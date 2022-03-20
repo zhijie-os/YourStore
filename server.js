@@ -1,13 +1,14 @@
+require('dotenv').config()
+
 const PORT = 8888
 const express = require('express')
-
+const app = express()
 const mongoose = require('mongoose')
 
-const app = express()
 
 
 
-mongoose.connect('mongodb://127.0.0.1:27017/yourstore', { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
 const db = mongoose.connection
 
 db.once('open', _ => {
@@ -15,8 +16,14 @@ db.once('open', _ => {
 })
 
 db.on('error', err => {
-    console.error('connection error')
+    console.error(err)
 })
 
+// middleware to let server to accept json
+app.use(express.json())
+
+
+const sellerRouter = require('./routes/seller')
+app.use('/seller',sellerRouter)
 
 app.listen(PORT, () => console.log('Server Started.'))
