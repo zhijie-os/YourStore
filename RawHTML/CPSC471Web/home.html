@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Your Store | Home Page</title>
+        <meta name="description" content="This is the description">
+        <link rel="stylesheet" href="styles.css" />
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"
+            integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk="
+            crossorigin="anonymous"
+        />
+        <script src = "home.js" async></script>
+    </head>
+    <body>
+        <header class="main-header">
+            <nav class = "nav main-nav">
+                <ul>
+                    <li><a href="home.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                </ul>
+            </nav>
+            <h1 class = "band-name band-name-large">Your Store</h1>
+            
+            <!-- 
+                <button class = "btn btn-header btn-play" type="button">&#9658</button>
+            -->
+            
+        </header>
+        <section class="content-section container">
+            <br>
+            <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <a href="#">Link 1</a>
+                  <a href="#">Link 2</a>
+                  <a href="#">Link 3</a>
+                </div>
+              </div>
+            <form action="/action_page.php">
+                <input type="text" placeholder="Search.." name="search">
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+            <br>
+            <!--
+                <h2 class="section-header">Categories</h2>
+            
+            <div class = "tour-row">
+                <div class="tour-date">Category1</div>                             
+                <button class="tour-btn btn btn-primary" type="button" onclick="document.location='store.html'">Search</button>      
+            </div>
+            <div class = "tour-row">
+                <div class="tour-date">Category2</div>                             
+                <button class="tour-btn btn btn-primary" type="button">Search</button>
+            </div>
+            <div class = "tour-row">
+                <div class="tour-date">Category3</div>                              
+                <button class="tour-btn btn btn-primary" type="button">Search</button>               
+            </div>
+            <div class = "tour-row">
+                <div class="tour-date">Category4</div>                             
+                <button class="tour-btn btn btn-primary" type="button">Search</button>  
+            </div>
+            <div class = "tour-row">
+                <div class="tour-date">Category5</div>                             
+                <button class="tour-btn btn btn-primary" type="button">Search</button>
+            </div>
+            <div class = "tour-row">
+                <div class="tour-date">Category6</div>                             
+                <button class="tour-btn btn btn-primary" type="button">Search</button> 
+            </div>
+            -->
+            
+            
+        </section>
+        
+        <footer class = "main-footer">
+            <div class="container main-footer-container">
+                <h3 class = "band-name">Your Store</h3>
+                <ul class="nav footer-nav">
+                    <li>
+                        <a href="https://www.youtube.com/channel/UCBiH-1k2qnrigVTScnvCKJA" target="_blank">
+                            <img src="Images/youtubeLogo.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://open.spotify.com/artist/4ntvojSPscU3PxselAEeY2" target="_blank">
+                            <img src="Images/spotifyLogo.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://zh-cn.facebook.com/OmnipotentYouthSociety" target="_blank">
+                            <img src="Images/facebookLogo.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>            
+        </footer>
+    </body>
+</html>

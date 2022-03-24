@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Your Store | Search Result</title>
+        <meta name="description" content="This is the description">
+        <link rel="stylesheet" href="styles.css" />
+        <script src = "store.js" async></script>
+    </head>
+    <body>
+        <header class="main-header">
+            <nav class = "nav main-nav">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                </ul>
+            </nav>
+            <h1 class = "band-name band-name-large">Your Store</h1>
+        </header>
+
+       
+        
+
+        
+        <div class="container content-section">
+            <h2 class="section-header">CART</h2>
+            <div class="cart-row">
+                <span class = "cart-item cart-header cart-column">ITEM</span>
+                <span class="cart-price cart-header cart-column">PRICE</span>
+                <span class="cart-quantity cart-header cart-column">QUANTITY</span>
+            </div>
+            <div class="cart-items">
+                <div class="cart-row">
+                    <div class="cart-item cart-column">
+                        <img class="cart-item-image" src="Images/T-ShirtWhite.jpg" width="100" height="100">
+                        <span class="cart-item-title">T-Shirt</span>
+                    </div>
+                    <span class="cart-price cart-column">$19.99</span>
+                    <div class="cart-quantity cart-column">
+                        <input class="cart-quantity-input" type="number" value="1">
+                        <button class="btn btn-danger" type="button">REMOVE</button>
+                    </div>
+                </div>
+                <div class="cart-row">
+                    <div class="cart-item cart-column">
+                        <img class="cart-item-image" src="Images/Album2OYS.jpg" width="100" height="100">
+                        <span class="cart-item-title">Album 2</span>
+                    </div>
+                    <span class="cart-price cart-column">$9.99</span>
+                    <div class="cart-quantity cart-column">
+                        <input class="cart-quantity-input" type="number" value="2">
+                        <button class="btn btn-danger" type="button">REMOVE</button>
+                    </div>
+                </div>
+            </div>
+            <div class = "cart-total">
+                <span class="cart-total-title">Total</span>
+                <span class="cart-total-price">$29.98</span>
+            </div>
+        </div>
+        <div class="container content-section">
+            <h2 class="section-header">Payment</h2>
+            <form>
+                <input type = "radio" name = "subject" value = "payment1"> Payment Method 1
+                <input type = "radio" name = "subject" value = "payment2"> Payment Method 2
+             </form>
+            
+            <div>
+                <button class="btn btn-primary btn-purchase" type="button">PURCHASE</button>
+            </div>
+        </div>
+        
+        <footer class = "main-footer">
+            <div class="container main-footer-container">
+                <h3 class = "band-name">Your Store</h3>
+                <ul class="nav footer-nav">
+                    <li>
+                        <a href="https://www.youtube.com/channel/UCBiH-1k2qnrigVTScnvCKJA" target="_blank">
+                            <img src="Images/youtubeLogo.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://open.spotify.com/artist/4ntvojSPscU3PxselAEeY2" target="_blank">
+                            <img src="Images/spotifyLogo.png">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://zh-cn.facebook.com/OmnipotentYouthSociety" target="_blank">
+                            <img src="Images/facebookLogo.png">
+                        </a>
+                    </li>
+                </ul>
+            </div>            
+        </footer>
+    </body>
+</html>
