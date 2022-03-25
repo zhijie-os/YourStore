@@ -4,49 +4,91 @@
         <title>Your Store | Search Result</title>
         <meta name="description" content="This is the description">
         <link rel="stylesheet" href="styles.css" />
-        <script src = "store.js" async></script>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body>
         <header class="main-header">
             <nav class = "nav main-nav">
                 <ul>
-                    <li><a href="index.html">HOME</a></li>
-                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="home.html">HOME</a></li>
+                    <li><a href="about.html"><i class="fa fa-shopping-cart" style="font-size:36px"></i></a></li>
                 </ul>
             </nav>
-            <h1 class = "band-name band-name-large">Your Store</h1>
+            <h1 class = "band-name band-name-large">Your Store</h1>   
         </header>
 
         <div class="container content-section">
             <h2 class="section-header">Search Result</h2>
+            <div class="form-row">
+                <span class="search-result-form-item form-header form-colum">ITEM</span>
+                <span class="search-result-form-description form-header form-colum">DESCRIPTION</span>
+                <span class="search-result-form-price form-header form-colum">PRICE</span>
+                <span class="search-result-form-action form-header form-colum">ACTION</span>
+            </div>
             <div class="shop-items">
-                <div class = "shop-item">
-                    <span class = "shop-item-title">Item1</span>
+                <div class = "search-result-form-item">
+                    <span class = "shop-item-title">OYSAlbum1</span>
                     <img class="shop-item-image" src="Images/Album1OYS.jpg">
                 </div>
-                <div class = "shop-item">
-                    <span class = "shop-item-title">Description</span>
-                    <p>description</p>
+                <div class = "search-result-form-description">
+                    <span>description</span>
                 </div>
-                <div class="shop-item-details">
-                    <span class="shop-item-price">$12.99</span>
+                <div class = "search-result-form-price">
+                    <span class="shop-item-price">$9.99</span>
+                </div>
+                <div class = "search-result-form-action">
                     <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
                 </div>
             </div>
+
             <div class="shop-items">
-                <div class = "shop-item">
-                    <span class = "shop-item-title">Item2</span>
+                <div class = "search-result-form-item">
+                    <span class = "shop-item-title">OYSAlbum2</span>
                     <img class="shop-item-image" src="Images/Album2OYS.jpg">
                 </div>
-                <div class = "shop-item">
-                    <span class = "shop-item-title">Description</span>
-                    <p>description</p>
+                <div class = "search-result-form-description">
+                    <span>description</span>
                 </div>
-                <div class="shop-item-details">
-                    <span class="shop-item-price">$12.99</span>
+                <div class = "search-result-form-price">
+                    <span class="shop-item-price">$9.99</span>
+                </div>
+                <div class = "search-result-form-action">
                     <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
                 </div>
-            </div>                 
+            </div>
+
+            <div class="shop-items">
+                <div class = "search-result-form-item">
+                    <span class = "shop-item-title">OYSTshirt-B</span>
+                    <img class="shop-item-image" src="Images/T-ShirtBlack.jpg">
+                </div>
+                <div class = "search-result-form-description">
+                    <span>description</span>
+                </div>
+                <div class = "search-result-form-price">
+                    <span class="shop-item-price">$19.99</span>
+                </div>
+                <div class = "search-result-form-action">
+                    <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                </div>
+            </div>
+
+            <div class="shop-items">
+                <div class = "search-result-form-item">
+                    <span class = "shop-item-title">OYSTshirt-W</span>
+                    <img class="shop-item-image" src="Images/T-ShirtWhite.jpg">
+                </div>
+                <div class = "search-result-form-description">
+                    <span>description</span>
+                </div>
+                <div class = "search-result-form-price">
+                    <span class="shop-item-price">$19.99</span>
+                </div>
+                <div class = "search-result-form-action">
+                    <button class="btn btn-primary shop-item-button" type="button">ADD TO CART</button>
+                </div>
+            </div>               
         </div>
         
         <footer class = "main-footer">
