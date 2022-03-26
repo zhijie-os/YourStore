@@ -1,0 +1,460 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\pgfplotsset{compat=1.16}
+
+
+\author{Zhijie Xia}
+\title{CPSC 471 Project API Specification}
+
+
+\pagestyle{fancy}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+
+\fancyhf{}
+\rhead{
+    RESTful API
+}
+\rfoot{
+    Page \thepage
+}
+
+\begin{document}
+\maketitle
+
+\newpage
+
+\begin{verbatim}
+        
+        Description: Users(customer,seller, and admin) login 
+        URL: /login
+        METHOD: PUT
+        INPUT:
+            [{
+                "user_name":string,
+                "password":string
+            }]
+        OUTPUT:
+            [{
+                "session_token":string
+            }]
+
+
+        /**
+         *  APIs about SELLER
+         */
+        
+        Description: Get a list of sellers with page size and page number
+        URL: /sellers?pageSize=m&pageNumber=n 
+        METHOD: GET 
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "user_name":string,
+                    "password":string
+                },
+                ...
+            ]
+
+        Description: Get a particular seller
+        URL: /sellers/:id
+        METHOD: GET 
+        INPUT: N/A
+        OUTPUT:
+            [
+                {
+                    "user_name":string,
+                    "password":string
+                }
+            ]
+        
+        Description: Create new seller
+        URL: /sellers
+        METHOD: POST
+        INPUT:
+            [{
+                "user_name":string,
+                "password":string
+            }]
+        OUTPUT: N/A
+
+        Description: Delete a particular seller 
+        URL: /sellers/:id 
+        METHOD: DELETE 
+        OUTPUT: N/A
+
+        Description: Get a list orders of a particular seller with page size and page number
+        URL: /sellers/:id/orders?pageSize=m&pageNumber=n
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]    
+                },
+                ...
+            ]
+
+        Description: Get a particular order of a particular seller 
+        URL: /sellers/:id/orders/:id
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]
+                }
+            ]
+
+
+        /**
+        *  APIs about CUSTOMER
+        */
+
+        
+        Description: Get a list of customers with page size and page number
+        URL: /customers?pageSize=m&pageNumber=n 
+        METHOD: GET 
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "user_name":string,
+                    "password":string,
+                    "cart_id":string
+                },
+                ...
+            ]
+    
+        Description: Get a particular customer
+        URL: /customers/:id
+        METHOD: GET 
+        INPUT: N/A
+        OUTPUT:
+            [
+                {
+                    "user_name":string,
+                    "password":string
+                    "cart_id":string
+                }
+            ]
+        
+        Description: Create new customer
+        URL: /customers
+        METHOD: POST
+        INPUT:
+            [{
+                "user_name":string,
+                "password":string
+            }]
+        OUTPUT: N/A
+
+        Description: Delete a particular customer
+        URL: /customer/:id 
+        METHOD: DELETE 
+        OUTPUT: N/A
+
+        Description: Get a list orders of a particular customer with page size and page number
+        URL: /customers/:id/orders?pageSize=m&pageNumber=n
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]
+                },
+                ...
+            ]
+
+        Description: Get a particular order of a particular customer 
+        URL: /customers/:id/orders/:id
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]
+                }
+            ]
+
+
+        Description: Get a customer's cart 
+        URL: /customers/:id/cart 
+        METHOD: GET 
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "cart_id":string,
+                    "products":[{"product_id":number,"quantity"=number}...],
+                    "total":number
+                }
+            ]
+
+        Description: Add a product to the customer's cart 
+        URL: /customers/:id/cart/product:id
+        METHOD: PUT 
+        INPUT: N/A
+        OUTPUT: N/A
+
+
+        Description: Delete a product from the customer's cart 
+        URL: /customers/:id/cart/product:id
+        METHOD: DELETE 
+        INPUT: N/A
+        OUTPUT: N/A
+        
+
+        
+        /**
+        *  APIs for ORDER
+        */
+    
+        Description: Get a list of all orders with page size and page number
+        URL: /orders?pageSize=m&pageNumber=n 
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+            [   {
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]
+                },
+                ...]
+
+        Description: Get a particular order
+        URL: /orders/:id
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT:
+                [{
+                    "order_id":number,
+                    "customer_id":string,
+                    "seller_id":string,
+                    "total":float,
+                    "receiver_name":string,
+                    "receiver_address":string,
+                    "payment":boolean,
+                    "shipped":boolean,
+                    "cancelled":boolean,
+                    "shipment_label":string,
+                    "products":[{"product_id":number, "quantity"=number},...]
+                }]
+
+        Description: Update a order
+        URL: /orders/:id
+        METHOD: PUT
+        INPUT: // the updated method does not necessary include every element of the following INPUT
+            [{
+                "customer_id":string,
+                "seller_id":string,
+                "total":float,
+                "receiver_name":string,
+                "receiver_address":string,
+                "payment":boolean,
+                "shipped":boolean,
+                "cancelled":boolean,
+                "shipment_label":string,
+                "products":[{"product_id":number, "quantity"=number},...]
+            }]
+        OUTPUT: N/A
+
+        Description: Create a order
+        URL: /orders/:id
+        METHOD: POST
+        INPUT: 
+            [{
+                "customer_id":string,
+                "seller_id":string,
+                "total":float,
+                "receiver_name":string,
+                "receiver_address":string,
+                "products":[{"product_id":number, "quantity"=number},...]
+            }]   
+        OUTPUT:
+            [{
+                "order_id":string
+            }]
+
+        Description: Delete a particular order
+        URL: /orders/:id
+        METHOD: Delete
+        INPUT: N/A
+        OUTPUT: N/A
+
+
+        /**
+        *  APIs for PRODUCT
+        */
+
+        Description: Get a list of products with search keyword, category, page size and page number 
+        URL: /products?pageSize=m&pageNumber=n&key=k&category=c
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT: 
+            [   {
+                    "product_id":string,
+                    "seller_id":string,
+                    "price":float,
+                    "search_keys":[string,...],
+                    "description":string
+                },
+                ...
+            ]
+
+
+        Description: Get a particular product
+        URL: /products/:id
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT: 
+            [{
+                "product_id":string,
+                "seller_id":string,
+                "price":float,
+                "search_keys":[string...],
+                "description":string
+            }]
+
+        Description: Create a product
+        URL: /products
+        METHOD: POST
+        INPUT: 
+            [{
+                "seller_id":string,
+                "price":float,
+                "search_keys":[string...],
+                "description":string
+                }]
+        OUTPUT: 
+            [{
+                "product_id":string
+            }]
+
+        Description: Update a particular product
+        URL: /products/:id
+        METHOD: PUT
+        INPUT: 
+            [{
+                "seller_id":string,
+                "price":float,
+                "search_keys":[string...],
+                "description":string
+                }]
+        OUTPUT: N/A
+
+
+        Description: DELETE a particular product
+        URL: /products/:id
+        METHOD: DELETE
+        INPUT: N/A
+        OUTPUT: N/A
+
+
+        /**
+        *  APIs for Category
+        */
+
+        Description: Get the complete list of all category
+        URL: /categories
+        METHOD: GET
+        INPUT: N/A
+        OUTPUT: 
+            [
+                {   "category_id":string,
+                    "title":stirng}
+                ...
+            ]
+
+        Description: Create a new category
+        URL: /categories
+        METHOD: POST
+        INPUT: 
+            [{
+                "title":string
+            }]
+        OUTPUT: 
+            [{
+                "category_id":string
+            }]
+
+        Description: Update a category
+        URL: /categories/:id
+        METHOD: PUT
+        INPUT: 
+            [{
+                "title":string
+            }]
+        OUTPUT: N/A
+
+        Description: Delete a category
+        URL: /categories/:id
+        METHOD: DELETE
+        INPUT: N/A
+        OUTPUT: N/A
+
+        Description: Add a product into a category
+        URL: /categories/:id/products/:id
+        METHOD: PUT
+        INPUT: N/A
+        OUTPUT: N/A
+
+
+        Description: Delete a product from a category
+        URL: /categories/:id/products/:id
+        METHOD: DELETE
+        INPUT: N/A
+        OUTPUT: N/A
+        
+    \end{verbatim}
+
+\end{document}
