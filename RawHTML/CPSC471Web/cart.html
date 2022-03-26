@@ -20,13 +20,33 @@
         <div class="container">
             <a href="#" class="navbar-brand">YourStore</a>
 
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+
+
             <div class="collapse navbar-collapse" id="navmenu">
+                <div class="input-group search-bar">
+                    <div class="dropdown input-group-prepend">
+                        <button class="btn btn-secondary dropdown-toggle btn-lg" type="button"
+                            data-bs-toggle="dropdown">
+                            All
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Food</a></li>
+                            <li><a class="dropdown-item" href="#">Books</a></li>
+                            <li><a class="dropdown-item" href="#">Electronic</a></li>
+                        </ul>
+                    </div>
+                    <input type="text" class="form-control">
+                    <button class="input-group-append btn btn-secondary btn-lg" type="button">Search<i class="bi bi-search"></i></button>
+                </div>
+
                 <!-- the actual nav bar as a list -->
                 <ul class="navbar-nav ms-auto">
+
                     <!-- nav-items  -->
                     <li class="nav-item">
                         <a href="#myproducts" class="nav-link">My Cart</a>
@@ -38,42 +58,16 @@
                         <a href="#logout" class="nav-link">Logout</a>
                     </li>
                 </ul>
+
+
             </div>
 
         </div>
     </nav>
 
 
-    <section class="m-5 pt-5">
-        <div class="container" id="search_bar">
-            <div class="d-md-flex justify-content-between align-items-center">
-                <h3 class="mb-3 mb-md-0"><span class="text-warning">John</span>, search within your products</h3>
-                <div class="input-group search-bar">
-                    <div class="dropdown">
-                        <button class="btn btn-secondary dropdown-toggle btn-lg" type="button"
-                            data-bs-toggle="dropdown">
-                            All Categories
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Food</a></li>
-                            <li><a class="dropdown-item" href="#">Books</a></li>
-                            <li><a class="dropdown-item" href="#">Electronic</a></li>
-                        </ul>
-                    </div>
-                    <input type="text" class="form-control">
-                    <button class="btn btn-dark btn-lg" type="button">Search<i class="bi bi-search"></i></button>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <section class="p-1">
-        <div class="container">
-            <button class="btn btn-primary btn-lg">Add New Product</button>
-        </div>
-    </section>
-
-    <section class="p-3">
+    <section class="pt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
