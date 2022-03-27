@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.3.22)  23 MAR 2022 18:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.3.22)  27 MAR 2022 02:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/notauser/zhijie_workspace/Winter_2022/CPSC_471/Project/API_Specification/api.tex
-(/home/notauser/zhijie_workspace/Winter_2022/CPSC_471/Project/API_Specification/api.tex
+**/home/notauser/YourStore/Docs/functional_design.tex
+(/home/notauser/YourStore/Docs/functional_design.tex
 LaTeX2e <2020-02-02> patch level 2
 L3 programming layer <2020-02-14> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2019/12/20 v1.4l Standard LaTeX document class
@@ -379,8 +379,8 @@ Package: enumitem 2019/06/20 v3.9 Customized lists
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count286
 \l__pdf_internal_box=\box60
-) (/home/notauser/zhijie_workspace/Winter_2022/CPSC_471/Project/API_Specification/api.aux)
-\openout1 = `api.aux'.
+) (/home/notauser/YourStore/Docs/functional_design.aux)
+\openout1 = `functional_design.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 29.
 LaTeX Font Info:    ... okay on input line 29.
@@ -462,6 +462,15 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 33--34
+
+ []
+
+
+Overfull \hbox (11.59868pt too wide) in paragraph at lines 35--37
+[]\OT1/cmr/m/n/12 Our project \OT1/cmr/bx/n/12 Your-Store \OT1/cmr/m/n/12 will be built with \OT1/cmr/bx/n/12 HTML\OT1/cmr/m/n/12 ,\OT1/cmr/bx/n/12 CSS\OT1/cmr/m/n/12 ,\OT1/cmr/bx/n/12 Javascript\OT1/cmr/m/n/12 , \OT1/cmr/bx/n/12 Boot-strap\OT1/cmr/m/n/12 ,\OT1/cmr/bx/n/12 ReactJS\OT1/cmr/m/n/12 ,
+ []
+
 
 Package Fancyhdr Warning: \headheight is too small (12.0pt): 
 Make it at least 14.49998pt.
@@ -469,69 +478,119 @@ We now make it that large for the rest of the document.
 This may cause the page layout to be inconsistent, however.
 
 [2]
-Overfull \hbox (98.34526pt too wide) in paragraph at lines 458--458
+<HIPO/HIPO.drawio.png, id=15, 1356.06625pt x 1832.8475pt>
+File: HIPO/HIPO.drawio.png Graphic file (type png)
+<use HIPO/HIPO.drawio.png>
+Package pdftex.def Info: HIPO/HIPO.drawio.png  used on input line 55.
+(pdftex.def)             Requested size: 446.26582pt x 603.16354pt.
+ [3]
+<DFD/DFD.drawio.png, id=20, 1182.4175pt x 1095.09125pt>
+File: DFD/DFD.drawio.png Graphic file (type png)
+<use DFD/DFD.drawio.png>
+Package pdftex.def Info: DFD/DFD.drawio.png  used on input line 57.
+(pdftex.def)             Requested size: 446.26582pt x 413.29834pt.
+ [4 </home/notauser/YourStore/Docs/HIPO/HIPO.drawio.png>] [5 </home/notauser/YourStore/Docs/DFD/DFD.drawio.png>]
+<Screenshots/home_index.png, id=29, 2569.6pt x 1445.4pt>
+File: Screenshots/home_index.png Graphic file (type png)
+<use Screenshots/home_index.png>
+Package pdftex.def Info: Screenshots/home_index.png  used on input line 71.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+<Screenshots/login.png, id=30, 2569.6pt x 1445.4pt>
+File: Screenshots/login.png Graphic file (type png)
+<use Screenshots/login.png>
+Package pdftex.def Info: Screenshots/login.png  used on input line 73.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+<Screenshots/search_result.png, id=31, 2569.6pt x 1445.4pt>
+File: Screenshots/search_result.png Graphic file (type png)
+<use Screenshots/search_result.png>
+Package pdftex.def Info: Screenshots/search_result.png  used on input line 75.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+ [6 </home/notauser/YourStore/Docs/Screenshots/home_index.png> </home/notauser/YourStore/Docs/Screenshots/login.png>]
+<Screenshots/cart.png, id=37, 2569.6pt x 1445.4pt>
+File: Screenshots/cart.png Graphic file (type png)
+<use Screenshots/cart.png>
+Package pdftex.def Info: Screenshots/cart.png  used on input line 77.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+<Screenshots/seller_products.png, id=38, 2569.6pt x 1445.4pt>
+File: Screenshots/seller_products.png Graphic file (type png)
+<use Screenshots/seller_products.png>
+Package pdftex.def Info: Screenshots/seller_products.png  used on input line 79.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+ [7 </home/notauser/YourStore/Docs/Screenshots/search_result.png> </home/notauser/YourStore/Docs/Screenshots/cart.png>]
+<Screenshots/order.png, id=45, 2569.6pt x 1445.4pt>
+File: Screenshots/order.png Graphic file (type png)
+<use Screenshots/order.png>
+Package pdftex.def Info: Screenshots/order.png  used on input line 81.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+<Screenshots/admin.png, id=46, 2569.6pt x 1445.4pt>
+File: Screenshots/admin.png Graphic file (type png)
+<use Screenshots/admin.png>
+Package pdftex.def Info: Screenshots/admin.png  used on input line 83.
+(pdftex.def)             Requested size: 446.26582pt x 251.00795pt.
+ [8 </home/notauser/YourStore/Docs/Screenshots/seller_products.png> </home/notauser/YourStore/Docs/Screenshots/order.png>] [9 </home/notauser/YourStore/Docs/Screenshots/admin.png>] [10]
+Overfull \hbox (98.34526pt too wide) in paragraph at lines 519--519
 []        \OT1/cmtt/m/n/12 Description: Get a list orders of a particular seller with page size and page number[] 
  []
 
 
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
 []                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
  []
 
-[3]
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
+[11]
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
 []                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
  []
 
-[4]
-Overfull \hbox (110.69527pt too wide) in paragraph at lines 458--458
+[12]
+Overfull \hbox (110.69527pt too wide) in paragraph at lines 519--519
 []        \OT1/cmtt/m/n/12 Description: Get a list orders of a particular customer with page size and page number[] 
  []
 
 
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
 []                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
  []
 
-[5]
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
+[13]
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
 []                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
  []
 
-[6]
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
-[]                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
- []
-
-
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 458--458
+[14]
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
 []                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
  []
 
 
-Overfull \hbox (147.74529pt too wide) in paragraph at lines 458--458
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 519--519
+[]                    \OT1/cmtt/m/n/12 "products":[{"product_id":number, "quantity"=number},...][] 
+ []
+
+
+Overfull \hbox (147.74529pt too wide) in paragraph at lines 519--519
 []        \OT1/cmtt/m/n/12 INPUT: // the updated method does not necessary include every element of the following INPUT[] 
  []
 
-[7]
-Overfull \hbox (147.74529pt too wide) in paragraph at lines 458--458
+[15]
+Overfull \hbox (147.74529pt too wide) in paragraph at lines 519--519
 []        \OT1/cmtt/m/n/12 Description: Get a list of products with search keyword, category, page size and page number[] 
  []
 
-[8] [9] [10] [11] (/home/notauser/zhijie_workspace/Winter_2022/CPSC_471/Project/API_Specification/api.aux) ) 
+[16] [17] [18] [19] (/home/notauser/YourStore/Docs/functional_design.aux) ) 
 Here is how much of TeX's memory you used:
- 23270 strings out of 481239
- 593555 string characters out of 5920377
- 973099 words of memory out of 5000000
- 38179 multiletter control sequences out of 15000+600000
- 535703 words of font info for 38 fonts, out of 8000000 for 9000
+ 23332 strings out of 481239
+ 594666 string characters out of 5920377
+ 972112 words of memory out of 5000000
+ 38227 multiletter control sequences out of 15000+600000
+ 536010 words of font info for 39 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,11n,127p,799b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on /home/notauser/zhijie_workspace/Winter_2022/CPSC_471/Project/API_Specification/api.pdf (11 pages, 42371 bytes).
+ 73i,12n,127p,764b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on /home/notauser/YourStore/Docs/functional_design.pdf (19 pages, 1777989 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
- 38 compressed objects within 1 object stream
+ 104 PDF objects out of 1000 (max. 8388607)
+ 60 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 58 words of extra memory for PDF output out of 10000 (max. 10000000)
 

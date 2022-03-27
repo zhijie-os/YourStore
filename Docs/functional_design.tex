@@ -9,8 +9,8 @@
 \pgfplotsset{compat=1.16}
 
 
-\author{Zhijie Xia}
-\title{CPSC 471 Project API Specification}
+\author{Zhijie Xia, Yuan Liu, Zixing Wei, G-69}
+\title{CPSC 471 Functional Design}
 
 
 \pagestyle{fancy}
@@ -20,7 +20,7 @@
 
 \fancyhf{}
 \rhead{
-    RESTful API
+    Functional Design
 }
 \rfoot{
     Page \thepage
@@ -30,6 +30,64 @@
 \maketitle
 
 \newpage
+\textbf{Notes:\\}
+
+Our project \textbf{YourStore} will be built with \textbf{HTML},\textbf{CSS},\textbf{Javascript}, \textbf{Bootstrap},\textbf{ReactJS},
+\textbf{ExpressJS}, \textbf{MongoDB}.
+
+
+
+At this stage, we have initial design on the API, what data would be stored, and the static UI. However, software engineering is an iterative refining process,
+we would expect some changes down the way, and some initial design might be modified in the Final Submission.
+
+
+
+\newpage
+
+\textbf{HIPO \& DFD}
+
+Contributors
+\begin{enumerate}
+    \item Zhijie Xia
+    \item Zixing Wei
+\end{enumerate}
+
+\includegraphics[width=0.95\textwidth]{HIPO/HIPO.drawio.png}
+
+\includegraphics[width=0.95\textwidth]{DFD/DFD.drawio.png}
+
+
+
+\newpage
+\textbf{Website}
+
+Contributors
+\begin{enumerate}
+    \item Zhijie Xia
+    \item Yuan Liu
+\end{enumerate}
+
+
+\includegraphics[width=0.95\textwidth]{Screenshots/home_index.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/login.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/search_result.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/cart.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/seller_products.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/order.png}
+
+\includegraphics[width=0.95\textwidth]{Screenshots/admin.png}
+\newpage
+
+Contributors
+\begin{enumerate}
+    \item Zhijie Xia
+\end{enumerate}
+
 
 \begin{verbatim}
         
@@ -58,7 +116,8 @@
         OUTPUT:
             [   {
                     "user_name":string,
-                    "password":string
+                    "password":string,
+                    "card_number":string
                 },
                 ...
             ]
@@ -71,7 +130,8 @@
             [
                 {
                     "user_name":string,
-                    "password":string
+                    "password":string,
+                    "card_number":string
                 }
             ]
         
@@ -81,7 +141,8 @@
         INPUT:
             [{
                 "user_name":string,
-                "password":string
+                "password":string,
+                "card_number":string
             }]
         OUTPUT: N/A
 
