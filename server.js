@@ -27,3 +27,5 @@ const sellerRouter = require('./routes/seller')
 app.use('/seller',sellerRouter)
 
 app.listen(PORT, () => console.log('Server Started.'))
+
+

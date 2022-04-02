@@ -9,17 +9,16 @@ router.get('/', async (req, res) => {
         const allSellers = await sellerModel.find()
 
         // only return the name of the Seller
-        res.json(allSellers.map((e) => { return e.UserName }))
+        res.json(allSellers)
     }
     catch (err) {
         res.status(500).json({ message: err.message })
     }
 })
 
-// GET 
+// GET a user
 router.get('/:id', getSellerInstance, (req, res) => {
-    // only send back
-    res.send(res.sellerInstance.UserName)
+    res.send(res.sellerInstance)
 })
 
 // POST
@@ -28,7 +27,8 @@ router.post('/', async (req, res) => {
     const newSeller = new sellerModel(
         {
             UserName: req.body.UserName,
-            Password: req.body.Password
+            Password: req.body.Password,
+            CardNumber: req.body.CardNumber
         })
 
     try {
@@ -45,7 +45,7 @@ router.patch('/:id', getSellerInstance, async (req, res) => {
 
     // change password
     res.sellerInstance.Password=req.body.Password
-
+    res.sellerInstance.CardNumber = req.body.CardNumber
     try {
         const updatedSeller = await res.sellerInstance.save()
         res.status(200).json(updatedSeller)

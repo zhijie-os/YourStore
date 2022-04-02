@@ -1,1 +1,2 @@
-### YourStore: A project for CPSC 471
+# YourStore: A project for CPSC 471
+
