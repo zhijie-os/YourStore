@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 
-// set up seller's schema
-const sellerSchema = new mongoose.Schema({
-    SellerID:{
+// set up product's schema
+const productSchema = new mongoose.Schema({
+    ProductID:{
         type:String,
         required:true
     },
@@ -25,4 +25,4 @@ const sellerSchema = new mongoose.Schema({
 })
 
 
-module.exports = mongoose.model("products",sellerSchema)
+module.exports = mongoose.model("products",productSchema)

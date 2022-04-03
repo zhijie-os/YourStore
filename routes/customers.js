@@ -4,29 +4,25 @@ const customerDB = require('../models/customers')
 
 
 // Get a list of customer with pagination
-router.get('/',async (req,res)=>
-{
+router.get('/', async (req, res) => {
     try {
-    
-        const pageSize = req.query.pageSize 
+
+        const pageSize = req.query.pageSize
         const pageNumber = req.query.pageNumber
         // all customer is a list
-        const allCustomers =  await customerDB.find().limit(pageSize).skip(pageSize*pageNumber)
+        const allCustomers = await customerDB.find().limit(pageSize).skip(pageSize * pageNumber)
 
         // only return the name of the customer
         res.json(allCustomers)
     }
     catch (err) {
-        if(!req.query.pageSize)
-        {
-            res.status(400).json({message:'pageSize is not defined...'})
+        if (!req.query.pageSize) {
+            res.status(400).json({ message: 'pageSize is not defined...' })
         }
-        else if(!req.query.pageNumber)
-        {
-            res.status(400).json({message:'pageNumber is not defined...'})
+        else if (!req.query.pageNumber) {
+            res.status(400).json({ message: 'pageNumber is not defined...' })
         }
-        else 
-        {
+        else {
             res.status(500).json({ message: err.message })
         }
     }
@@ -46,10 +42,10 @@ router.post('/', async (req, res) => {
         {
             UserName: req.body.UserName,
             Password: req.body.Password,
-            Cart:[]
+            Cart: []
         })
-    
-        // try if can save the customer
+
+    // try if can save the customer
     try {
         const savedCustomer = await newcustomer.save()
         // on success, send back 201
@@ -64,10 +60,15 @@ router.post('/', async (req, res) => {
 // PATCH with respect to :id and the given input
 router.patch('/:id', getCustomerInstance, async (req, res) => {
 
-    // change password if any
-    res.customerInstance.Password=req.body.Password
-    // change cart if any
-    res.customerInstance.Card = req.body.Cart
+    if (req.body.Password) {
+        // change password if any
+        res.customerInstance.Password = req.body.Password
+    }
+    else if (req.body.Cart) {
+        // change cart if any
+        res.customerInstance.Card = req.body.Cart
+    }
+
 
     // try to save back
     try {
@@ -86,14 +87,12 @@ router.patch('/:id', getCustomerInstance, async (req, res) => {
 router.delete('/:id', getCustomerInstance, async (req, res) => {
 
     // try to remove
-    try
-    {
+    try {
         await res.customerInstance.remove()
-        res.json({message:'Successfully deleted the customer'})
+        res.json({ message: 'Successfully deleted the customer' })
     }
-    catch(err)
-    {
-        res.status(500).json({message:'Failed to delete the customer'})
+    catch (err) {
+        res.status(500).json({ message: 'Failed to delete the customer' })
     }
 })
 

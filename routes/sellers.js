@@ -62,10 +62,17 @@ router.post('/', async (req, res) => {
 // PATCH with respect to :id and the given input
 router.patch('/:id', getSellerInstance, async (req, res) => {
 
-    // change password if any
-    res.sellerInstance.Password=req.body.Password
-    // change card number if any
-    res.sellerInstance.CardNumber = req.body.CardNumber
+    if(req.body.Password)
+    {
+        // change password if any
+        res.sellerInstance.Password=req.body.Password
+    }
+    else if(req.body.CardNumber)
+    {
+        // change card number if any
+        res.sellerInstance.CardNumber = req.body.CardNumber
+    }
+
 
     // try to save back
     try {
