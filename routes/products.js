@@ -5,26 +5,29 @@ const productDB = require('../models/products')
 
 router.get('/',async (req,res)=>
 {
-    try {
-        const pageSize = req.query.pageSize 
-        const pageNumber = req.query.pageNumber
-        // all product is a list
-        const allProducts = await productDB.find().limit(pageSize).skip(pageSize*pageNumber)
-
-        res.json(allProducts)
+    if(!req.query.pageSize)
+    {
+        res.status(400).json({message:'pageSize is not defined...'})
     }
-    catch (err) {
-        if(!req.query.pageSize)
-        {
-            res.status(400).json({message:'pageSize is not defined...'})
+    else if(!req.query.pageNumber)
+    {
+        res.status(400).json({message:'pageNumber is not defined...'})
+    }
+    else 
+    {
+        try {
+        
+            const pageSize = req.query.pageSize 
+            const pageNumber = req.query.pageNumber
+            // all product is a list
+            const allProducts = await productDB.find().limit(pageSize).skip(pageSize*pageNumber)
+    
+            res.json(allProducts)
         }
-        else if(!req.query.pageNumber)
-        {
-            res.status(400).json({message:'pageNumber is not defined...'})
-        }
-        else 
-        {
-            res.status(500).json({ message: err.message })
+        catch (err) {
+    
+                res.status(500).json({ message: err.message })
+    
         }
     }
 })
@@ -35,20 +38,19 @@ router.get('/:id', getProductInstance, (req, res) => {
     res.send(res.productInstance)
 })
 
-// POST a user with respect to the JSON input
+// POST a product with respect to the JSON input
 router.post('/', async (req, res) => {
 
     // parse the JSON
     const newProduct = new productDB(
         {
-            ProductID:req.body.ProductID,
+            SellerID:req.body.SellerID,
             Title:req.body.Title,
             Price:req.body.Price,
             Description:req.body.Description,
             SearchKeys:req.body.SearchKeys
         })
-    
-        // try if can save the product
+
     try {
         const savedproduct = await newProduct.save()
         // on success, send back 201
@@ -62,8 +64,6 @@ router.post('/', async (req, res) => {
 
 // PATCH with respect to :id and the given input
 router.patch('/:id', getProductInstance, async (req, res) => {
-
-
 
     // try to save back
     try {

@@ -30,6 +30,8 @@ app.use('/customers', customerRouter)
 const orderRouter = require('./routes/orders')
 app.use('/orders', orderRouter)
 
+const productRouter = require('./routes/products')
+app.use('/products', productRouter)
 
 
 app.listen(PORT, () => console.log('Server Started.'))

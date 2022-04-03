@@ -5,32 +5,31 @@ const orderDB = require('../models/orders')
 
 
 // GET a list of orders with pagination
-router.get('/',async (req,res)=>
-{
-
-    try {
-        const pageSize = req.query.pageSize 
-        const pageNumber = req.query.pageNumber
-        // all order is a list
-        const allOrders = await orderDB.find().limit(pageSize).skip(pageSize*pageNumber)
-
-        // only return the name of the order
-        res.json(allOrders)
+router.get('/', async (req, res) => {
+    if (!req.query.pageSize) {
+        res.status(400).json({ message: 'pageSize is not defined...' })
     }
-    catch (err) {
-        if(!req.query.pageSize)
-        {
-            res.status(400).json({message:'pageSize is not defined...'})
+    else if (!req.query.pageNumber) {
+        res.status(400).json({ message: 'pageNumber is not defined...' })
+    }
+    else {
+        try {
+            const pageSize = req.query.pageSize
+            const pageNumber = req.query.pageNumber
+            // all order is a list
+            const allOrders = await orderDB.find().limit(pageSize).skip(pageSize * pageNumber)
+
+            // only return the name of the order
+            res.json(allOrders)
         }
-        else if(!req.query.pageNumber)
-        {
-            res.status(400).json({message:'pageNumber is not defined...'})
-        }
-        else 
-        {
+        catch (err) {
+
             res.status(500).json({ message: err.message })
+
         }
     }
+
+
 })
 
 
@@ -50,14 +49,14 @@ router.post('/', async (req, res) => {
             Total: req.body.Total,
             ReceiverName: req.body.ReceiverName,
             ReceiverAddress: req.body.ReceiverAddress,
-            Payment:false,
-            Cancelled:false,
-            Shipped:false,
-            ShipmentLabel:"None",
-            Products:req.body.Products
+            Payment: false,
+            Cancelled: false,
+            Shipped: false,
+            ShipmentLabel: "None",
+            Products: req.body.Products
         })
-    
-        // try if can save the order
+
+    // try if can save the order
     try {
         const savedOrder = await newOrder.save()
 
@@ -74,18 +73,15 @@ router.post('/', async (req, res) => {
 router.patch('/:id', getOrderInstance, async (req, res) => {
 
     // change into "paid" status
-    if(req.body.Payment)
-    {
-        res.orderInstance.Payment=req.body.Payment
+    if (req.body.Payment) {
+        res.orderInstance.Payment = req.body.Payment
     }
-    else if(req.body.Cancelled )
-    {
+    else if (req.body.Cancelled) {
         // change into "cancelled" status
-        res.orderInstance.Cancelled = req.body.Cancelled 
+        res.orderInstance.Cancelled = req.body.Cancelled
     }
-    else if(req.body.ShipmentLabel)
-    {
-            // change into "shipped" status
+    else if (req.body.ShipmentLabel) {
+        // change into "shipped" status
         res.orderInstance.Shipped = true
         res.orderInstance.ShipmentLabel = req.body.ShipmentLabel
     }
@@ -108,14 +104,12 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
 router.delete('/:id', getOrderInstance, async (req, res) => {
 
     // try to remove
-    try
-    {
+    try {
         await res.orderInstance.remove()
-        res.json({message:'Successfully deleted the order'})
+        res.json({ message: 'Successfully deleted the order' })
     }
-    catch(err)
-    {
-        res.status(500).json({message:'Failed to delete the order'})
+    catch (err) {
+        res.status(500).json({ message: 'Failed to delete the order' })
     }
 })
 
@@ -127,7 +121,7 @@ async function getOrderInstance(req, res, next) {
 
     try {
         // find order by Username
-        orderInstance = await orderDB.findOne({"_id":req.params.id})
+        orderInstance = await orderDB.findOne({ "_id": req.params.id })
         // if order not exist, then send error status
         if (orderInstance == null) {
             return res.status(404).json({ message: 'Cannot find order' })

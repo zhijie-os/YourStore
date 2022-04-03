@@ -5,24 +5,24 @@ const customerDB = require('../models/customers')
 
 // Get a list of customer with pagination
 router.get('/', async (req, res) => {
-    try {
-
-        const pageSize = req.query.pageSize
-        const pageNumber = req.query.pageNumber
-        // all customer is a list
-        const allCustomers = await customerDB.find().limit(pageSize).skip(pageSize * pageNumber)
-
-        // only return the name of the customer
-        res.json(allCustomers)
+    if (!req.query.pageSize) {
+        res.status(400).json({ message: 'pageSize is not defined...' })
     }
-    catch (err) {
-        if (!req.query.pageSize) {
-            res.status(400).json({ message: 'pageSize is not defined...' })
+    else if (!req.query.pageNumber) {
+        res.status(400).json({ message: 'pageNumber is not defined...' })
+    }
+    else {
+        try {
+
+            const pageSize = req.query.pageSize
+            const pageNumber = req.query.pageNumber
+            // all customer is a list
+            const allCustomers = await customerDB.find().limit(pageSize).skip(pageSize * pageNumber)
+
+            // only return the name of the customer
+            res.json(allCustomers)
         }
-        else if (!req.query.pageNumber) {
-            res.status(400).json({ message: 'pageNumber is not defined...' })
-        }
-        else {
+        catch (err) {
             res.status(500).json({ message: err.message })
         }
     }
