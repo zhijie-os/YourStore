@@ -21,14 +21,14 @@ db.on('error', err => {
 app.use(express.json())
 
 
-const sellerRouter = require('./routes/seller')
-app.use('/seller', sellerRouter)
+const sellerRouter = require('./routes/sellers')
+app.use('/sellers', sellerRouter)
 
-const customerRouter = require('./routes/customer')
-app.use('/customer', customerRouter)
+const customerRouter = require('./routes/customers')
+app.use('/customers', customerRouter)
 
-const orderRouter = require('./routes/order')
-app.use('/order', orderRouter)
+const orderRouter = require('./routes/orders')
+app.use('/orders', orderRouter)
 
 
 

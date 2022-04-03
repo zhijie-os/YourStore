@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const customerDB = require('../models/customer')
+const customerDB = require('../models/customers')
 
 
 // Get a list of customer with pagination

@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const sellerDB = require('../models/seller')
+const sellerDB = require('../models/sellers')
 
 
 router.get('/',async (req,res)=>

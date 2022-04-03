@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const orderDB = require('../models/order')
+const orderDB = require('../models/orders')
 
 
 
@@ -127,7 +127,7 @@ async function getOrderInstance(req, res, next) {
 
     try {
         // find order by Username
-        orderInstance = await orderDB.findOne({ UserName: req.params.id })
+        orderInstance = await orderDB.findOne({"_id":req.params.id})
         // if order not exist, then send error status
         if (orderInstance == null) {
             return res.status(404).json({ message: 'Cannot find order' })
