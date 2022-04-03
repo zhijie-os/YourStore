@@ -2,13 +2,11 @@ const express = require('express')
 const router = express.Router()
 const orderDB = require('../models/order')
 
-let OrderCount=0;
+
 
 // GET a list of orders with pagination
 router.get('/',async (req,res)=>
 {
-
-    if(pageSize)
 
     try {
         const pageSize = req.query.pageSize 
@@ -47,23 +45,22 @@ router.post('/', async (req, res) => {
     // parse the JSON
     const newOrder = new orderDB(
         {
-            OrderID:"order"+OrderCount,
             CustomerID: req.body.CustomerID,
             SellerID: req.body.SellerID,
-            Total: req.body.CardNumber,
+            Total: req.body.Total,
             ReceiverName: req.body.ReceiverName,
             ReceiverAddress: req.body.ReceiverAddress,
             Payment:false,
             Cancelled:false,
             Shipped:false,
-            ShipementLabel:null,
+            ShipmentLabel:"None",
             Products:req.body.Products
         })
     
         // try if can save the order
     try {
         const savedOrder = await newOrder.save()
-        OrderCount+=1
+
         // on success, send back 201
         res.status(200).json(savedOrder)
     }
@@ -77,11 +74,22 @@ router.post('/', async (req, res) => {
 router.patch('/:id', getOrderInstance, async (req, res) => {
 
     // change into "paid" status
-    res.orderInstance.Payment=req.body.Payment
-    // change into "cancelled" status
-    res.orderInstance.Cancelled = req.body.Cancelled 
-    // change into "shipped" status
-    res.orderInstance.Shipped = req.body.Shipped
+    if(req.body.Payment)
+    {
+        res.orderInstance.Payment=req.body.Payment
+    }
+    else if(req.body.Cancelled )
+    {
+        // change into "cancelled" status
+        res.orderInstance.Cancelled = req.body.Cancelled 
+    }
+    else if(req.body.ShipmentLabel)
+    {
+            // change into "shipped" status
+        res.orderInstance.Shipped = true
+        res.orderInstance.ShipmentLabel = req.body.ShipmentLabel
+    }
+
 
     // try to save back
     try {
