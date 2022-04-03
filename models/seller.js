@@ -9,6 +9,10 @@ const sellerSchema = new mongoose.Schema({
     Password:{
         type:String,
         required:true
+    },
+    CardNumber:{
+        type:String,
+        required:true
     }
 })
 
