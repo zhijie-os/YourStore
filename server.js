@@ -6,8 +6,6 @@ const app = express()
 const mongoose = require('mongoose')
 
 
-
-
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
 const db = mongoose.connection
 
@@ -24,7 +22,15 @@ app.use(express.json())
 
 
 const sellerRouter = require('./routes/seller')
-app.use('/seller',sellerRouter)
+app.use('/seller', sellerRouter)
+
+const customerRouter = require('./routes/customer')
+app.use('/customer', customerRouter)
+
+const orderRouter = require('./routes/order')
+app.use('/order', orderRouter)
+
+
 
 app.listen(PORT, () => console.log('Server Started.'))
 
