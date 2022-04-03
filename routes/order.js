@@ -7,10 +7,12 @@ let OrderCount=0;
 // GET a list of orders with pagination
 router.get('/',async (req,res)=>
 {
-    const pageSize = req.query.pageSize 
-    const pageNumber = req.query.pageNumber
-    
+
+    if(pageSize)
+
     try {
+        const pageSize = req.query.pageSize 
+        const pageNumber = req.query.pageNumber
         // all order is a list
         const allOrders = await orderDB.find().limit(pageSize).skip(pageSize*pageNumber)
 
@@ -18,7 +20,18 @@ router.get('/',async (req,res)=>
         res.json(allOrders)
     }
     catch (err) {
-        res.status(500).json({ message: err.message })
+        if(!req.query.pageSize)
+        {
+            res.status(400).json({message:'pageSize is not defined...'})
+        }
+        else if(!req.query.pageNumber)
+        {
+            res.status(400).json({message:'pageNumber is not defined...'})
+        }
+        else 
+        {
+            res.status(500).json({ message: err.message })
+        }
     }
 })
 
@@ -32,7 +45,7 @@ router.get('/:id', getOrderInstance, (req, res) => {
 router.post('/', async (req, res) => {
 
     // parse the JSON
-    const neworder = new orderDB(
+    const newOrder = new orderDB(
         {
             OrderID:"order"+OrderCount,
             CustomerID: req.body.CustomerID,
@@ -61,7 +74,7 @@ router.post('/', async (req, res) => {
 })
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getorderInstance, async (req, res) => {
+router.patch('/:id', getOrderInstance, async (req, res) => {
 
     // change into "paid" status
     res.orderInstance.Payment=req.body.Payment

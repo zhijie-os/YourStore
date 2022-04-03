@@ -5,10 +5,9 @@ const sellerDB = require('../models/seller')
 
 router.get('/',async (req,res)=>
 {
-    const pageSize = req.query.pageSize 
-    const pageNumber = req.query.pageNumber
-    
     try {
+        const pageSize = req.query.pageSize 
+        const pageNumber = req.query.pageNumber
         // all seller is a list
         const allSellers = await sellerDB.find().limit(pageSize).skip(pageSize*pageNumber)
 
@@ -16,7 +15,18 @@ router.get('/',async (req,res)=>
         res.json(allSellers)
     }
     catch (err) {
-        res.status(500).json({ message: err.message })
+        if(!req.query.pageSize)
+        {
+            res.status(400).json({message:'pageSize is not defined...'})
+        }
+        else if(!req.query.pageNumber)
+        {
+            res.status(400).json({message:'pageNumber is not defined...'})
+        }
+        else 
+        {
+            res.status(500).json({ message: err.message })
+        }
     }
 })
 

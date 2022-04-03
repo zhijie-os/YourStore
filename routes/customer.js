@@ -6,24 +6,35 @@ const customerDB = require('../models/customer')
 // Get a list of customer with pagination
 router.get('/',async (req,res)=>
 {
-    const pageSize = req.query.pageSize 
-    const pageNumber = req.query.pageNumber
-    
     try {
+    
+        const pageSize = req.query.pageSize 
+        const pageNumber = req.query.pageNumber
         // all customer is a list
-        const allcustomers = await customerDB.find().limit(pageSize).skip(pageSize*pageNumber)
+        const allCustomers =  await customerDB.find().limit(pageSize).skip(pageSize*pageNumber)
 
         // only return the name of the customer
-        res.json(allcustomers)
+        res.json(allCustomers)
     }
     catch (err) {
-        res.status(500).json({ message: err.message })
+        if(!req.query.pageSize)
+        {
+            res.status(400).json({message:'pageSize is not defined...'})
+        }
+        else if(!req.query.pageNumber)
+        {
+            res.status(400).json({message:'pageNumber is not defined...'})
+        }
+        else 
+        {
+            res.status(500).json({ message: err.message })
+        }
     }
 })
 
 
 // GET a user with respect to :id
-router.get('/:id', getcustomerInstance, (req, res) => {
+router.get('/:id', getCustomerInstance, (req, res) => {
     res.send(res.customerInstance)
 })
 
@@ -40,9 +51,9 @@ router.post('/', async (req, res) => {
     
         // try if can save the customer
     try {
-        const savedcustomer = await newcustomer.save()
+        const savedCustomer = await newcustomer.save()
         // on success, send back 201
-        res.status(200).json(savedcustomer)
+        res.status(200).json(savedCustomer)
     }
     catch (err) {
         // on error, send back error
@@ -51,7 +62,7 @@ router.post('/', async (req, res) => {
 })
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getcustomerInstance, async (req, res) => {
+router.patch('/:id', getCustomerInstance, async (req, res) => {
 
     // change password if any
     res.customerInstance.Password=req.body.Password
@@ -60,9 +71,9 @@ router.patch('/:id', getcustomerInstance, async (req, res) => {
 
     // try to save back
     try {
-        const updatedcustomer = await res.customerInstance.save()
+        const updatedCustomer = await res.customerInstance.save()
         // successed
-        res.status(200).json(updatedcustomer)
+        res.status(200).json(updatedCustomer)
     }
     catch (err) {
         // error on our side
@@ -72,7 +83,7 @@ router.patch('/:id', getcustomerInstance, async (req, res) => {
 })
 
 // DELETE a user with respect to :id
-router.delete('/:id', getcustomerInstance, async (req, res) => {
+router.delete('/:id', getCustomerInstance, async (req, res) => {
 
     // try to remove
     try
@@ -89,7 +100,7 @@ router.delete('/:id', getcustomerInstance, async (req, res) => {
 
 
 // middleware that finds the customer instance by :id from the database
-async function getcustomerInstance(req, res, next) {
+async function getCustomerInstance(req, res, next) {
     let customerInstance
 
     try {
