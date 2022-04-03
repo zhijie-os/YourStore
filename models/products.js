@@ -14,6 +14,10 @@ const productSchema = new mongoose.Schema({
         type:Number,
         required:true
     },
+    Inventory:{
+        type:Number,
+        required:true
+    },
     Description:{
         type:String,
         required:true

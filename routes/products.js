@@ -47,6 +47,7 @@ router.post('/', async (req, res) => {
             SellerID:req.body.SellerID,
             Title:req.body.Title,
             Price:req.body.Price,
+            Inventory:req.body.Inventory,
             Description:req.body.Description,
             SearchKeys:req.body.SearchKeys
         })
@@ -65,6 +66,23 @@ router.post('/', async (req, res) => {
 // PATCH with respect to :id and the given input
 router.patch('/:id', getProductInstance, async (req, res) => {
 
+    if(req.body.Title)
+    {
+        res.productInstance.Title = req.body.Title
+    }
+    else if(body.Price)
+    {
+        res.productInstance.Price = req.body.Price
+    }
+    else if(body.Inventory)
+    {
+        res.productInstance.Inventory = req.body.Inventory
+    }
+    else if(body.Description)
+    {
+        res.productInstance.Description = req.body.Description
+    }
+    
     // try to save back
     try {
         const updatedProduct = await res.productInstance.save()
@@ -101,7 +119,7 @@ async function getProductInstance(req, res, next) {
 
     try {
         // find product by Username
-        productInstance = await productDB.findOne({ UserName: req.params.id })
+        productInstance = await productDB.findOne({ "_id": req.params.id })
         // if product not exist, then send error status
         if (productInstance == null) {
             return res.status(404).json({ message: 'Cannot find product' })
