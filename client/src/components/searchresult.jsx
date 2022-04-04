@@ -1,60 +1,72 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
 
-function SearchResult(props){
+function SearchResult(props) {
     const [loaded, setLoaded] = useState(false);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-          axios.get("http://127.0.0.1:8888/products?pageSize=10&pageNumber="+page)
-          .then(res => 
-            {
+        axios.get("http://127.0.0.1:8888/products?pageSize=10&pageNumber=" + page)
+            .then(res => {
                 console.log(res.data);
-                setAll(res.data);
+                setProducts(res.data);
                 setLoaded(true);
             })
-      }, [])
+    }, [])
 
     return (
-        <section class="m-2 pt-3">
-        <div class="container p-2">
-            <div class="row d-flex justify-content-center align-items-center">
-                <div class="col">
-                    <div class="card">
-                        <div class="card-body p-4">
-                            <div class="row">
-                                <div class="col">
+        <section className="m-2 pt-3">
+            <div className="container p-2">
+                <div className="row d-flex justify-content-center align-items-center">
+                    <div className="col">
+                        <div className="card">
+                            <div className="card-body p-4">
+                                <div className="row">
+                                    <div className="col">
 
-                                    {/* <div class="card mb-3 mb-lg-0">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="d-flex flex-row  align-items-center">
-                                                    <div>
-                                                        <img src="Images/T-ShirtWhite.jpg" class="img-fluid rounded-3"
-                                                            style="width: 65px;" />
-                                                    </div>
-                                                    <div class="ms-3">
-                                                        <h5>White T-Shirt</h5>
-                                                        <p class="small mb-0">Just a regular White T-Shirt</p>
+                                        {
+                                            loaded
+                                            &&
+                                            products.map(product =>
+
+                                                <div className="card mb-3 mb-lg-0">
+                                                    <div className="card-body">
+                                                        <div className="d-flex justify-content-between">
+                                                            <div className="d-flex  align-items-center">
+                                                                <div>
+                                                                    <h5>Image Placeholder</h5>
+                                                                    {/* <img src="Images/T-ShirtWhite.jpg" className="img-fluid rounded-3"
+                                                                        style="width: 65px;" /> */}
+                                                                </div>
+                                                                <div className="ms-3">
+                                                                    <h5>{product.Title}</h5>
+                                                                    <p className="small mb-0">{product.Description}</p>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="d-flex flex-row align-items-center">
+                                                                <div className="d-flex flex-row align-items-center me-4">
+                                                                    <div>
+                                                                        <h5 className="mb-0">${product.Price}</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <div onclick="" className="d-flex flex-row align-items-center">
+                                                                    <button type="button" className="btn btn-secondary">Add to Cart</button>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="d-flex flex-row align-items-center">
-                                                    <div>
-                                                        <h5 class="mb-0">$99.99</h5>
-                                                    </div>
-                                                </div>
-                                                <div onclick="" class="d-flex flex-row align-items-center">
-                                                    <button type="button" class="btn btn-secondary">Add to Cart</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div> */}
-                                    
-                                    
+                                            )
+                                        }
+
+
+
                                     </div></div></div></div></div></div></div>
-    </section>
+        </section>
     );
 }
 

@@ -24,7 +24,7 @@ function NavBar(props) {
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
                             {userType==="seller" && <a href="#myproducts" className="nav-link text-white">My Products</a>}
-                            {userType==="customer" && <a href="#mycart" class="nav-link text-white">My Cart</a>}
+                            {userType==="customer" && <a href="#mycart" className="nav-link text-white">My Cart</a>}
                         </li>
                         <li className="nav-item">
                             <a href="#myorders" className="nav-link text-white">My Orders</a>

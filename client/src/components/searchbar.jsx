@@ -24,7 +24,7 @@ function SearchBar(props){
                     All
                 </button>
                 <ul className="dropdown-menu">
-                    {loaded && allCategories.map(category=><li><a className="dropdown-item" href="#">{category.Title}</a></li>)}
+                    {loaded && allCategories.map(category=><li  key={category.Title}><a className="dropdown-item" href="#">{category.Title}</a></li>)}
                 </ul>
             </div>
             <input type="text" className="form-control" />
