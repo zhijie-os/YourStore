@@ -1,7 +1,8 @@
-import SearchBar from './components/searchbar.jsx'
-import NavBar from './components/navbar.jsx'
-import Footer from './components/footer.jsx';
-import SearchResult from './components/searchresult.jsx';
+import SearchBar from './atomic/searchBar.jsx'
+import NavBar from './atomic/navBar.jsx'
+import Footer from './atomic/footer.jsx';
+import SearchResult from './atomic/productSearch.jsx';
+import SearchWithPagination from './complex/searchWithPagination.jsx';
 
 
 function App() {
@@ -9,10 +10,9 @@ function App() {
     <div className="App d-flex flex-column min-vh-100" >
       <NavBar userType="customer" />
 
-      <SearchResult/>
+      <SearchWithPagination searchType="Products"/>
 
-      
-      <Footer />
+      <Footer/>
     </div>
   );
 }
