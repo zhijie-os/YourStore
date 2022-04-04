@@ -34,7 +34,7 @@ const productRouter = require('./routes/products');
 app.use('/products', productRouter);
 
 const categoryRouter = require('./routes/categories');
-app.use('./categories', categoryRouter);
+app.use('/categories', categoryRouter);
 
 app.listen(PORT, () => console.log('Server Started.'));
 

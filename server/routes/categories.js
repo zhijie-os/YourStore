@@ -4,13 +4,10 @@ const categoryDB = require('../models/categories')
 
 
 router.get('/', async (req, res) => {
-
     try {
-
         // all category is a list
         const allCategories = await categoryDB.find()
-
-        res.json(allCategories)
+        res.status(200).json(allCategories)
     }
     catch (err) {
 
