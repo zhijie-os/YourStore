@@ -1,25 +1,25 @@
 import Pagination from "../atomic/pagination";
 import ProductSearchResult from "../atomic/productSearch";
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useReducer} from 'react';
 
 function SearchWithPagination(props) {
 
     const [page,setPage]=useState(0);
-    const [rerender, setRerender] = useState(false);
 
     function changePage(destPage){
         setPage(destPage);
     };
 
+    const forceUpdate = useReducer(bool => !bool)[1];
+
     useEffect(()=>
     {
-        console.log("here");
-        setRerender(!rerender);
+        forceUpdate();
     },[page]);
 
     return (
         <div>
-            {props.searchType==="Products" && <ProductSearchResult pageSize={10} pageNumber={page}/>}
+            {props.searchType==="Products" && <ProductSearchResult key={page} pageSize={10} pageNumber={page}/> }
             <Pagination pageNumber={page} onClick={changePage}/>
         </div>
     );

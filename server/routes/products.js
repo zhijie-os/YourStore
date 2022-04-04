@@ -3,31 +3,23 @@ const router = express.Router()
 const productDB = require('../models/products')
 
 
-router.get('/',async (req,res)=>
-{
-    if(!req.query.pageSize)
-    {
-        res.status(400).json({message:'pageSize is not defined...'})
+router.get('/', async (req, res) => {
+    if (!req.query.pageSize) {
+        res.status(400).json({ message: 'pageSize is not defined...' })
     }
-    else if(!req.query.pageNumber)
-    {
-        res.status(400).json({message:'pageNumber is not defined...'})
+    else if (!req.query.pageNumber) {
+        res.status(400).json({ message: 'pageNumber is not defined...' })
     }
-    else 
-    {
+    else {
         try {
-        
-            const pageSize = req.query.pageSize 
+            const pageSize = req.query.pageSize
             const pageNumber = req.query.pageNumber
             // all product is a list
-            const allProducts = await productDB.find().limit(pageSize).skip(pageSize*pageNumber)
-    
+            const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
             res.json(allProducts)
         }
         catch (err) {
-    
-                res.status(500).json({ message: err.message })
-    
+            res.status(500).json({ message: err.message })
         }
     }
 })
@@ -44,12 +36,12 @@ router.post('/', async (req, res) => {
     // parse the JSON
     const newProduct = new productDB(
         {
-            SellerID:req.body.SellerID,
-            Title:req.body.Title,
-            Price:req.body.Price,
-            Inventory:req.body.Inventory,
-            Description:req.body.Description,
-            SearchKeys:req.body.SearchKeys
+            SellerID: req.body.SellerID,
+            Title: req.body.Title,
+            Price: req.body.Price,
+            Inventory: req.body.Inventory,
+            Description: req.body.Description,
+            SearchKeys: req.body.SearchKeys
         })
 
     try {
@@ -66,23 +58,19 @@ router.post('/', async (req, res) => {
 // PATCH with respect to :id and the given input
 router.patch('/:id', getProductInstance, async (req, res) => {
 
-    if(req.body.Title)
-    {
+    if (req.body.Title) {
         res.productInstance.Title = req.body.Title
     }
-    else if(body.Price)
-    {
+    else if (body.Price) {
         res.productInstance.Price = req.body.Price
     }
-    else if(body.Inventory)
-    {
+    else if (body.Inventory) {
         res.productInstance.Inventory = req.body.Inventory
     }
-    else if(body.Description)
-    {
+    else if (body.Description) {
         res.productInstance.Description = req.body.Description
     }
-    
+
     // try to save back
     try {
         const updatedProduct = await res.productInstance.save()
@@ -100,14 +88,12 @@ router.patch('/:id', getProductInstance, async (req, res) => {
 router.delete('/:id', getProductInstance, async (req, res) => {
 
     // try to remove
-    try
-    {
+    try {
         await res.productInstance.remove()
-        res.json({message:'Successfully deleted the product'})
+        res.json({ message: 'Successfully deleted the product' })
     }
-    catch(err)
-    {
-        res.status(500).json({message:'Failed to delete the product'})
+    catch (err) {
+        res.status(500).json({ message: 'Failed to delete the product' })
     }
 })
 
