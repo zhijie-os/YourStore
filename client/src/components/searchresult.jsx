@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import Pagination from './pagination';
 
 
 function SearchResult(props) {
@@ -65,7 +66,10 @@ function SearchResult(props) {
 
 
 
-                                    </div></div></div></div></div></div></div>
+                                    </div></div></div></div></div></div>
+            </div>
+
+            <Pagination currentPage={page+1}/>
         </section>
     );
 }
