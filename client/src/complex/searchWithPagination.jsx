@@ -1,5 +1,5 @@
-import Pagination from "../atomic/pagination";
-import ProductSearchResult from "../atomic/productSearch";
+import Pagination from "../components/pagination";
+import ProductSearchResult from "../customer/complex/SearchResult";
 import {useState, useEffect, useReducer} from 'react';
 
 function SearchWithPagination(props) {
