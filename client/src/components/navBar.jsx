@@ -3,8 +3,10 @@ import SearchBar from './searchBar';
 
 
 function NavBar(props) {
+
     const [userType, setUserType] = useState(null);
 
+    
     useEffect(()=>{
         setUserType(props.userType);
     },[]);
@@ -26,10 +28,10 @@ function NavBar(props) {
                             {userType==="customer" && <a href="#mycart" className="nav-link text-white">My Cart</a>}
                         </li>
                         <li className="nav-item">
-                            <a href="#myorders" className="nav-link text-white">My Orders</a>
+                            {userType && <a href="#myorders" className="nav-link text-white">My Orders</a>}
                         </li>
                         <li className="nav-item">
-                            <a href="#logout" className="nav-link text-white">Logout</a>
+                            {/* {login && <a href="#logout" className="nav-link text-white">Logout</a>} */}
                         </li>
                     </ul>
                 </div>

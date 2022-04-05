@@ -50,4 +50,4 @@ function SearchResult(props) {
     );
 }
 
-export default SearchResult
+export default SearchResult;
