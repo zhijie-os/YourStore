@@ -5,7 +5,7 @@ import NavBar from "./components/navBar";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch, getState } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
     login,
@@ -16,16 +16,12 @@ import {store} from './Redux/store'
 
 function Login(props) {
     let navigate = useNavigate();
-    const gs = useSelector(selectGlobalState);
     const dispatch = useDispatch();
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
 
-    const loginDispatch = (res) => new Promise((resolve, reject)=>{
-        dispatch(login({userID:res.data.UserName,userType:res.data.UserType}));
-    });
 
 
     const loginAtemp = (e) => {
