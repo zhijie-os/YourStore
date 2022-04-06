@@ -45,6 +45,6 @@ export const GlobalStateSlice = createSlice({
 
 export const { login,logout,selectCategory, enterSearchKey, searchProduct, searchInventory} = GlobalStateSlice.actions;
 
-export const selectCount = (state) => state.GlobalState.value;
+export const selectGlobalState = (state) => state.GlobalState.value;
 
 export default GlobalStateSlice.reducer;

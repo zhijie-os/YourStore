@@ -13,19 +13,17 @@ import { GlobalState } from './Redux/globalState.js';
 
 function App() {
 
-  const [userInfo, setUserInfo] = useState({ID:null,UserType:null});
-
   return (
-    <GlobalState/>
-    // <Router>
-    //     <div className="App">
-    //       <Routes>
-    //         <Route exact path="/" element={<Login updater={(info)=>setUserInfo(info)}/>} />
-    //         <Route exact path="/login" element={<Login updater={(info)=>setUserInfo(info)}/>} />
-    //         <Route exact path="/home" element={<CustomerHome userType={userInfo.UserType}/>} />
-    //       </Routes>
-    //     </div>
-    // </Router >
+    //<GlobalState/>
+    <Router>
+        <div className="App">
+          <Routes>
+            <Route exact path="/" element={<Login />} />
+            <Route exact path="/login" element={<Login/>} />
+            <Route exact path="/home" element={<CustomerHome/>} />
+          </Routes>
+        </div>
+    </Router >
   );
 }
 

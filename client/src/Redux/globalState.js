@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   login,
-  logout,
-  searchProduct,
-  selectCount
+  selectGlobalState
 } from './globalStateSlice';
 
 export function GlobalState() {
-  const count = useSelector(selectCount);
+  const count = useSelector(selectGlobalState);
   const dispatch = useDispatch();
-  const [incrementAmount, setIncrementAmount] = useState('2');
-
   
-
   return (
     <div>
       <div >

@@ -3,31 +3,47 @@ import Footer from "./components/footer";
 import NavBar from "./components/navBar";
 
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+
+import {
+    login,
+    selectGlobalState
+} from './Redux/globalStateSlice';
+
+
 
 function Login(props) {
     let navigate = useNavigate();
+    const gs = useSelector(selectGlobalState);
+    const dispatch = useDispatch();
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
+
+    const loginDispatch = (res) => new Promise((resolve, reject)=>{
+        dispatch(login({userID:res.data.UserName,userType:res.data.UserType}));
+    });
+
+
     const loginAtemp = (e) => {
         e.preventDefault();
         axios.put("http://127.0.0.1:8888/login",
-            { "UserName": userName, "Password": password }).then(res => {
-                props.updater({ID:res.data.UserName, UserType:res.data.UserType});
-                if(res.data.UserType=="customer")
-                {
+            {"UserName": userName, "Password": password }).then(res => {     
+                dispatch(login({userID:res.data.UserName,userType:res.data.UserType})); 
+                console.log(gs);
+                if (gs.userType == "customer") {
+                    alert("let'us go!");
                     navigate("/home");
                 }
-                else
-                {  
+                else {
                     navigate("/login");
                 }
-            }).catch((err)=>{
+            }).catch((err) => {
                 alert(err.response.data.message);
-             });
+            });
     }
 
     return (
