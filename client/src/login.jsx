@@ -5,14 +5,14 @@ import NavBar from "./components/navBar";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, getState } from 'react-redux';
 
 import {
     login,
     selectGlobalState
 } from './Redux/globalStateSlice';
 
-
+import {store} from './Redux/store'
 
 function Login(props) {
     let navigate = useNavigate();
@@ -32,10 +32,8 @@ function Login(props) {
         e.preventDefault();
         axios.put("http://127.0.0.1:8888/login",
             {"UserName": userName, "Password": password }).then(res => {     
-                dispatch(login({userID:res.data.UserName,userType:res.data.UserType})); 
-                console.log(gs);
-                if (gs.userType == "customer") {
-                    alert("let'us go!");
+                dispatch(login({userID:res.data.UserName,userType:res.data.UserType}));     
+                if (store.getState().GlobalState.value.userType == "customer") {
                     navigate("/home");
                 }
                 else {
