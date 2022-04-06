@@ -5,8 +5,8 @@ import SearchBar from './searchBar';
 function NavBar(props) {
 
     const [userType, setUserType] = useState(null);
-
     
+
     useEffect(()=>{
         setUserType(props.userType);
     },[]);
@@ -19,7 +19,7 @@ function NavBar(props) {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                {userType==="customer" && <SearchBar/>}
+                {props.searchBar && <SearchBar/>}
 
                 <div className="collapse navbar-collapse " id="navmenu">
                     <ul className="navbar-nav ms-auto">
@@ -28,7 +28,7 @@ function NavBar(props) {
                             {userType==="customer" && <a href="#mycart" className="nav-link text-white">My Cart</a>}
                         </li>
                         <li className="nav-item">
-                            {userType && <a href="#myorders" className="nav-link text-white">My Orders</a>}
+                             <a href="#myorders" className="nav-link text-white">My Orders</a>
                         </li>
                         <li className="nav-item">
                             {/* {login && <a href="#logout" className="nav-link text-white">Logout</a>} */}

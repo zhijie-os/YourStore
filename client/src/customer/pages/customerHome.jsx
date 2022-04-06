@@ -1,11 +1,14 @@
+import Footer from "../../components/footer";
 import NavBar from "../../components/navBar";
-import SearchResult from "../complex/SearchResult";
+import GiantSearchBar from "../atomic/giantSearchBar";
 
 function CustomerHome() {
+
     return (
-        <div>
-            <NavBar userType="customer" />
-            <SearchResult />
+        <div className="bg-dark full-div">
+            <NavBar searchBar={false} userType="customer"/>
+            <GiantSearchBar/>
+            <Footer/>
         </div>
     );
 }
