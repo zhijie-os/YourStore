@@ -9,14 +9,14 @@ import Login from './login.jsx';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import { useState } from 'react';
-import { Counter } from './Redux/counter.js';
+import { GlobalState } from './Redux/globalState.js';
 
 function App() {
 
   const [userInfo, setUserInfo] = useState({ID:null,UserType:null});
 
   return (
-    <Counter/>
+    <GlobalState/>
     // <Router>
     //     <div className="App">
     //       <Routes>
