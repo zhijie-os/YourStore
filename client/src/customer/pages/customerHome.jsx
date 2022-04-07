@@ -6,9 +6,9 @@ function CustomerHome() {
 
     return (
         <div className="bg-dark full-div">
-            <NavBar searchBar={false} userType="customer"/>
-            <GiantSearchBar/>
-            <Footer/>
+            <NavBar searchBar={false} userType="customer" />
+            <GiantSearchBar />
+            <Footer />
         </div>
     );
 }

@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const productDB = require('../models/products')
-
+const categoryDB =require('../models/categories')
 
 router.get('/', async (req, res) => {
     if (!req.query.pageSize) {
@@ -10,12 +10,50 @@ router.get('/', async (req, res) => {
     else if (!req.query.pageNumber) {
         res.status(400).json({ message: 'pageNumber is not defined...' })
     }
+    else if (!req.query.searchKey) {
+        res.status(400).json( { message: 'searchKey is not defined'});
+    }
+    else if (!req.query.category){
+        res.status(400).json({ message: 'category err'});
+    }
     else {
         try {
-            const pageSize = req.query.pageSize
-            const pageNumber = req.query.pageNumber
+            const pageSize = req.query.pageSize;
+            const pageNumber = req.query.pageNumber;
+            const searchKey = req.query.searchKey;
+            const category = req.query.category;
+            console.log(pageSize,pageNumber,searchKey,category);
+
+            let allProducts;
+            if(category!="null")
+            {
+                allProducts = await categoryDB.findOne({"Title":category});
+                allProducts = allProducts.Products;
+
+                allProducts = await Promise.all(allProducts.map(async (productID) => {
+                    const product = await productDB.findOne({"_id":productID});
+                    return product;
+                }));
+            }
+            else 
+            {
+                  
+                console.log("herer");    
+                // no specified category
+                allProducts = await productDB.find(); 
+            }
+
+            if(searchKey!="null")
+            {
+                allProducts = allProducts.filter((product)=>{
+                    return product.Title==searchKey || product.SearchKeys.includes(searchKey);
+                })
+            }
+
+
+            allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
             // all product is a list
-            const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
+            //const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
             res.json(allProducts)
         }
         catch (err) {

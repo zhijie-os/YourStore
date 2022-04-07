@@ -5,37 +5,45 @@ import NavBar from "./components/navBar";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
-    login,
-    selectGlobalState
+    login
 } from './Redux/globalStateSlice';
 
-import {store} from './Redux/store'
+import { store } from './Redux/store'
 
 function Login(props) {
     let navigate = useNavigate();
     const dispatch = useDispatch();
 
+
+    // local states, username and password: Javascript is case sensitive
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
 
-
-
-
+    // try login
     const loginAtemp = (e) => {
+        // prevent page refresh
         e.preventDefault();
-        axios.put("http://127.0.0.1:8888/login",
-            {"UserName": userName, "Password": password }).then(res => {     
-                dispatch(login({userID:res.data.UserName,userType:res.data.UserType}));     
+
+        // axios put
+        axios.put("http://127.0.0.1:8888/login",    // UserName and Password in the body
+            { "UserName": userName, "Password": password }).then(res => {
+                // trigger the "login" reducer in the global state
+                // set th userID and userType in the global state
+                dispatch(login({ userID: res.data.UserName, userType: res.data.UserType }));
+                // check which type the user is
                 if (store.getState().GlobalState.value.userType == "customer") {
+                    // navigate to page /home
                     navigate("/home");
                 }
                 else {
+                    // navigate to page /inventory if it is seller
                     navigate("/login");
                 }
             }).catch((err) => {
+                // otherwise, alert user that the error message
                 alert(err.response.data.message);
             });
     }
