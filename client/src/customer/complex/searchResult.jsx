@@ -14,6 +14,8 @@ function SearchResult(props) {
     }
 
     const retrieveProducts = ()=>{
+        console.log("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
+        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+"&category="+(getGSValue().category=="All"||getGSValue().category==null?"null":getGSValue().key));
         axios.get("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
         +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+"&category="+(getGSValue().category=="All"||getGSValue().category==null?"null":getGSValue().key))
             .then(res => {
@@ -46,7 +48,7 @@ function SearchResult(props) {
                                                 loaded
                                                 &&
                                                 products.map(product =>
-                                                    <SearchProductCard key={product.id} product={product} />
+                                                    <SearchProductCard key={product._id} product={product} />
                                                 )
                                             }
 

@@ -10,11 +10,9 @@ import {
 } from '../Redux/globalStateSlice';
 
 import { store } from '../Redux/store'
-import { useNavigate } from 'react-router-dom';
-
 
 function SearchBar(props) {
-    let navigate = useNavigate();
+ 
 
     const [loaded, setLoaded] = useState(false);
     const [allCategories, setAll] = useState([]);
@@ -25,7 +23,7 @@ function SearchBar(props) {
     const dispatch = useDispatch();
 
 
-    // called only when the first loading
+    // called only the first time loading
     useEffect(() => {
         // get the list of all categories
         axios.get("http://127.0.0.1:8888/categories")
@@ -47,19 +45,11 @@ function SearchBar(props) {
     const setKey = (key) => {
         dispatch(enterSearchKey(key));
     }
-
-    // redirect page when the "search" button is clicked
-    const pageRedirect = () => {
-        let userType = store.getState().GlobalState.value.userType;
-
-        console.log(store.getState().GlobalState.value);
-        if (userType === "customer") {
-            navigate("/search")
-        }
-        else {
-
-        }
+    
+    const clicked = () =>{
+        alert("clicked");
     }
+
 
     return (
         <div className="input-group search-bar">
@@ -74,7 +64,7 @@ function SearchBar(props) {
                 </ul>
             </div>
             <input type="text" className="form-control" onChange={(e) => setKey(e.target.value)} />
-            <button className="input-group-append btn btn-secondary btn-lg" type="button" onClick={pageRedirect}>Search<i
+            <button className="input-group-append btn btn-secondary btn-lg" type="button" onClick={props.onClick}>Search<i
                 className="bi bi-search" ></i></button>
         </div>
     );

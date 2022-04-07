@@ -22,7 +22,7 @@ function CartProductCard(props) {
                             <h5 className="mb-0">${props.product.Price}</h5>
                         </div>
                     </div>
-                    <div onclick={props.delete}><i className="bi bi-trash"></i></div>
+                    <div onClick={props.delete}><i className="bi bi-trash"></i></div>
                 </div>
             </div>
         </div>

@@ -1,15 +1,26 @@
 
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
-
+import {store} from "../../Redux/store"
+import {useNavigate} from "react-router-dom"
 
 
 function CustomerCart(props) {
 
+    let navigate = useNavigate();
+    const navOnClick = () => {
+        console.log(store.getState().GlobalState.value.userType);
+        if(store.getState().GlobalState.value.userType=="customer")
+        {
+            alert("Let us go");
+            navigate("/search");
+        }
+    };
+
+
     return (
         <div>
-
-            <NavBar searchBar={true} userType="customer" />
+            <NavBar searchBar={true} userType="customer" onClick={navOnClick}/>
             
             <section class="m-2 pt-3">
                 <div class="container p-2">

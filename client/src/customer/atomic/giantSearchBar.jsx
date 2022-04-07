@@ -1,6 +1,6 @@
 import SearchBar from "../../components/searchBar";
 
-function GiantSearchBar() {
+function GiantSearchBar(props) {
     return (
         <div>
             <section className="text-light p-5 p-lg-3 pt-lg-5">
@@ -15,7 +15,7 @@ function GiantSearchBar() {
             </section>
 
             <div className="d-flex p-5 justify-content-around">
-                <SearchBar/>
+                <SearchBar onClick={props.onClick}/>
             </div>
         </div>
 

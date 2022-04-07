@@ -49,9 +49,10 @@ router.get('/', async (req, res) => {
             }
 
 
-            allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
+            // allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
             // all product is a list
             //const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
+            console.log("returning.....\n"+allProducts);
             res.json(allProducts)
         }
         catch (err) {

@@ -23,7 +23,7 @@ function NavBar(props) {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                {props.searchBar && <SearchBar/>}
+                {props.searchBar && <SearchBar onClick={props.onClick} />}
 
                 <div className="collapse navbar-collapse " id="navmenu">
                     <ul className="navbar-nav ms-auto">
