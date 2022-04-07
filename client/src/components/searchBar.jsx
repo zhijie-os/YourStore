@@ -52,7 +52,7 @@ function SearchBar(props) {
     const pageRedirect = () => {
         let userType = store.getState().GlobalState.value.userType;
 
-        console.log(userType);
+        console.log(store.getState().GlobalState.value);
         if (userType === "customer") {
             navigate("/search")
         }

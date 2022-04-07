@@ -3,6 +3,13 @@ const router = express.Router()
 const customerDB = require('../models/customers')
 
 
+router.get("/:id/cart",getCustomerInstance, async (req,res)=>
+{
+    res.json
+});
+
+
+
 // Get a list of customer with pagination
 router.get('/', async (req, res) => {
     if (!req.query.pageSize) {
