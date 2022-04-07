@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios from "axios";
+
 import SearchProductCard from '../atomic/searchProductCard';
 import Pagination from '../../components/pagination';
 import { store } from '../../Redux/store'
-
+import React, { useState, useEffect } from 'react';
+import axios from "axios";
 function SearchResult(props) {
     const [loaded, setLoaded] = useState(false);
     const [products, setProducts] = useState([]);
@@ -25,6 +25,8 @@ function SearchResult(props) {
                 setLoaded(true);
             })
     }
+
+
 
     useEffect(() => {
         retrieveProducts();

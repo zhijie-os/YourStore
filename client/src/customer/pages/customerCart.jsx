@@ -2,7 +2,7 @@
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 import {store} from "../../Redux/store"
-import {useNavigate, useEffect} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import axios from "axios";
 
 function CustomerCart(props) {
@@ -18,9 +18,7 @@ function CustomerCart(props) {
     };
 
 
-    useEffect(()=>{
-        
-    },[]);
+ 
 
 
 
