@@ -1,5 +1,6 @@
 
 function CartProductCard(props) {
+
     return (
         <div className="card mb-3 mb-lg-0">
             <div className="card-body">
@@ -8,7 +9,7 @@ function CartProductCard(props) {
                         <div>
                             <h2>Image Placeholder</h2>
                         </div>
-                        <div class="ms-3">
+                        <div className="ms-3">
                             <h5>{props.product.Title}</h5>
                             <p className="small mb-0">{props.product.Description}</p>
                         </div>
@@ -18,7 +19,7 @@ function CartProductCard(props) {
                             <h5 className="mb-0">${props.product.Price}</h5>
                         </div>
                     </div>
-                    <div><i className="bi bi-trash"></i></div>
+                    <div><i className="bi bi-trash" onClick={props.deleteFromCart(props.product)}></i></div>
                 </div>
             </div>
         </div>

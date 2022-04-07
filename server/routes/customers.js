@@ -50,9 +50,13 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
             res.status(400).json({ message: "Product ID needed to remove the product from the cart..." });
         }
 
+        console.log(req.body.ProductID);
         // delete one instance of the product
         var index = res.customerInstance.Cart.indexOf(req.body.ProductID);
-        res.customerInstance.Cart.splice(index, 1);
+        if(index!=-1){
+            res.customerInstance.Cart.splice(index, 1);
+        }
+
         
         // save back
         await res.customerInstance.save()
