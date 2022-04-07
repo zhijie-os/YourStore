@@ -1,7 +1,15 @@
 import SearchResult from "../complex/searchResult";
-
+import NavBar from "../../components/navBar";
+import Footer from "../../components/footer";
 function CustomerSearch(props) {
-    return (<SearchResult />);
+    return (
+    <div>
+         <NavBar searchBar={false} userType="customer" />
+         <SearchResult />
+         <Footer />
+    </div>
+
+    );
 }
 
 export default CustomerSearch;

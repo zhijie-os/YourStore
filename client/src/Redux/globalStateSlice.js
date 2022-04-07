@@ -34,16 +34,16 @@ export const GlobalStateSlice = createSlice({
         enterSearchKey: (state, action) => {
             state.value.key = action.payload;
         },
-        searchProduct: (state,action) =>{
+        searchProduct: (state, action) => {
             state.value.product = action.payload;
         },
-        searchInventory: (state,action) =>{
+        searchInventory: (state, action) => {
             state.value.inventory = action.payload;
         },
     },
 });
 
-export const { login,logout,selectCategory, enterSearchKey, searchProduct, searchInventory} = GlobalStateSlice.actions;
+export const { login, logout, selectCategory, enterSearchKey, searchProduct, searchInventory } = GlobalStateSlice.actions;
 
 export const selectGlobalState = (state) => state.GlobalState.value;
 

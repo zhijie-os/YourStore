@@ -37,8 +37,6 @@ router.get('/', async (req, res) => {
             }
             else 
             {
-                  
-                console.log("herer");    
                 // no specified category
                 allProducts = await productDB.find(); 
             }

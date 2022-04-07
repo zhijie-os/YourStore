@@ -69,6 +69,7 @@ function SearchBar(props) {
                     {gs.category}
                 </button>
                 <ul className="dropdown-menu">
+                    <li key="All" onClick={setCategory("All")}><a className="dropdown-item" href="#">All</a></li>
                     {loaded && allCategories.map(category => <li key={category.Title} onClick={setCategory(category.Title)}><a className="dropdown-item" href="#">{category.Title}</a></li>)}
                 </ul>
             </div>

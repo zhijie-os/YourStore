@@ -1,7 +1,6 @@
 
 
-function CustomerCart(props)
-{
+function CustomerCart(props) {
 
 }
 

@@ -8,23 +8,23 @@ import {
 export function GlobalState() {
   const count = useSelector(selectGlobalState);
   const dispatch = useDispatch();
-  
+
   return (
     <div>
       <div >
         <button
 
           aria-label="Login"
-          onClick={() => dispatch(login({userID:"ID",userType:"Type"}))}
+          onClick={() => dispatch(login({ userID: "ID", userType: "Type" }))}
         >
-        Login
+          Login
         </button>
         <span >{count.loggedIn} == {count.userID} == {count.userType}</span>
         <button
 
-          onClick={() => dispatch(login({userID:"John",userType:"Teacher"}))}
+          onClick={() => dispatch(login({ userID: "John", userType: "Teacher" }))}
         >
-        Logout
+          Logout
         </button>
       </div>
     </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import SearchProductCard from '../atomic/searchProductCard';
 import Pagination from '../../components/pagination';
-import { store } from './Redux/store'
+import { store } from '../../Redux/store'
 
 function SearchResult(props) {
     const [loaded, setLoaded] = useState(false);
@@ -14,8 +14,8 @@ function SearchResult(props) {
     }
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/products?(pageSize=10" + ",pageNumber=" + page
-        +",searchKey"+getGSValue().key+",category="+getGSValue().category+")")
+        axios.get("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
+        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+"&category="+(getGSValue().category=="All"||getGSValue().category==null?"null":getGSValue().key))
             .then(res => {
                 setProducts(res.data);
                 setLoaded(true);

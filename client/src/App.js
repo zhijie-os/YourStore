@@ -17,14 +17,14 @@ function App() {
   return (
     //<GlobalState/>
     <Router>
-        <div className="App">
-          <Routes>
-            <Route exact path="/" element={<Login />} />
-            <Route exact path="/login" element={<Login/>} />
-            <Route exact path="/home" element={<CustomerHome/>} />
-            <Route exact path="/search" element={<CustomerSearch/>} />
-          </Routes>
-        </div>
+      <div className="App">
+        <Routes>
+          <Route exact path="/" element={<Login />} />
+          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/home" element={<CustomerHome />} />
+          <Route exact path="/search" element={<CustomerSearch />} />
+        </Routes>
+      </div>
     </Router >
   );
 }
