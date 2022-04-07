@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { useState } from 'react';
 import { GlobalState } from './Redux/globalState.js';
 import CustomerSearch from './customer/pages/customerSearch.jsx';
+import CustomerCart from './customer/pages/customerCart.jsx';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/home" element={<CustomerHome />} />
           <Route exact path="/search" element={<CustomerSearch />} />
+          <Route exact path="cart" element={<CustomerCart />} />
         </Routes>
       </div>
     </Router >

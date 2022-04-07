@@ -1,15 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import SearchBar from './searchBar';
-
+import {useNavigate} from 'react-router-dom';
 
 function NavBar(props) {
-
+    let navigate = useNavigate();
     const [userType, setUserType] = useState(null);
     
 
     useEffect(()=>{
         setUserType(props.userType);
     },[]);
+
+    const goToCart = () =>{
+        navigate("/cart");
+    };
 
     return (
         <nav className="navbar bg-dark navbar-expand-lg  p-3 fixed-top">
@@ -24,8 +28,8 @@ function NavBar(props) {
                 <div className="collapse navbar-collapse " id="navmenu">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            {userType==="seller" && <a href="#myproducts" className="nav-link text-white">My Products</a>}
-                            {userType==="customer" && <a href="#mycart" className="nav-link text-white">My Cart</a>}
+                            {userType==="seller" && <a href="#myproducts" className="nav-link text-white" >My Products</a>}
+                            {userType==="customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
                         </li>
                         <li className="nav-item">
                              <a href="#myorders" className="nav-link text-white">My Orders</a>

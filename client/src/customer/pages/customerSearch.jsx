@@ -4,11 +4,11 @@ import Footer from "../../components/footer";
 function CustomerSearch(props) {
     return (
     <div>
-         <NavBar searchBar={false} userType="customer" />
+         <NavBar searchBar={true} userType="customer" />
          <SearchResult />
          <Footer />
     </div>
-
+    
     );
 }
 
