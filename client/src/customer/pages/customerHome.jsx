@@ -10,15 +10,12 @@ function CustomerHome() {
     const navOnClick = () => {
         if(store.getState().GlobalState.value.userType=="customer")
         {
-            alert("Let us go");
             navigate("/search");
         }
     };
 
 
     return (
-
-
         <div className="bg-dark full-div">
             <NavBar searchBar={false} userType="customer"/>
             <GiantSearchBar  onClick={navOnClick}/>

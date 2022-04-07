@@ -4,6 +4,8 @@ import Footer from "../../components/footer";
 import {store} from "../../Redux/store"
 import {useNavigate} from "react-router-dom"
 import axios from "axios";
+import {useState, useEffect} from  "react";
+import CartProductCard from "../atomic/cartProductCard";
 
 function CustomerCart(props) {
 
@@ -12,14 +14,32 @@ function CustomerCart(props) {
         console.log(store.getState().GlobalState.value.userType);
         if(store.getState().GlobalState.value.userType=="customer")
         {
-            alert("Let us go");
             navigate("/search");
         }
     };
 
+    const [rerender, setRerender] = useState(false);
+    const [products, setProducts] = useState(null);
+    const [total, setTotal] = useState(null);
+    const [loaded, setLoaded] = useState(false);
 
- 
+    useEffect(()=>{
+        axios.get("http://127.0.0.1:8888/customers/"+ 
+        store.getState().
+        GlobalState.value.userID+"/cart").then(
+            (res)=>{
+                console.log(res.data);
+                setLoaded(false);
+                setProducts(res.data.products);
+                setTotal(res.data.total);
+                setLoaded(true);
+            }
+        );
+    },[rerender]);
 
+    const deleteFromCart = ()=>{
+        axios.get("")
+    };
 
 
     return (
@@ -35,8 +55,7 @@ function CustomerCart(props) {
 
                                     <div class="row">
                                         <div class="col-lg-7">
-                                            !_!#@#_!@#_!@$!_)$I#!()
-
+                                            {loaded && products.map(product=><CartProductCard key={product._id} product={product}/>)}
                                         </div>
 
                                         <div class="col-lg-5">
@@ -67,7 +86,7 @@ function CustomerCart(props) {
 
                                                     <div class="d-flex justify-content-between mb-4">
                                                         <p class="mb-2">Total</p>
-                                                        <p class="mb-2">$4818.00</p>
+                                                        <p class="mb-2">${loaded && total}</p>
                                                     </div>
 
 

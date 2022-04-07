@@ -14,15 +14,11 @@ function CartProductCard(props) {
                         </div>
                     </div>
                     <div className="d-flex flex-row align-items-center">
-                        <div style="width: 50px;" className="me-3">
-                            <input min="0" name="quantity" value="1"
-                                type="number" className="form-control form-control-sm" />
-                        </div>
                         <div>
                             <h5 className="mb-0">${props.product.Price}</h5>
                         </div>
                     </div>
-                    <div onClick={props.delete}><i className="bi bi-trash"></i></div>
+                    <div><i className="bi bi-trash"></i></div>
                 </div>
             </div>
         </div>
