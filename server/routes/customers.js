@@ -1,12 +1,48 @@
 const express = require('express')
 const router = express.Router()
 const customerDB = require('../models/customers')
+const productDB = require('../models/products')
 
+router.get("/:id/cart", getCustomerInstance, async (req, res) => {
+    try {
+        const cart = res.customerInstance.Cart;
 
-router.get("/:id/cart",getCustomerInstance, async (req,res)=>
-{
-    res.json
+        let total = 0;
+
+        let products = await Promise.all(cart.map(async (productID) => {
+            const product = await productDB.findOne({ "_id": productID });
+            return product;
+        }));
+
+        console.log(products);
+        products.map((product) => {
+            total += product.Price;
+        });
+
+        res.json({ products: products, total: (Math.round(total * 100) / 100).toFixed(2) });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
 });
+
+router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
+    try {
+        if (!req.body.ProductID) {
+            res.status(400).json({ message: "Product ID needed to add into the cart..." });
+        }
+
+        res.customerInstance.Cart.push(req.body.ProductID);
+
+        await res.customerInstance.save()
+
+        res.status(200).json({ message: req.body.ProductID+" has been added..." });
+
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+});
+
 
 
 
