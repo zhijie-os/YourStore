@@ -44,12 +44,10 @@ function CustomerCart(props) {
         console.log(product._id);
         axios.delete("http://127.0.0.1:8888/customers/"+ 
         store.getState().GlobalState.value.userID+"/cart",
-        {"ProductID":product._id}).then(()=>{
+        {data:{"ProductID":product._id}}).then(()=>{
             setRerender(!rerender);
             alert(product.Title + " has been successfully removed from the cart...")
-        }).catch(()=>console.log(err));
-            
-    
+        }).catch(err=>console.log(err));
     };
 
 

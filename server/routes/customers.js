@@ -28,15 +28,19 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
 
 router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
+       
         if (!req.body.ProductID) {
+
             res.status(400).json({ message: "Product ID needed to add  the product into the cart..." });
+
+            return;
         }
 
         res.customerInstance.Cart.push(req.body.ProductID);
 
         await res.customerInstance.save()
 
-        res.status(200).json({ message: req.body.ProductID+" has been added..." });
+        res.status(200).json({ message: req.body.ProductID + " has been added..." });
 
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -46,22 +50,25 @@ router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
 
 router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
+        console.log(req.body);
         if (!req.body.ProductID) {
-            res.status(400).json({ message: "Product ID needed to remove the product from the cart..." });
+            res.status(404).json({ message: "Product ID needed to remove the product from the cart..." });
+            return;
         }
 
-        console.log(req.body.ProductID);
+        console.log(res.customerInstance)
+        console.log("User want to delete Item " + req.body.ProductID);
         // delete one instance of the product
         var index = res.customerInstance.Cart.indexOf(req.body.ProductID);
-        if(index!=-1){
+        if (index != -1) {
             res.customerInstance.Cart.splice(index, 1);
         }
 
-        
+
         // save back
         await res.customerInstance.save()
 
-        res.status(200).json({ message: req.body.ProductID+" has been added..." });
+        res.status(200).json({ message: req.body.ProductID + " has been deleted..." });
 
     } catch (err) {
         res.status(500).json({ message: err.message })
