@@ -2,8 +2,8 @@
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 import {store} from "../../Redux/store"
-import {useNavigate} from "react-router-dom"
-
+import {useNavigate, useEffect} from "react-router-dom"
+import axios from "axios";
 
 function CustomerCart(props) {
 
@@ -16,6 +16,12 @@ function CustomerCart(props) {
             navigate("/search");
         }
     };
+
+
+    useEffect(()=>{
+        
+    },[]);
+
 
 
     return (
@@ -34,7 +40,6 @@ function CustomerCart(props) {
                                             !_!#@#_!@#_!@$!_)$I#!()
 
                                         </div>
-
 
                                         <div class="col-lg-5">
                                             <div class="card bg-secondary text-white rounded-3">
