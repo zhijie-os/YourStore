@@ -30,7 +30,7 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
 
 router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
-       
+
         console.log(req.body);
         if (!req.body.ProductID) {
 
@@ -61,7 +61,7 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
 
         // console.log(res.customerInstance)
         // console.log("User want to delete Item " + req.body.ProductID);
-        
+
         // delete one instance of the product
         var index = res.customerInstance.Cart.indexOf(req.body.ProductID);
         if (index != -1) {
@@ -80,8 +80,46 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
 });
 
 
-router.get("/:id/createOrder", getCustomerInstance, async (req, res) =>{
-    
+router.get("/:id/createOrder", getCustomerInstance, async (req, res) => {
+    if (!req.body.CustomerID) {
+        res.status(400).json({ message: "Customer ID needed to create orders..." });
+    }
+    else if (!req.body.ReceiverName)
+    {
+        res.status(400).json({ message: "ReceiverName needed to create orders..." });
+    }
+    else if(!req.body.ReceiverAddress)
+    {
+        res.status(400).json({ message: "ReceiverAddress needed to create orders..." });
+    }
+    else if (!req.body.Products) {
+        res.status(400).json({ message: "Products needed to create orders..." });
+    }
+    else {
+        try{
+            req.body.Products.map((product)=>{
+                let newOrder = new orderDB(
+                    {
+                        CustomerID: req.body.CustomerID,
+                        SellerID: product.SellerID,
+                        Total: product.Price,
+                        ReceiverName: req.body.ReceiverName,
+                        ReceiverAddress: req.body.ReceiverAddress,
+                        Payment: false,
+                        Cancelled: false,
+                        Shipped: false,
+                        ShipmentLabel: "None",
+                        Product: product._id
+                    });
+                await newOrder.save();
+            });
+            res.json("Orders created");
+        }
+        catch{
+            res.status(400).json({message:"Fail to create orders...."});
+        }
+    }
+
 });
 
 // Get a list of customer with pagination

@@ -69,6 +69,7 @@ router.post('/', async (req, res) => {
     }
 })
 
+
 // PATCH with respect to :id and the given input
 router.patch('/:id', getOrderInstance, async (req, res) => {
 
@@ -85,6 +86,11 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
         res.orderInstance.Shipped = true
         res.orderInstance.ShipmentLabel = req.body.ShipmentLabel
     }
+    else
+    {
+        res.status(500).json({ message: "Please Provide Fields to be updated" })
+        return;
+    }
 
 
     // try to save back
@@ -95,7 +101,7 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
     }
     catch (err) {
         // error on our side
-        res.status(500).json({ message: 'Failed to update the password' })
+        res.status(500).json({ message: 'Failed to update anything.' })
     }
 
 })
