@@ -15,6 +15,14 @@ function NavBar(props) {
         navigate("/cart");
     };
 
+    const goToCustomerOrder = () =>{
+        navigate("/customer/orders");
+    };
+
+    const goToSellerOrder = () =>{
+        navigate("/seller/orders");
+    };
+
     return (
         <nav className="navbar bg-dark navbar-expand-lg  p-3 fixed-top">
             <div className="container">
@@ -32,7 +40,7 @@ function NavBar(props) {
                             {userType==="customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
                         </li>
                         <li className="nav-item">
-                             <a href="#myorders" className="nav-link text-white">My Orders</a>
+                            {userType==="customer" && <a href="#myorders" className="nav-link text-white" onClick={goToCustomerOrder}>My Orders</a>}
                         </li>
                         <li className="nav-item">
                             {/* {login && <a href="#logout" className="nav-link text-white">Logout</a>} */}

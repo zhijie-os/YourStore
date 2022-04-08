@@ -19,6 +19,12 @@ function CustomerCart(props) {
     };
 
     const purchase = () =>{
+        if(products.length==0)
+        {
+            alert("You do not have any products to purchase ...");
+            return;
+        }
+
         if(name&&address)
         {
             let info={
@@ -50,18 +56,17 @@ function CustomerCart(props) {
     
     var key_id=0;
 
-    useEffect(()=>{
-        console.log(products);
-        console.log(name);
-        console.log(address);
-    },[name,address]);
+    // useEffect(()=>{
+    //     console.log(products);
+    //     console.log(name);
+    //     console.log(address);
+    // },[name,address]);
 
     useEffect(()=>{
         axios.get("http://127.0.0.1:8888/customers/"+ 
         store.getState().
         GlobalState.value.userID+"/cart").then(
             (res)=>{
-                console.log(res.data);
                 key_id=0;
                 setLoaded(false);
                 setProducts(res.data.products);
@@ -72,7 +77,7 @@ function CustomerCart(props) {
     },[rerender]);
 
     const deleteFromCart = (product) => () =>{
-        console.log(product._id);
+        // console.log(product._id);
         axios.delete("http://127.0.0.1:8888/customers/"+ 
         store.getState().GlobalState.value.userID+"/cart",
         {data:{"ProductID":product._id}}).then(()=>{
