@@ -15,10 +15,11 @@ function SearchResult(props) {
     }
 
     const retrieveProducts = ()=>{
-        console.log("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
-        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+"&category="+(getGSValue().category=="All"||getGSValue().category==null?"null":getGSValue().key));
+        // console.log(getGSValue().category);
         axios.get("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
-        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+"&category="+(getGSValue().category=="All"||getGSValue().category==null?"null":getGSValue().key))
+        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+
+        "&category="+(getGSValue().category=="All"||
+        getGSValue().category==null?"null":getGSValue().category))
             .then(res => {
                 setLoaded(false);
                 setProducts(res.data);

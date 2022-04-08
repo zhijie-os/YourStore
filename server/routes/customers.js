@@ -31,6 +31,7 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
 router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
        
+        console.log(req.body);
         if (!req.body.ProductID) {
 
             res.status(400).json({ message: "Product ID needed to add  the product into the cart..." });
@@ -52,14 +53,15 @@ router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
 
 router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         if (!req.body.ProductID) {
             res.status(404).json({ message: "Product ID needed to remove the product from the cart..." });
             return;
         }
 
-        console.log(res.customerInstance)
-        console.log("User want to delete Item " + req.body.ProductID);
+        // console.log(res.customerInstance)
+        // console.log("User want to delete Item " + req.body.ProductID);
+        
         // delete one instance of the product
         var index = res.customerInstance.Cart.indexOf(req.body.ProductID);
         if (index != -1) {

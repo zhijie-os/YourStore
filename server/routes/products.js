@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
 
 
         // add into seller's products
-        let belongingSeller = await sellerDB.findOne({"UserName":});
+        let belongingSeller = await sellerDB.findOne({"UserName":req.body.SellerID});
         belongingSeller.Products.push(savedproduct._id);
         await belongingSeller.save();
 
