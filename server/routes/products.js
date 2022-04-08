@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const productDB = require('../models/products')
 const categoryDB =require('../models/categories')
+const sellerDB = require('../models/sellers')
+
 
 router.get('/', async (req, res) => {
     if (!req.query.pageSize) {
@@ -48,7 +50,6 @@ router.get('/', async (req, res) => {
                 })
             }
 
-
             // allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
             // all product is a list
             //const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
@@ -84,9 +85,17 @@ router.post('/', async (req, res) => {
 
     try {
         const savedproduct = await newProduct.save()
+
+        // add into category
         belongingCategory = await categoryDB.findOne({"Title":req.body.Category});
         belongingCategory.Products.push(savedproduct._id);
         await belongingCategory.save();
+
+
+        // add into seller's products
+        let belongingSeller = await sellerDB.findOne({"UserName":});
+        belongingSeller.Products.push(savedproduct._id);
+        await belongingSeller.save();
 
         // on success, send back 200
         res.status(200).json(savedproduct)
