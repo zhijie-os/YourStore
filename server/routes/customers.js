@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const customerDB = require('../models/customers')
 const productDB = require('../models/products')
-const orderDB = require('../models/products')
+const orderDB = require('../models/orders')
 
 
 router.get("/:id/cart", getCustomerInstance, async (req, res) => {
@@ -16,7 +16,7 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
             return product;
         }));
 
-        console.log(products);
+        // console.log(products);
         products.map((product) => {
             total += product.Price;
         });
@@ -31,7 +31,7 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
 router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
 
-        console.log(req.body);
+        // console.log(req.body);
         if (!req.body.ProductID) {
 
             res.status(400).json({ message: "Product ID needed to add  the product into the cart..." });
@@ -80,11 +80,9 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
 });
 
 
-router.get("/:id/createOrder", getCustomerInstance, async (req, res) => {
-    if (!req.body.CustomerID) {
-        res.status(400).json({ message: "Customer ID needed to create orders..." });
-    }
-    else if (!req.body.ReceiverName)
+router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
+    console.log(req.body)
+    if (!req.body.ReceiverName)
     {
         res.status(400).json({ message: "ReceiverName needed to create orders..." });
     }
@@ -97,10 +95,11 @@ router.get("/:id/createOrder", getCustomerInstance, async (req, res) => {
     }
     else {
         try{
-            req.body.Products.map((product)=>{
+            // create orders
+            await Promise.all(req.body.Products.map(async (product)=>{
                 let newOrder = new orderDB(
                     {
-                        CustomerID: req.body.CustomerID,
+                        CustomerID: req.params.id,
                         SellerID: product.SellerID,
                         Total: product.Price,
                         ReceiverName: req.body.ReceiverName,
@@ -112,11 +111,17 @@ router.get("/:id/createOrder", getCustomerInstance, async (req, res) => {
                         Product: product._id
                     });
                 await newOrder.save();
-            });
+            }));
+            
+
+            // clear the cart
+            res.customerInstance.Cart=[];
+            await res.customerInstance.save();
             res.json("Orders created");
         }
-        catch{
-            res.status(400).json({message:"Fail to create orders...."});
+        catch(err){
+            // console.log(err);
+            res.status(500).json({message:"Fail to create orders...."});
         }
     }
 

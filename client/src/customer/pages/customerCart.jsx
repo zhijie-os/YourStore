@@ -18,12 +18,43 @@ function CustomerCart(props) {
         }
     };
 
+    const purchase = () =>{
+        if(name&&address)
+        {
+            let info={
+                ReceiverName: name,
+                ReceiverAddress: address,
+                Products: products
+            };
+            axios.put("http://127.0.0.1:8888/customers/"+
+            store.getState().GlobalState.value.userID+"/createOrder",
+            info).then(()=>{
+                setRerender(!rerender);
+                alert("Orders has been successively created");
+            }).catch(err=>console.log(err))
+        }
+        else
+        {
+            alert("Both Address and Name required...");
+        }
+
+    }
+
+
     const [rerender, setRerender] = useState(false);
     const [products, setProducts] = useState(null);
     const [total, setTotal] = useState(null);
     const [loaded, setLoaded] = useState(false);
+    const [address, setAddress] = useState(null);
+    const [name, setName] = useState(null);
     
     var key_id=0;
+
+    useEffect(()=>{
+        console.log(products);
+        console.log(name);
+        console.log(address);
+    },[name,address]);
 
     useEffect(()=>{
         axios.get("http://127.0.0.1:8888/customers/"+ 
@@ -83,14 +114,17 @@ function CustomerCart(props) {
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeName">Receiver Name</label>
                                                             <input type="text" id="typeName"
-                                                                className="form-control form-control-lg" placeholder="Joe Doe" />
+                                                                className="form-control form-control-lg" 
+                                                                placeholder="eg: Joe Doe" 
+                                                                onChange={(e) => setName(e.target.value)} />
                                                         </div>
 
                                                         <div className="form-outline form-white mb-4">
                                                             <label className="form-label" htmlFor="typeText">Receiver Address</label>
                                                             <input type="text" id="typeText"
                                                                 className="form-control form-control-lg"
-                                                                placeholder="3272 24 Ave Nw" />
+                                                                placeholder="eg: 3272 24 Ave Nw" 
+                                                                onChange={(e) => setAddress(e.target.value)} />
                                                         </div>
                                                     </form>
 
@@ -102,7 +136,7 @@ function CustomerCart(props) {
                                                     </div>
 
 
-                                                    <button type="button" className="col-md-12 btn btn-dark">Purchase</button>
+                                                    <button type="button" className="col-md-12 btn btn-dark" onClick={purchase}>Purchase</button>
 
                                                 </div>
                                             </div>
