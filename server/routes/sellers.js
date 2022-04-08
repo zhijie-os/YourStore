@@ -42,14 +42,23 @@ router.post('/', async (req, res) => {
         {
             UserName: req.body.UserName,
             Password: req.body.Password,
-            CardNumber: req.body.CardNumber
+            CardNumber: req.body.CardNumber,
+            Orders: [],
+            Products: []
         })
 
     // try if can save the seller
     try {
-        const savedSeller = await newSeller.save()
+        let alreadyUsed = await sellerDB.findOne({"UserName": req.body.UserName});
+ 
+        if(alreadyUsed!=null){
+            res.status(500).json("Seller "+req.body.UserName+" already existed.");
+            return;
+        }
+
+        await newSeller.save()
         // on success, send back 201
-        res.status(200).json(savedSeller)
+        res.status(200).json("Seller "+req.body.UserName+" has been successfully created");
     }
     catch (err) {
         // on error, send back error

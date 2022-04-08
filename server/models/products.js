@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema({
     SearchKeys:{
         type:[String],
         required:true
+    },
+    Category:{
+        type: String,
+        required:true
     }
 })
 

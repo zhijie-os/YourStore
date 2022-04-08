@@ -78,12 +78,17 @@ router.post('/', async (req, res) => {
             Price: req.body.Price,
             Inventory: req.body.Inventory,
             Description: req.body.Description,
-            SearchKeys: req.body.SearchKeys
+            SearchKeys: req.body.SearchKeys,
+            Category:req.body.Category
         })
 
     try {
         const savedproduct = await newProduct.save()
-        // on success, send back 201
+        belongingCategory = await categoryDB.findOne({"Title":req.body.Category});
+        belongingCategory.Products.push(savedproduct._id);
+        await belongingCategory.save();
+
+        // on success, send back 200
         res.status(200).json(savedproduct)
     }
     catch (err) {

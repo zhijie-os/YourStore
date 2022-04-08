@@ -14,7 +14,11 @@ const sellerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    Order: {
+    Orders: {
+        type: [String],
+        required: true
+    },
+    Products: {
         type: [String],
         required: true
     },
