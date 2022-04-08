@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-
 // set up order's schema
 const orderSchema = new mongoose.Schema({
     CustomerID:{
@@ -40,8 +38,8 @@ const orderSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    Products:{
-        type:[{ProductID:String, Quantity:Number}],
+    Product:{
+        type:String,
         required:true
     }
 })

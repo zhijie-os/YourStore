@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const customerDB = require('../models/customers')
 const productDB = require('../models/products')
+const orderDB = require('../models/products')
+
 
 router.get("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
@@ -76,7 +78,9 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
 });
 
 
-
+router.get("/:id/createOrder", getCustomerInstance, async (req, res) =>{
+    
+});
 
 // Get a list of customer with pagination
 router.get('/', async (req, res) => {

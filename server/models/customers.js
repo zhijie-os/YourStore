@@ -15,7 +15,11 @@ const customerSchema = new mongoose.Schema({
     Cart:{
         type:[String],
         required:true
-    }
+    },
+    Order:{
+        type:[String],
+        required:true
+    },
 })
 
 

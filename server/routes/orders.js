@@ -53,7 +53,7 @@ router.post('/', async (req, res) => {
             Cancelled: false,
             Shipped: false,
             ShipmentLabel: "None",
-            Products: req.body.Products
+            Product: req.body.Product
         })
 
     // try if can save the order
