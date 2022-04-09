@@ -1,8 +1,14 @@
 import NavBar from "../../components/navBar";
 import Footer from "../../components/footer";
 
-function CustomerOrders(props) {
+import Table from 'react-bootstrap/Table'
+import { useEffect, useState } from "react";
 
+import {store} from '../../Redux/store'
+import {useNavigate} from "react-router-dom"
+
+function CustomerOrders(props) {
+    let navigate = useNavigate();
 
     const navOnClick = () => {
         console.log(store.getState().GlobalState.value.userType);
@@ -11,45 +17,50 @@ function CustomerOrders(props) {
         }
     };
 
+    const [loaded, setLoaded] = useState(false);
+    const [orders, setOrders] = useState([]);
+
+    useEffect(()=>{
+
+    },[])
+
 
     return (
         <div>
 
             <NavBar searchBar={true} userType="customer" onClick={navOnClick} />
 
-            <section className="p-3">
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-12">
-                            <table className="table table-bordered">
-                                <thread>
-                                    <tr>
-                                        <th>Product Name</th>
-                                    </tr>
-                                </thread>
-                                <tbody className="align-middle text-center">
-                                    <tr>
-                                        <td>80808080</td>
-                                        <td>Random Customer</td>
-                                        <td>$99.99</td>
-                                        <td>Dummy Receiver</td>
-                                        <td>3272 24 Ave NW</td>
-                                        <td>Shipped</td>
-                                        <td>
-                                            <button className="btn btn-secondary">Detail</button>
-                                            <button className="btn btn-primary">Ship</button>
-                                            <button className="btn btn-danger">Cancel</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
+            <div className="container">
+                <Table >
+                    <thead>
+                        <tr>
+                            <th>Order Number</th>
+                            <th>Product Name</th>
+                            <th>Price</th>
+                            <th>Receiver Address</th>
+                            <th>Receiver Name</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Table cell</td>
+                            <td>Table cell</td>
+                            <td>Table cell</td>
+                            <td>Table cell</td>
+                            <td>Table cell</td>
+                            <td>Table cell</td>
+                            <td>
+                                <button className="btn btn-danger">Cancel</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </div>
 
-            <Footer/>
+            <Footer />
         </div>
     );
 }

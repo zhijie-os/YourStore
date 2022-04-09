@@ -33,7 +33,7 @@ function NavBar(props) {
 
                 {props.searchBar && <SearchBar onClick={props.onClick} />}
 
-                <div className="collapse navbar-collapse " id="navmenu">
+                <div className="collapse navbar-collapse" id="navmenu">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
                             {userType==="seller" && <a href="#myproducts" className="nav-link text-white" >My Products</a>}

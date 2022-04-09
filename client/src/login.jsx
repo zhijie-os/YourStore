@@ -15,7 +15,10 @@ import { store } from './Redux/store'
 
 function Login(props) {
     let navigate = useNavigate();
+    
+    // for redux
     const dispatch = useDispatch();
+
 
 
     // local states, username and password: Javascript is case sensitive
