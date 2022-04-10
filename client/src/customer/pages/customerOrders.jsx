@@ -14,7 +14,6 @@ function CustomerOrders(props) {
     let navigate = useNavigate();
 
     const navOnClick = () => {
-        console.log(store.getState().GlobalState.value.userType);
         if (store.getState().GlobalState.value.userType == "customer") {
             navigate("/search");
         }
@@ -23,24 +22,30 @@ function CustomerOrders(props) {
     const [loaded, setLoaded] = useState(false);
     const [orders, setOrders] = useState([]);
 
+
+    const cancelOrder = (orderNumber) => () =>{
+            
+    };
+
+    const cancelledAlert = () =>{
+        alert("The order is already be cancelled.");
+    };
+
     useEffect(() => {
         axios.get("http://127.0.0.1:8888/customers/" +
             store.getState().GlobalState.value.userID+
             "/orders").then((res) => {
                 setLoaded(false);
-                console.log(res.data);
-                setOrders(res.data);
+                console.log(res.data.Orders);
+                setOrders(res.data.Orders);
                 setLoaded(true);
             }).catch(err=>console.log(err));
-    }, [])
+    }, []);
 
     
-
     return (
         <div>
-
             <NavBar searchBar={true} userType="customer" onClick={navOnClick} />
-
 
             <div className="container">
                 <Table >
@@ -58,24 +63,23 @@ function CustomerOrders(props) {
                         </tr>
                     </thead>
                     <tbody>
-                        {loaded && orders.map((order) => {
+                        {loaded && orders.map(order => {
                             return (
                                 <tr>
-                                    <td>{order._id}</td>
+                                    <td>{order.OrderNumber}</td>
                                     <td>{order.SellerID}</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
-                                    <td>Table cell</td>
+                                    <td>{order.ProductName}</td>
+                                    <td>{order.Price}</td>
+                                    <td>{order.ReceiverName}</td>
+                                    <td>{order.ReceiverAddress}</td>
+                                    <td>{order.Status}</td>
+                                    <td>{order.ShipmentLabel}</td>
                                     <td>
-                                        <button className="btn btn-danger">Cancel</button>
+                                        <button className="btn btn-danger" onClick={order.Status==="Cancelled"?cancelledAlert:cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
                             )
                         })}
-
                     </tbody>
                 </Table>
             </div>

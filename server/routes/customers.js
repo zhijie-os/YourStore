@@ -3,8 +3,71 @@ const router = express.Router()
 const customerDB = require('../models/customers')
 const productDB = require('../models/products')
 const orderDB = require('../models/orders')
+const sellerDB = require('../models/sellers')
+
+// get customer's orders by UserName
+router.get("/:id/orders", getCustomerInstance, async (req, res) => {
+    try {
+
+        const customerOrderIDs = res.customerInstance.Orders;
+
+        let actualOrders;
+
+        actualOrders = await Promise.all(customerOrderIDs.map(async (orderID) => {
+            return orderDB.findOne({ "_id": orderID });
+        }));
+
+        let orderInfo;
+        orderInfo = await Promise.all(actualOrders.map(async (order)=>{
+            let product = await productDB.findOne({"_id":order.Product});
+
+            let status;
+
+            if(!order.Payment)
+            {
+                status="Unpaid"
+            }
+            else{
+                if(order.Shipped)
+                {
+                    status="Shipped"
+                }
+                else{
+                    status="Unshipped"
+                }
+            }
+
+            if(order.Cancelled)
+            {
+                status="Cancelled";
+            }
+
+            return {
+                "OrderNumber":order._id,
+                "SellerID":order.SellerID,
+                "ProductName": product.Title,
+                "Price":order.Total,
+                "ReceiverName":order.ReceiverName,
+                "ReceiverAddress":order.ReceiverAddress,
+                "Status":status,
+                "ShipmentLabel":order.ShipmentLabel
+            } 
+        }));
+
+        res.json({ Orders: orderInfo });
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
 
 
+
+
+
+
+
+// get user Cart by UserName
 router.get("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
         const cart = res.customerInstance.Cart;
@@ -28,6 +91,8 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
     }
 });
 
+
+// add one product into customer's cart
 router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
     try {
 
@@ -59,9 +124,6 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
             return;
         }
 
-        // console.log(res.customerInstance)
-        // console.log("User want to delete Item " + req.body.ProductID);
-
         // delete one instance of the product
         var index = res.customerInstance.Cart.indexOf(req.body.ProductID);
         if (index != -1) {
@@ -79,24 +141,43 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
     }
 });
 
+router.delete("/:id/orders", getCustomerInstance, async (req, res) => {
+    try {
+
+        res.customerInstance.Orders = []
+        await res.customerInstance.save();
+
+
+        res.status(200).json({ message: " orders has been deleted..." });
+
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+
+});
+
+
+
+
 
 router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
-    console.log(req.body)
-    if (!req.body.ReceiverName)
-    {
+
+    if (!req.body.ReceiverName) {
         res.status(400).json({ message: "ReceiverName needed to create orders..." });
     }
-    else if(!req.body.ReceiverAddress)
-    {
+    else if (!req.body.ReceiverAddress) {
         res.status(400).json({ message: "ReceiverAddress needed to create orders..." });
     }
     else if (!req.body.Products) {
         res.status(400).json({ message: "Products needed to create orders..." });
     }
     else {
-        try{
+        try {
+
             // create orders
-            await Promise.all(req.body.Products.map(async (product)=>{
+            for (const product of req.body.Products) {
+
                 let newOrder = new orderDB(
                     {
                         CustomerID: req.params.id,
@@ -110,18 +191,32 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
                         ShipmentLabel: "None",
                         Product: product._id
                     });
+
+                //  1
                 await newOrder.save();
-            }));
-            
+
+                // 2
+                res.customerInstance.Orders.push(newOrder._id);
+                await res.customerInstance.save();
+
+
+                let sellerInstance;
+                sellerInstance = await sellerDB.findOne({ "UserName": product.SellerID })
+// 
+                sellerInstance.Orders.push(newOrder._id)
+
+                await sellerInstance.save();
+
+            }
 
             // clear the cart
-            res.customerInstance.Cart=[];
+            res.customerInstance.Cart = [];
             await res.customerInstance.save();
             res.json("Orders created");
         }
-        catch(err){
-            // console.log(err);
-            res.status(500).json({message:"Fail to create orders...."});
+        catch (err) {
+            console.log(err);
+            res.status(500).json({ message: err.message });
         }
     }
 
@@ -152,7 +247,6 @@ router.get('/', async (req, res) => {
     }
 })
 
-
 // GET a user with respect to :id
 router.get('/:id', getCustomerInstance, (req, res) => {
     res.send(res.customerInstance)
@@ -163,7 +257,7 @@ router.post('/', async (req, res) => {
 
     // parse the JSON
     const newcustomer = new customerDB(
-        {
+        {               // parse JSON
             UserName: req.body.UserName,
             Password: req.body.Password,
             Cart: []
@@ -219,7 +313,6 @@ router.delete('/:id', getCustomerInstance, async (req, res) => {
         res.status(500).json({ message: 'Failed to delete the customer' })
     }
 })
-
 
 
 // middleware that finds the customer instance by :id from the database

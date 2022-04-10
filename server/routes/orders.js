@@ -120,6 +120,19 @@ router.delete('/:id', getOrderInstance, async (req, res) => {
 })
 
 
+router.delete('/', async (req, res) => {
+
+    // try to remove
+    try {
+        await orderDB.remove({});
+        res.json({ message: 'All orders deleted...' })
+    }
+    catch (err) {
+        res.status(500).json({ message: 'Failed to delete the order' })
+    }
+})
+
+
 
 // middleware that finds the order instance by :id from the database
 async function getOrderInstance(req, res, next) {

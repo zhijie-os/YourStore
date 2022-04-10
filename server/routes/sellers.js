@@ -1,8 +1,33 @@
 const express = require('express')
 const router = express.Router()
 const sellerDB = require('../models/sellers')
+const orderDB = require('../models/orders')
 
 
+// get seller's orders by UserName
+router.get("/:id/orders", getSellerInstance, async (req, res) => {
+    try {
+
+        const sellerOrderIDs = res.sellerInstance.Orders;
+
+        let actualOrders;
+
+        actualOrders = await Promise.all(sellerOrderIDs.map(async (orderID) => {
+            return orderDB.findOne({ "_id": orderID });
+        }));
+
+        res.json({ Orders: actualOrders });
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
+
+
+
+
+// get seller instances
 router.get('/', async (req, res) => {
     if (!req.query.pageSize) {
         res.status(400).json({ message: 'pageSize is not defined...' })
@@ -105,6 +130,23 @@ router.delete('/:id', getSellerInstance, async (req, res) => {
     }
 })
 
+
+
+router.delete("/:id/orders", getSellerInstance, async (req, res) => {
+    try {
+
+        res.sellerInstance.Orders = []
+        await res.sellerInstance.save();
+
+
+        res.status(200).json({ message:" orders has been deleted..." });
+
+    }
+    catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+
+});
 
 
 // middleware that finds the seller instance by :id from the database
