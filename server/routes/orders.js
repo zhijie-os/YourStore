@@ -4,6 +4,45 @@ const orderDB = require('../models/orders')
 
 
 
+router.patch('/:id/ship', getOrderInstance, async (req, res)=>
+{
+    if(!req.body.ShippingLabel)
+    {
+        res.status(400).json({ fail: 'shipping label is not defined...' })
+        return;
+    }
+
+    if(!res.orderInstance.Payment && !res.orderInstance.Cancelled)
+    {
+        res.status(400).json({ fail: "Customer has not made a payment yet, you cannot ship..."});
+        return;
+    }
+
+    if(res.orderInstance.Cancelled)
+    {
+        res.status(400).json({ fail: "The order is cancelled, you cannot ship..."});
+        return;
+    }
+
+    try{
+ 
+        res.orderInstance.Shipped = true;
+        res.orderInstance.ShipmentLabel = req.body.ShippingLabel;
+
+        await res.orderInstance.save();
+
+
+        res.status(200).json({success: "The order shipping status is udpated...."});
+    }
+    catch(err)
+    {
+        res.status(500).json({ fail: err.message });
+    }
+
+    
+});
+
+
 // GET a list of orders with pagination
 router.get('/', async (req, res) => {
     if (!req.query.pageSize) {

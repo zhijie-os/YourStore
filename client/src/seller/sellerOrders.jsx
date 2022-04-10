@@ -17,6 +17,23 @@ function SellerOrders(props) {
     const [orders, setOrders] = useState([]);
     const [rerender, setRerender] = useState(false);
 
+
+
+    const ship = (orderNumber) => () => {
+        let shippingLabel = prompt("Please enter the shipping label", "eg:1Z149A726800291371");
+        if (shippingLabel != null) {
+            alert("shipping label get")
+        }
+
+        
+
+    }
+
+    const cannotShip = (reason) => () => {
+
+    }
+
+
     const cancelOrder = (orderNumber) => () => {
         // console.log(product._id);
         axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
@@ -75,6 +92,7 @@ function SellerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
+                                        <button className="btn btn-primary" onClick={ship(order.orderNumber)}>Ship</button>
                                         <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
