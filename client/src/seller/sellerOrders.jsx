@@ -1,10 +1,10 @@
-import NavBar from "../../components/navBar";
-import Footer from "../../components/footer";
+import NavBar from "../components/navBar";
+import Footer from "../components/footer";
 
 import Table from 'react-bootstrap/Table'
 import { useEffect, useState } from "react";
 
-import { store } from '../../Redux/store'
+import { store } from '../Redux/store'
 import { useNavigate } from "react-router-dom"
 
 import axios from "axios";
@@ -13,42 +13,14 @@ import axios from "axios";
 function SellerOrders(props) {
     // let navigate = useNavigate();
 
-  
-    // const [loaded, setLoaded] = useState(false);
-    // const [orders, setOrders] = useState([]);
-    // const [rerender, setRerender] = useState(false);
 
-    // const cancelOrder = (orderNumber) => () => {
-    //     // console.log(product._id);
-    //     axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
-    //         { "Cancelled": "true" }).then(() => {
-    //             setRerender(!rerender);
-    //             alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
-    //         }).catch(err => console.log(err));
-    // };
-
-
-    // const cancelledAlert = () => {
-    //     alert("The order is already be cancelled.");
-    // };
-
-    // useEffect(() => {
-    //     axios.get("http://127.0.0.1:8888/customers/" +
-    //         store.getState().GlobalState.value.userID +
-    //         "/orders").then((res) => {
-    //             setLoaded(false);
-    //             console.log(res.data.Orders);
-    //             setOrders(res.data.Orders);
-    //             setLoaded(true);
-    //         }).catch(err => console.log(err));
-    // }, [rerender]);
 
 
     return (
         <div>
             <NavBar searchBar={false} userType="seller" />
 
-            <div className="container">
+            {/* <div className="container">
                 <Table >
                     <thead>
                         <tr>
@@ -83,7 +55,7 @@ function SellerOrders(props) {
                         })}
                     </tbody>
                 </Table>
-            </div>
+            </div> */}
 
             <Footer />
         </div>

@@ -56,12 +56,6 @@ function CustomerCart(props) {
     
     var key_id=0;
 
-    // useEffect(()=>{
-    //     console.log(products);
-    //     console.log(name);
-    //     console.log(address);
-    // },[name,address]);
-
     useEffect(()=>{
         axios.get("http://127.0.0.1:8888/customers/"+ 
         store.getState().

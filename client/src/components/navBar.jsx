@@ -1,27 +1,43 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from './searchBar';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { store } from '../Redux/store'
+import {clean } from '../Redux/globalStateSlice'
 
 function NavBar(props) {
     let navigate = useNavigate();
+    const dispatch = useDispatch();
+
+
     const [userType, setUserType] = useState(null);
-    
 
-    useEffect(()=>{
+
+
+
+
+    useEffect(() => {
         setUserType(props.userType);
-    },[]);
+    }, []);
 
-    const goToCart = () =>{
+    const goToCart = () => {
         navigate("/cart");
     };
 
-    const goToCustomerOrder = () =>{
+    const goToCustomerOrder = () => {
         navigate("/customer/orders");
     };
 
-    const goToSellerOrder = () =>{
+    const goToSellerOrder = () => {
         navigate("/seller/orders");
     };
+
+
+    const logout = () => {
+        dispatch(clean("Dummy"));
+        navigate("/login");
+    };
+
 
     return (
         <nav className="navbar bg-dark navbar-expand-lg  p-3 fixed-top">
@@ -36,15 +52,15 @@ function NavBar(props) {
                 <div className="collapse navbar-collapse" id="navmenu">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            {userType==="seller" && <a href="#myproducts" className="nav-link text-white" >My Products</a>}
-                            {userType==="customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
+                            {userType === "seller" && <a href="#myproducts" className="nav-link text-white" >My Products</a>}
+                            {userType === "customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
                         </li>
                         <li className="nav-item">
-                            {userType==="customer" && <a href="#myorders" className="nav-link text-white" onClick={goToCustomerOrder}>My Orders</a>}
-                            {/* {userType==="customer" && <a href="#myorders" className="nav-link text-white" onClick={goToSellerOrder}>My Orders</a>} */}
+                            {userType === "customer" && <a href="#myorders" className="nav-link text-white" onClick={goToCustomerOrder}>My Orders</a>}
+                            {userType === "seller" && <a href="#myorders" className="nav-link text-white" onClick={goToSellerOrder}>My Orders</a>}
                         </li>
                         <li className="nav-item">
-                            {/* {login && <a href="#logout" className="nav-link text-white">Logout</a>} */}
+                            <a href="#logout" className="nav-link text-white" onClick={logout}>Logout</a>
                         </li>
                     </ul>
                 </div>

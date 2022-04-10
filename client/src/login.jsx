@@ -41,9 +41,12 @@ function Login(props) {
                     // navigate to page /home
                     navigate("/home");
                 }
-                else {
+                else if(store.getState().GlobalState.value.userType == "seller"){
                     // navigate to page /inventory if it is seller
-                    navigate("/login");
+                    navigate("/seller/orders");
+                }
+                else {
+                    navigate("/login")
                 }
             }).catch((err) => {
                 // otherwise, alert user that the error message

@@ -7,8 +7,6 @@ const initialState = {
         userType: null,
         category: null,
         key: "",
-        product: [],
-        inventory: [],
     },
     status: 'idle',
 };
@@ -40,10 +38,18 @@ export const GlobalStateSlice = createSlice({
         searchInventory: (state, action) => {
             state.value.inventory = action.payload;
         },
+        clean: (state,action) => 
+        {
+            state.value.loggedIn = false;
+            state.value.userID= null;
+            state.value.userType= null;
+            state.value.category= null;
+            state.value.key= "";
+        }
     },
 });
 
-export const { login, logout, selectCategory, enterSearchKey, searchProduct, searchInventory } = GlobalStateSlice.actions;
+export const { login, logout, selectCategory, enterSearchKey,clean} = GlobalStateSlice.actions;
 
 export const selectGlobalState = (state) => state.GlobalState.value;
 
