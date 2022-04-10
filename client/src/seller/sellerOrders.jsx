@@ -22,11 +22,16 @@ function SellerOrders(props) {
     const ship = (orderNumber) => () => {
         let shippingLabel = prompt("Please enter the shipping label", "eg:1Z149A726800291371");
         if (shippingLabel != null) {
-            alert("shipping label get")
+            axios.patch("http://127.0.0.1:8888/orders/" + orderNumber+"/ship",
+            {"ShippingLabel":shippingLabel}).then(()=>{
+                setRerender(!rerender);
+                alert("The order's shipping status is udpated...")
+            }).catch(error=>alert(error.response.data.fail));
         }
-
-        
-
+        else 
+        {
+            alert("Shipping Label cannot be blank...");
+        }
     }
 
     const cannotShip = (reason) => () => {
@@ -92,7 +97,7 @@ function SellerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
-                                        <button className="btn btn-primary" onClick={ship(order.orderNumber)}>Ship</button>
+                                        <button className="btn btn-primary" onClick={ship(order.OrderNumber)}>Ship</button>
                                         <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
