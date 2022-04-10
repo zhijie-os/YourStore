@@ -23,32 +23,32 @@ function CustomerOrders(props) {
     const [orders, setOrders] = useState([]);
     const [rerender, setRerender] = useState(false);
 
-    const cancelOrder = (orderNumber) => () =>{
+    const cancelOrder = (orderNumber) => () => {
         // console.log(product._id);
-        axios.patch("http://127.0.0.1:8888/orders/"+orderNumber,
-        {"Cancelled":"true"}).then(()=>{
-            setRerender(!rerender);
-            alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
-        }).catch(err=>console.log(err));
+        axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
+            { "Cancelled": "true" }).then(() => {
+                setRerender(!rerender);
+                alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
+            }).catch(err => console.log(err));
     };
 
 
-    const cancelledAlert = () =>{
+    const cancelledAlert = () => {
         alert("The order is already be cancelled.");
     };
 
     useEffect(() => {
         axios.get("http://127.0.0.1:8888/customers/" +
-            store.getState().GlobalState.value.userID+
+            store.getState().GlobalState.value.userID +
             "/orders").then((res) => {
                 setLoaded(false);
                 console.log(res.data.Orders);
                 setOrders(res.data.Orders);
                 setLoaded(true);
-            }).catch(err=>console.log(err));
+            }).catch(err => console.log(err));
     }, [rerender]);
 
-    
+
     return (
         <div>
             <NavBar searchBar={true} userType="customer" onClick={navOnClick} />
@@ -81,7 +81,7 @@ function CustomerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
-                                        <button className="btn btn-danger" onClick={order.Status==="Cancelled"?cancelledAlert:cancelOrder(order.OrderNumber)}>Cancel</button>
+                                        <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
                             )

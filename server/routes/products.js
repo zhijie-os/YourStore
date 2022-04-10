@@ -77,7 +77,6 @@ router.post('/', async (req, res) => {
             SellerID: req.body.SellerID,
             Title: req.body.Title,
             Price: req.body.Price,
-            Inventory: req.body.Inventory,
             Description: req.body.Description,
             SearchKeys: req.body.SearchKeys,
             Category:req.body.Category
@@ -114,9 +113,6 @@ router.patch('/:id', getProductInstance, async (req, res) => {
     }
     else if (body.Price) {
         res.productInstance.Price = req.body.Price
-    }
-    else if (body.Inventory) {
-        res.productInstance.Inventory = req.body.Inventory
     }
     else if (body.Description) {
         res.productInstance.Description = req.body.Description

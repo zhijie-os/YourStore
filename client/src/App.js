@@ -1,18 +1,15 @@
-// import SearchBar from './components/searchBar.jsx'
-import NavBar from './components/navBar.jsx'
-import Footer from './components/footer.jsx';
-import ProductSearchResult from './customer/complex/searchResult.jsx';
+
 import CustomerHome from './customer/pages/customerHome.jsx';
 import Login from './login.jsx';
 
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import { useState } from 'react';
-import { GlobalState } from './Redux/globalState.js';
+
 import CustomerSearch from './customer/pages/customerSearch.jsx';
 import CustomerCart from './customer/pages/customerCart.jsx';
 import CustomerOrders from './customer/pages/customerOrders.jsx';
+import SellerOrders from './seller/sellerOrders.jsx';
 
 function App() {
 
@@ -27,6 +24,7 @@ function App() {
           <Route exact path="/search" element={<CustomerSearch />} />
           <Route exact path="/cart" element={<CustomerCart />} />
           <Route exact path="/customer/orders" element={<CustomerOrders />} />
+          <Route exact path="/seller/orders" element={<SellerOrders/>} />
         </Routes>
       </div>
     </Router >
