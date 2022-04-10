@@ -2,9 +2,12 @@
 import NavBar from "../components/navBar";
 import Footer from "../components/footer";
 import Table from 'react-bootstrap/Table'
+import Modal from 'react-bootstrap/Modal'
+import Form from 'react-bootstrap/Form'
+import Button from 'react-bootstrap/Button'
 
-import { useState, useEffect} from "react";
-import {store} from '../Redux/store';
+import { useState, useEffect } from "react";
+import { store } from '../Redux/store';
 
 import axios from "axios";
 
@@ -26,6 +29,23 @@ function SellerProducts(props) {
     }, [rerender]);
 
 
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const [newProductTitle, setNewProductTitle] = useState();
+    const [newProductPrice, setNewProductPrice] = useState();
+    const [newProductDescription, setNewProductDescription] = useState();
+
+
+
+    const addNewProduct = () => {
+        console.log(newProductTitle, newProductPrice, newProductDescription);
+        handleClose();
+    };
+
     return (
         <div>
             <NavBar userType="seller" />
@@ -34,9 +54,74 @@ function SellerProducts(props) {
 
                 <section className="p-1">
                     <div className="container">
-                        <button className="btn btn-primary btn-lg">Add New Product</button>
+                        <button className="btn btn-primary btn-lg" onClick={handleShow}>Add New Product</button>
                     </div>
                 </section>
+
+
+
+
+                <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>Product Details</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Product Title</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: iPhone"
+                                    autoFocus
+                                    onChange={e => setNewProductTitle(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Product Price</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: 1999.99 (no dollar sign please)"
+                                    autoFocus
+                                    onChange={e => setNewProductPrice(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Category</Form.Label>
+                                <Form.Select aria-label="Default select example">
+                                    <option>Please select the</option>
+                                    <option value="1">One</option>
+                                    <option value="2">Two</option>
+                                    <option value="3">Three</option>
+                                </Form.Select>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Search Tags</Form.Label>
+                                <Form.Control
+                                    placeholder='eg: ios, Apple, Phone 
+                                    (seperate each tag by ",")'
+                                    autoFocus
+                                    onChange={e => setNewProductPrice(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
+                            >
+                                <Form.Label>Product Description</Form.Label>
+                                <Form.Control as="textarea" rows={2}
+                                    placeholder="eg: iPhone designed by Apple at California."
+                                    onChange={e => setNewProductDescription(e.target.value)} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="primary" onClick={addNewProduct}>
+                            Save Products
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+
 
 
 
