@@ -10,6 +10,7 @@ import CustomerSearch from './customer/pages/customerSearch.jsx';
 import CustomerCart from './customer/pages/customerCart.jsx';
 import CustomerOrders from './customer/pages/customerOrders.jsx';
 import SellerOrders from './seller/sellerOrders.jsx';
+import SellerProducts from './seller/sellerProducts.jsx';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route exact path="/cart" element={<CustomerCart />} />
           <Route exact path="/customer/orders" element={<CustomerOrders />} />
           <Route exact path="/seller/orders" element={<SellerOrders/>} />
+          <Route exact path="/seller/products" element={<SellerProducts/>} />
         </Routes>
       </div>
     </Router >

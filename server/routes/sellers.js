@@ -3,6 +3,7 @@ const router = express.Router()
 const sellerDB = require('../models/sellers')
 const orderDB = require('../models/orders')
 const productDB = require('../models/products')
+const { route } = require('./products')
 
 
 // get seller's orders by UserName
@@ -62,6 +63,31 @@ router.get("/:id/orders", getSellerInstance, async (req, res) => {
 });
 
 
+
+// get sellers's products
+router.get('/:id/products', getSellerInstance, async(req,res)=>{
+    try 
+    {
+        const productIDs = res.sellerInstance.Products;
+
+        let allProducts = await Promise.all(productIDs.map(async (productID)=>{
+            let productInstance = await productDB.findOne({"_id":productID});
+
+            return {
+                "ProductNumber":productInstance._id,
+                "ProductTitle":productInstance.Title,
+                "Description":productInstance.Description,
+                "Price":productInstance.Price
+            }
+        }));
+
+        res.json({Products: allProducts});
+    }
+    catch(err)
+    {
+        res.status(500).json({message:err.message});
+    }
+});
 
 
 

@@ -13,9 +13,6 @@ function NavBar(props) {
     const [userType, setUserType] = useState(null);
 
 
-
-
-
     useEffect(() => {
         setUserType(props.userType);
     }, []);
@@ -27,6 +24,11 @@ function NavBar(props) {
     const goToCustomerOrder = () => {
         navigate("/customer/orders");
     };
+
+
+    const goToSellerProduct = () =>{
+        navigate("/seller/products");
+    }
 
     const goToSellerOrder = () => {
         navigate("/seller/orders");
@@ -52,7 +54,7 @@ function NavBar(props) {
                 <div className="collapse navbar-collapse" id="navmenu">
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            {userType === "seller" && <a href="#myproducts" className="nav-link text-white" >My Products</a>}
+                            {userType === "seller" && <a href="#myproducts" className="nav-link text-white" onClick={goToSellerProduct}>My Products</a>}
                             {userType === "customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
                         </li>
                         <li className="nav-item">

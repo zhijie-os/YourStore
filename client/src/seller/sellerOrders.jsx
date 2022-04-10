@@ -34,8 +34,14 @@ function SellerOrders(props) {
         }
     }
 
-    const cannotShip = (reason) => () => {
-
+    const cannotShip = (status) => () => {
+        if(status == "Unpaid")
+        {
+            alert("Customer has not made a payment yet, cannot ship...");
+        }
+        else{
+            alert("The order is cancelled, cannot ship...");
+        }
     }
 
 
@@ -70,7 +76,7 @@ function SellerOrders(props) {
             <NavBar searchBar={false} userType="seller" />
 
             <div className="container">
-                <Table >
+                <Table striped bordered hover>
                     <thead>
                         <tr>
                             <th>Order Number</th>
@@ -97,7 +103,7 @@ function SellerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
-                                        <button className="btn btn-primary" onClick={ship(order.OrderNumber)}>Ship</button>
+                                        <button className="btn btn-primary" onClick={(order.Status=="Cancelled"||order.Status=="Unpaid")?cannotShip(order.Status):ship(order.OrderNumber)}>Ship</button>
                                         <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
