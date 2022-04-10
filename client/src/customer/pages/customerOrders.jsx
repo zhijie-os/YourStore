@@ -21,11 +21,17 @@ function CustomerOrders(props) {
 
     const [loaded, setLoaded] = useState(false);
     const [orders, setOrders] = useState([]);
-
+    const [rerender, setRerender] = useState(false);
 
     const cancelOrder = (orderNumber) => () =>{
-            
+        // console.log(product._id);
+        axios.patch("http://127.0.0.1:8888/orders/"+orderNumber,
+        {"Cancelled":"true"}).then(()=>{
+            setRerender(!rerender);
+            alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
+        }).catch(err=>console.log(err));
     };
+
 
     const cancelledAlert = () =>{
         alert("The order is already be cancelled.");
@@ -40,7 +46,7 @@ function CustomerOrders(props) {
                 setOrders(res.data.Orders);
                 setLoaded(true);
             }).catch(err=>console.log(err));
-    }, []);
+    }, [rerender]);
 
     
     return (
@@ -65,7 +71,7 @@ function CustomerOrders(props) {
                     <tbody>
                         {loaded && orders.map(order => {
                             return (
-                                <tr>
+                                <tr key={order.OrderNumber}>
                                     <td>{order.OrderNumber}</td>
                                     <td>{order.SellerID}</td>
                                     <td>{order.ProductName}</td>

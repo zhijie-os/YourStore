@@ -78,16 +78,26 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
         res.orderInstance.Payment = req.body.Payment
     }
     else if (req.body.Cancelled) {
+        if(res.orderInstance.Cancelled)
+        {
+            res.status(400).json({ message: "Order is already being cancelled" });
+        }
+
         // change into "cancelled" status
-        res.orderInstance.Cancelled = req.body.Cancelled
+        if (req.body.Cancelled == 'true') {
+            res.orderInstance.Cancelled = true;
+        }
+        else {
+            res.status(400).json({ message: "Unrecognized field for body.Cancelled" });
+            return;
+        }
     }
     else if (req.body.ShipmentLabel) {
         // change into "shipped" status
         res.orderInstance.Shipped = true
         res.orderInstance.ShipmentLabel = req.body.ShipmentLabel
     }
-    else
-    {
+    else {
         res.status(500).json({ message: "Please Provide Fields to be updated" })
         return;
     }
