@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const sellerDB = require('../models/sellers')
 const orderDB = require('../models/orders')
+const productDB = require('../models/products')
 
 
 // get seller's orders by UserName
@@ -16,7 +17,44 @@ router.get("/:id/orders", getSellerInstance, async (req, res) => {
             return orderDB.findOne({ "_id": orderID });
         }));
 
-        res.json({ Orders: actualOrders });
+        let orderInfo;
+        orderInfo = await Promise.all(actualOrders.map(async (order)=>{
+            let product = await productDB.findOne({"_id":order.Product});
+
+            let status;
+
+            if(!order.Payment)
+            {
+                status="Unpaid"
+            }
+            else{
+                if(order.Shipped)
+                {
+                    status="Shipped"
+                }
+                else{
+                    status="Unshipped"
+                }
+            }
+
+            if(order.Cancelled)
+            {
+                status="Cancelled";
+            }
+
+            return {
+                "OrderNumber":order._id,
+                "CustomerID":order.CustomerID,
+                "ProductName": product.Title,
+                "Price":order.Total,
+                "ReceiverName":order.ReceiverName,
+                "ReceiverAddress":order.ReceiverAddress,
+                "Status":status,
+                "ShipmentLabel":order.ShipmentLabel
+            } 
+        }));
+
+        res.json({ Orders: orderInfo });
     }
     catch (err) {
         res.status(500).json({ message: err.message });

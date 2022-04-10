@@ -32,12 +32,6 @@ export const GlobalStateSlice = createSlice({
         enterSearchKey: (state, action) => {
             state.value.key = action.payload;
         },
-        searchProduct: (state, action) => {
-            state.value.product = action.payload;
-        },
-        searchInventory: (state, action) => {
-            state.value.inventory = action.payload;
-        },
         clean: (state,action) => 
         {
             state.value.loggedIn = false;
