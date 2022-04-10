@@ -41,6 +41,7 @@ function NavBar(props) {
                         </li>
                         <li className="nav-item">
                             {userType==="customer" && <a href="#myorders" className="nav-link text-white" onClick={goToCustomerOrder}>My Orders</a>}
+                            {/* {userType==="customer" && <a href="#myorders" className="nav-link text-white" onClick={goToSellerOrder}>My Orders</a>} */}
                         </li>
                         <li className="nav-item">
                             {/* {login && <a href="#logout" className="nav-link text-white">Logout</a>} */}
