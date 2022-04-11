@@ -265,9 +265,16 @@ router.post('/', async (req, res) => {
 
     // try if can save the customer
     try {
-        const savedCustomer = await newcustomer.save()
+        let alreadyUsed = await customerDB.findOne({"UserName": req.body.UserName});
+ 
+        if(alreadyUsed!=null){
+            res.status(500).json({message:"Customer "+req.body.UserName+" already existed."});
+            return;
+        }
+
+        await newcustomer.save()
         // on success, send back 201
-        res.status(200).json(savedCustomer)
+        res.status(200).json({message:"Customer "+req.body.UserName+" has been successfully created"});
     }
     catch (err) {
         // on error, send back error

@@ -131,7 +131,7 @@ router.post('/', async (req, res) => {
         {
             UserName: req.body.UserName,
             Password: req.body.Password,
-            CardNumber: req.body.CardNumber,
+            CardNumber: 4242424242424242,
             Orders: [],
             Products: []
         })
@@ -141,13 +141,13 @@ router.post('/', async (req, res) => {
         let alreadyUsed = await sellerDB.findOne({"UserName": req.body.UserName});
  
         if(alreadyUsed!=null){
-            res.status(500).json("Seller "+req.body.UserName+" already existed.");
+            res.status(500).json({message:"Seller "+req.body.UserName+" already existed."});
             return;
         }
 
         await newSeller.save()
         // on success, send back 201
-        res.status(200).json("Seller "+req.body.UserName+" has been successfully created");
+        res.status(200).json({message:"Seller "+req.body.UserName+" has been successfully created"});
     }
     catch (err) {
         // on error, send back error
