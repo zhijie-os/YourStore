@@ -1,7 +1,7 @@
 function Footer()
 {
     return(
-        <footer className="p-5 bg-dark text-white text-center position-relative mt-auto">
+        <footer className="p-5 bg-dark text-white text-center at-bottom">
         <div className="container">
             <p className="lead">Copyright &copy;YourStore</p>
             <a href="#" className="position-absolute bottom-0 end-0 p-5">

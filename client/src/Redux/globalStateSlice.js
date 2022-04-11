@@ -5,7 +5,7 @@ const initialState = {
         loggedIn: false,
         userID: null,
         userType: null,
-        category: null,
+        category: "All",
         key: "",
     },
     status: 'idle',
@@ -37,7 +37,7 @@ export const GlobalStateSlice = createSlice({
             state.value.loggedIn = false;
             state.value.userID= null;
             state.value.userType= null;
-            state.value.category= null;
+            state.value.category= "All";
             state.value.key= "";
         }
     },

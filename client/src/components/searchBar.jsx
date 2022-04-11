@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connectAdvanced } from 'react-redux';
 
 import {
     enterSearchKey,
@@ -11,7 +11,6 @@ import {
 
 import { store } from '../Redux/store'
 import Form from 'react-bootstrap/Form'
-
 
 function SearchBar(props) {
 
@@ -30,8 +29,10 @@ function SearchBar(props) {
         // get the list of all categories
         axios.get("http://127.0.0.1:8888/categories")
             .then(res => {
+                setLoaded(false);
                 // set the allCategories
-                setAll(res.data);
+                let result = [{"Title":"All"}];
+                setAll(result.concat(res.data));
                 // set loaded
                 setLoaded(true);
             })
@@ -39,7 +40,7 @@ function SearchBar(props) {
 
 
     // set selected category in the global state
-    const setCategory  = (category) => {
+    const setCategory = (category) => {
         dispatch(selectCategory(category));
     }
 
@@ -48,17 +49,40 @@ function SearchBar(props) {
         dispatch(enterSearchKey(key));
     }
 
-    const clicked = () => {
-        alert("clicked");
-    }
+
+    const makeCategories = () => {
+        let categoriesBar = [];
+
+        
+        categoriesBar.push(
+        <option 
+        key={store.getState().GlobalState.value.category} 
+        value={store.getState().GlobalState.value.category}>
+            {store.getState().GlobalState.value.category}
+            </option>);
+
+    
+        allCategories.filter((category)=>{
+            return category.Title != store.getState().GlobalState.value.category;
+        }).map((category)=>{
+            categoriesBar.push(<option key={category.Title} value={category.Title}>{category.Title}</option>);
+        });
+
+        return categoriesBar;
+    };
+
+
 
 
     return (
         <div className="input-group search-bar">
-            <Form.Select  onChange={(e)=>setCategory(e.target.value)}>
-                {loaded && allCategories.map(category => <option key={category.Title} 
-                value={category.Title}
-                >{category.Title}</option>)}
+
+
+            <Form.Select className="limit-width" onChange={(e) => setCategory(e.target.value)}>
+                {/* {loaded && allCategories.map(category => <option key={category.Title}
+                    value={category.Title}
+                >{category.Title}</option>)} */}
+                {loaded && makeCategories()}
             </Form.Select>
             <input type="text" placeholder={store.getState().GlobalState.value.key} className="form-control" onChange={(e) => setKey(e.target.value)} />
             <button className="input-group-append btn btn-secondary btn-lg" type="button" onClick={props.onClick}>Search<i

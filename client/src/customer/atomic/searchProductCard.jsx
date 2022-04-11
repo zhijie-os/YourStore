@@ -33,7 +33,7 @@ function SearchProductCard(props) {
                     <div className="d-flex flex-row align-items-center">
                         <div className="d-flex flex-row align-items-center me-4">
                             <div>
-                                <h5>{props.product.Inventory} left </h5>
+                                <h5 className="mb-0 me-4">{props.product.Inventory} left </h5>
                             </div>
                             <div>
                                 <h5 className="mb-0">${props.product.Price}</h5>
