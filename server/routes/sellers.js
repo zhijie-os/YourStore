@@ -76,6 +76,7 @@ router.get('/:id/products', getSellerInstance, async(req,res)=>{
             return {
                 "ProductNumber":productInstance._id,
                 "ProductTitle":productInstance.Title,
+                "Inventory":productInstance.Inventory,
                 "Description":productInstance.Description,
                 "Price":productInstance.Price
             }

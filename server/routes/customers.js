@@ -200,11 +200,16 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
                 await res.customerInstance.save();
 
 
+                    // decrease Inventory
+                let productInstance;
+                productInstance = await productDB.findOne({"_id":product._id});
+                productInstance.Inventory = productInstance.Inventory-1;
+                await productInstance.save();
+
+                    // decrease Inventory
                 let sellerInstance;
                 sellerInstance = await sellerDB.findOne({ "UserName": product.SellerID })
-// 
                 sellerInstance.Orders.push(newOrder._id)
-
                 await sellerInstance.save();
 
             }

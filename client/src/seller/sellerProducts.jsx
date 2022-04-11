@@ -37,6 +37,7 @@ function SellerProducts(props) {
     const [newProductPrice, setNewProductPrice] = useState();
     const [newProductDescription, setNewProductDescription] = useState();
     const [newSearchTags, setNewSearchTags] = useState();
+    const [newInventory, setNewInventory] = useState();
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState();
 
@@ -49,6 +50,7 @@ function SellerProducts(props) {
 
     const handleShow = () => {
         setNewProductDescription(null);
+        setNewInventory(null);
         setNewProductPrice(null);
         setNewProductTitle(null);
         setNewSearchTags(null);
@@ -95,6 +97,7 @@ function SellerProducts(props) {
                 "SellerID": store.getState().GlobalState.value.userID ,
                 "Title": newProductTitle,
                 "Price": newProductPrice,
+                "Inventory": newInventory,
                 "Description": newProductDescription,
                 "SearchKeys": tags,
                 "Category":category
@@ -115,6 +118,7 @@ function SellerProducts(props) {
     const [updatePrice, setUpdatePrice] = useState();
     const [updateTags, setUpdateTags] = useState([]);
     const [updateCategory, setUpdateCategory] = useState();
+    const [updateInventory, setUpdateInventory] = useState();
     const [selectedProductID, setSelectedProductID] = useState();
 
 
@@ -128,12 +132,13 @@ function SellerProducts(props) {
         setUpdateDescription(null);
         setUpdateTags(null);
         setUpdateCategory(null);
+        setUpdateInventory
         setUpdateShow(true);
     };
 
     
     const updateProduct = () => {
-        if (!updateTitle&&!updatePrice&&!updateCategory&&!updateDescription&&!updateTags)
+        if (!updateTitle&&!updatePrice&&!updateCategory&&!updateDescription&&!updateTags&&!updateInventory)
         {
             alert("Must to fill in one of the field to update a product...");
         }
@@ -154,6 +159,7 @@ function SellerProducts(props) {
             {
                 "Title": updateTitle,
                 "Price": updatePrice,
+                "Inventory":updateInventory,
                 "Description": updateDescription,
                 "SearchKeys": tags,
                 "Category": updateCategory
@@ -207,6 +213,14 @@ function SellerProducts(props) {
                                     placeholder="eg: 1999.99 (no dollar sign please)"
                                     autoFocus
                                     onChange={e => setUpdatePrice(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Inventory</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: 50 "
+                                    autoFocus
+                                    onChange={e => setUpdateInventory(e.target.value)}
                                 />
                             </Form.Group>
 
@@ -290,6 +304,14 @@ function SellerProducts(props) {
                                     onChange={e => setNewProductPrice(e.target.value)}
                                 />
                             </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Inventory</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: 50 "
+                                    autoFocus
+                                    onChange={e => setNewInventory(e.target.value)}
+                                />
+                            </Form.Group>
 
 
 
@@ -346,6 +368,7 @@ function SellerProducts(props) {
                             <tr>
                                 <th>Product ID</th>
                                 <th>Product Title</th>
+                                <th>Inventory</th>
                                 <th>Description</th>
                                 <th>Price</th>
                                 <th>Actions</th>
@@ -357,6 +380,7 @@ function SellerProducts(props) {
                                     <tr key={product.ProductNumber}>
                                         <td>{product.ProductNumber}</td>
                                         <td>{product.ProductTitle}</td>
+                                        <td>{product.Inventory}</td>
                                         <td>{product.Description}</td>
                                         <td>{product.Price}</td>
                                         <td>

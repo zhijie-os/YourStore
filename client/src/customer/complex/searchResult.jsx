@@ -4,8 +4,13 @@ import Pagination from '../../components/pagination';
 import { store } from '../../Redux/store'
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
+import { useDispatch } from 'react-redux';
+import { enterSearchKey, selectCategory } from '../../Redux/globalStateSlice';
 
 function SearchResult(props) {
+
+    const dispatch = useDispatch();
+
     const [loaded, setLoaded] = useState(false);
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(0);
@@ -25,7 +30,11 @@ function SearchResult(props) {
                 setProducts(res.data);
                 console.log(res.data);
                 setLoaded(true);
-            })
+                
+
+                dispatch(selectCategory(null));
+                dispatch(enterSearchKey(null));
+            }).catch(err=>console.log(err));
     }
 
 

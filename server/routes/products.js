@@ -43,14 +43,14 @@ router.get('/', async (req, res) => {
 
             if (searchKey != "null") {
                 allProducts = allProducts.filter((product) => {
-                    return product.Title == searchKey || product.SearchKeys.includes(searchKey);
+                    return (product.Title == searchKey || product.SearchKeys.includes(searchKey));
                 })
             }
 
-            // allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
-            // all product is a list
-            //const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
-            console.log("returning.....\n" + allProducts);
+            // allProducts = allProducts.filter((product) => {
+            //     return product.Inventory > 0;
+            // })
+
             res.json(allProducts)
         }
         catch (err) {
@@ -74,13 +74,12 @@ router.post('/', async (req, res) => {
             SellerID: req.body.SellerID,
             Title: req.body.Title,
             Price: req.body.Price,
+            Inventory: req.body.Inventory,
             Description: req.body.Description,
             SearchKeys: req.body.SearchKeys,
             Category: req.body.Category,
             Owned: true,
         })
-
-
 
     try {
         const savedproduct = await newProduct.save()
@@ -117,11 +116,15 @@ router.patch('/:id', getProductInstance, async (req, res) => {
     if (req.body.Description) {
         res.productInstance.Description = req.body.Description
     }
-    if (req.body.Category){
+    if (req.body.Category) {
         res.productInstance.Category = req.body.Category
     }
-    if(req.body.SearchKeys){
-        res.productInstance.SearchKeys= req.body.SearchKeys
+    if (req.body.SearchKeys) {
+        res.productInstance.SearchKeys = req.body.SearchKeys
+    }
+    if (req.body.Inventory)
+    {
+        res.productInstance.Inventory = req.body.Inventory
     }
 
     // try to save back
