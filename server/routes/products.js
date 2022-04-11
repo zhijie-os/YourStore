@@ -68,7 +68,7 @@ router.get('/:id', getProductInstance, (req, res) => {
     res.send(res.productInstance)
 })
 
-// POST a product with respect to the JSON input
+// create a product with respect to the JSON input
 router.post('/', async (req, res) => {
 
     // parse the JSON
@@ -82,6 +82,8 @@ router.post('/', async (req, res) => {
             Category:req.body.Category
         })
 
+
+        
     try {
         const savedproduct = await newProduct.save()
 

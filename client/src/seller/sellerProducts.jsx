@@ -26,24 +26,85 @@ function SellerProducts(props) {
                 setProducts(res.data.Products);
                 setLoaded(true);
             }).catch(err => console.log(err));
+
     }, [rerender]);
+
 
 
 
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+
 
     const [newProductTitle, setNewProductTitle] = useState();
     const [newProductPrice, setNewProductPrice] = useState();
     const [newProductDescription, setNewProductDescription] = useState();
+    const [newSearchTags, setNewSearchTags] = useState();
 
+    const [categories, setCategories] = useState([]);
+    const [category, setCategory] = useState();
+
+
+    const handleClose = () => {
+        setShow(false);
+    };
+
+
+
+    const handleShow = () => {
+        setNewProductDescription(null);
+        setNewProductPrice(null);
+        setNewProductTitle(null);
+        setNewSearchTags(null);
+        setCategory(null);
+        setShow(true);
+    };
+
+    useEffect(() => {
+        axios.get("http://127.0.0.1:8888/categories")
+            .then(res => {
+                // set the allCategories
+                setCategories(res.data);
+            }).catch(err => console.log(err));
+    }, [])
+
+
+
+    // set selected category in the global state
+    const selectCategory = (category) => () => {
+        setCategory(category);
+    }
 
 
     const addNewProduct = () => {
-        console.log(newProductTitle, newProductPrice, newProductDescription);
-        handleClose();
+        if (!newProductTitle||!newProductPrice||!category||!newProductDescription)
+        {
+            alert("Fields cannot be left empty...");
+        }
+        else if (isNaN(newProductPrice)& Number(newProductPrice) > 0) {
+            alert("Price field is not a number...");
+        }
+        else {
+            
+            // array
+            let tags = newSearchTags.split(",").map(tag=>tag.trim());
+            console.log(tags);
+
+            axios.post("http://127.0.0.1:8888/products",
+            {
+                "SellerID": store.getState().GlobalState.value.userID ,
+                "Title": newProductTitle,
+                "Price": newProductPrice,
+                "Description": newProductDescription,
+                "SearchKeys": tags,
+                "Category":category
+            }).then(()=>{
+                alert("Product has been successfully created...");
+                setRerender(!rerender);
+            }).catch(err=>console.log(err));
+
+            handleClose();   
+        }
     };
 
     return (
@@ -83,22 +144,30 @@ function SellerProducts(props) {
                                     onChange={e => setNewProductPrice(e.target.value)}
                                 />
                             </Form.Group>
+
+
+
                             <Form.Group>
                                 <Form.Label>Category</Form.Label>
-                                <Form.Select aria-label="Default select example">
-                                    <option>Please select the</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
-                                </Form.Select>
+                                <Form.Control
+                                    as="select"
+                                    onChange={e => setCategory(e.target.value)}
+                                >
+                                    <option>Please select the category</option>
+                                    {categories.length > 0 && categories.map(cate => <option key={cate._id} value={cate.Title}>{cate.Title}</option>)}
+                                </Form.Control>
                             </Form.Group>
+
+
+
+
                             <Form.Group className="mb-3">
                                 <Form.Label>Search Tags</Form.Label>
                                 <Form.Control
                                     placeholder='eg: ios, Apple, Phone 
                                     (seperate each tag by ",")'
                                     autoFocus
-                                    onChange={e => setNewProductPrice(e.target.value)}
+                                    onChange={e => setNewSearchTags(e.target.value)}
                                 />
                             </Form.Group>
                             <Form.Group
