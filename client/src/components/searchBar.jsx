@@ -10,9 +10,11 @@ import {
 } from '../Redux/globalStateSlice';
 
 import { store } from '../Redux/store'
+import Form from 'react-bootstrap/Form'
+
 
 function SearchBar(props) {
- 
+
 
     const [loaded, setLoaded] = useState(false);
     const [allCategories, setAll] = useState([]);
@@ -37,7 +39,7 @@ function SearchBar(props) {
 
 
     // set selected category in the global state
-    const setCategory = (category) => () => {
+    const setCategory  = (category) => {
         dispatch(selectCategory(category));
     }
 
@@ -45,25 +47,20 @@ function SearchBar(props) {
     const setKey = (key) => {
         dispatch(enterSearchKey(key));
     }
-    
-    const clicked = () =>{
+
+    const clicked = () => {
         alert("clicked");
     }
 
 
     return (
         <div className="input-group search-bar">
-            <div className="dropdown input-group-prepend">
-                <button className="btn btn-secondary dropdown-toggle btn-lg" type="button"
-                    data-bs-toggle="dropdown">
-                    {gs.category}
-                </button>
-                <ul className="dropdown-menu">
-                    <li key="All" onClick={setCategory("All")}><a className="dropdown-item" href="#">All</a></li>
-                    {loaded && allCategories.map(category => <li key={category.Title} onClick={setCategory(category.Title)}><a className="dropdown-item" href="#">{category.Title}</a></li>)}
-                </ul>
-            </div>
-            <input type="text" className="form-control" onChange={(e) => setKey(e.target.value)} />
+            <Form.Select  onChange={(e)=>setCategory(e.target.value)}>
+                {loaded && allCategories.map(category => <option key={category.Title} 
+                value={category.Title}
+                >{category.Title}</option>)}
+            </Form.Select>
+            <input type="text" placeholder={store.getState().GlobalState.value.key} className="form-control" onChange={(e) => setKey(e.target.value)} />
             <button className="input-group-append btn btn-secondary btn-lg" type="button" onClick={props.onClick}>Search<i
                 className="bi bi-search" ></i></button>
         </div>

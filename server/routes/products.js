@@ -35,6 +35,8 @@ router.get('/', async (req, res) => {
                     const product = await productDB.findOne({ "_id": productID });
                     return product;
                 }));
+
+                console.log(allProducts);
             }
             else {
                 // no specified category
@@ -47,9 +49,9 @@ router.get('/', async (req, res) => {
                 })
             }
 
-            // allProducts = allProducts.filter((product) => {
-            //     return product.Inventory > 0;
-            // })
+            allProducts = allProducts.filter((product) => {
+                return product.Inventory > 0;
+            })
 
             res.json(allProducts)
         }
@@ -148,7 +150,7 @@ router.delete('/:id', getProductInstance, async (req, res) => {
         if (res.productInstance.Owned) {
             const sellerInstance = await sellerDB.findOne({ "UserName": res.productInstance.SellerID });
 
-            const index = sellerInstance.Products.indexOf(res.productInstance._id);
+            let index = sellerInstance.Products.indexOf(res.productInstance._id);
             if (index > -1) {
                 sellerInstance.Products.splice(index, 1); // 2nd parameter means remove one item only
             }
@@ -157,6 +159,14 @@ router.delete('/:id', getProductInstance, async (req, res) => {
 
             res.productInstance.Owned = false;
             await res.productInstance.save();
+
+            let categoryInstance = await categoryDB.findOne({"Title":res.productInstance.Category})
+            index = categoryInstance.Products.indexOf(res.productInstance._id);
+            if (index > -1) {
+                categoryInstance.Products.splice(index, 1); // 2nd parameter means remove one item only
+            }
+            await categoryInstance.save();
+
 
             res.json({ message: 'Successfully deleted the product...' })
 

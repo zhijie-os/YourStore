@@ -9,8 +9,6 @@ import { enterSearchKey, selectCategory } from '../../Redux/globalStateSlice';
 
 function SearchResult(props) {
 
-    const dispatch = useDispatch();
-
     const [loaded, setLoaded] = useState(false);
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(0);
@@ -32,9 +30,7 @@ function SearchResult(props) {
                 setLoaded(true);
                 
 
-                dispatch(selectCategory(null));
-                dispatch(enterSearchKey(null));
-            }).catch(err=>console.log(err));
+            }).catch(err=>console.log(err.response.data));
     }
 
 
