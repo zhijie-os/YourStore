@@ -33,14 +33,10 @@ function SellerProducts(props) {
 
 
     const [show, setShow] = useState(false);
-
-
-
     const [newProductTitle, setNewProductTitle] = useState();
     const [newProductPrice, setNewProductPrice] = useState();
     const [newProductDescription, setNewProductDescription] = useState();
     const [newSearchTags, setNewSearchTags] = useState();
-
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState();
 
@@ -70,10 +66,14 @@ function SellerProducts(props) {
 
 
 
-    // set selected category in the global state
-    const selectCategory = (category) => () => {
-        setCategory(category);
-    }
+
+    const deleteProduct = (productID) => () => {
+        console.log("http://127.0.0.1:8888/products/"+productID);
+        axios.delete("http://127.0.0.1:8888/products/"+productID).then(()=>{
+            alert("Product with ID " + productID + " has been successfully remvoed....")
+            setRerender(!rerender);
+        }).catch(err => console.log(err.response));
+    };
 
 
     const addNewProduct = () => {
@@ -215,7 +215,7 @@ function SellerProducts(props) {
                                         <td>{product.Price}</td>
                                         <td>
                                             <button className="btn btn-primary">Update</button>
-                                            <button className="btn btn-danger">Delete</button>
+                                            <button className="btn btn-danger" onClick={deleteProduct(product.ProductNumber)}>Delete</button>
                                         </td>
                                     </tr>
                                 )

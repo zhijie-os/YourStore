@@ -25,6 +25,10 @@ const productSchema = new mongoose.Schema({
     Category:{
         type: String,
         required:true
+    },
+    Owned:{
+        type: Boolean,
+        required:true
     }
 })
 

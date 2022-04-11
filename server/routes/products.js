@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const productDB = require('../models/products')
-const categoryDB =require('../models/categories')
+const categoryDB = require('../models/categories')
 const sellerDB = require('../models/sellers')
 
 
@@ -13,10 +13,10 @@ router.get('/', async (req, res) => {
         res.status(400).json({ message: 'pageNumber is not defined...' })
     }
     else if (!req.query.searchKey) {
-        res.status(400).json( { message: 'searchKey is not defined'});
+        res.status(400).json({ message: 'searchKey is not defined' });
     }
-    else if (!req.query.category){
-        res.status(400).json({ message: 'category err'});
+    else if (!req.query.category) {
+        res.status(400).json({ message: 'category err' });
     }
     else {
         try {
@@ -24,36 +24,33 @@ router.get('/', async (req, res) => {
             const pageNumber = req.query.pageNumber;
             const searchKey = req.query.searchKey;
             const category = req.query.category;
-            console.log(pageSize,pageNumber,searchKey,category);
+            console.log(pageSize, pageNumber, searchKey, category);
 
             let allProducts;
-            if(category!="null")
-            {
-                allProducts = await categoryDB.findOne({"Title":category});
+            if (category != "null") {
+                allProducts = await categoryDB.findOne({ "Title": category });
                 allProducts = allProducts.Products;
 
                 allProducts = await Promise.all(allProducts.map(async (productID) => {
-                    const product = await productDB.findOne({"_id":productID});
+                    const product = await productDB.findOne({ "_id": productID });
                     return product;
                 }));
             }
-            else 
-            {
+            else {
                 // no specified category
-                allProducts = await productDB.find(); 
+                allProducts = await productDB.find();
             }
 
-            if(searchKey!="null")
-            {
-                allProducts = allProducts.filter((product)=>{
-                    return product.Title==searchKey || product.SearchKeys.includes(searchKey);
+            if (searchKey != "null") {
+                allProducts = allProducts.filter((product) => {
+                    return product.Title == searchKey || product.SearchKeys.includes(searchKey);
                 })
             }
 
             // allProducts = allProducts.slice(pageSize*pageNumber,pageSize*(pageNumber+1));
             // all product is a list
             //const allProducts = await productDB.find().limit(pageSize).skip(pageSize * pageNumber)
-            console.log("returning.....\n"+allProducts);
+            console.log("returning.....\n" + allProducts);
             res.json(allProducts)
         }
         catch (err) {
@@ -79,22 +76,23 @@ router.post('/', async (req, res) => {
             Price: req.body.Price,
             Description: req.body.Description,
             SearchKeys: req.body.SearchKeys,
-            Category:req.body.Category
+            Category: req.body.Category,
+            Owned: true,
         })
 
 
-        
+
     try {
         const savedproduct = await newProduct.save()
 
         // add into category
-        belongingCategory = await categoryDB.findOne({"Title":req.body.Category});
+        belongingCategory = await categoryDB.findOne({ "Title": req.body.Category });
         belongingCategory.Products.push(savedproduct._id);
         await belongingCategory.save();
 
 
         // add into seller's products
-        let belongingSeller = await sellerDB.findOne({"UserName":req.body.SellerID});
+        let belongingSeller = await sellerDB.findOne({ "UserName": req.body.SellerID });
         belongingSeller.Products.push(savedproduct._id);
         await belongingSeller.save();
 
@@ -138,11 +136,29 @@ router.delete('/:id', getProductInstance, async (req, res) => {
 
     // try to remove
     try {
-        await res.productInstance.remove()
-        res.json({ message: 'Successfully deleted the product' })
+        if (res.productInstance.Owned) {
+            const sellerInstance = await sellerDB.findOne({ "UserName": res.productInstance.SellerID });
+
+            const index = sellerInstance.Products.indexOf(res.productInstance._id);
+            if (index > -1) {
+                sellerInstance.Products.splice(index, 1); // 2nd parameter means remove one item only
+            }
+
+            await sellerInstance.save();
+
+            res.productInstance.Owned = false;
+            await res.productInstance.save();
+
+            res.json({ message: 'Successfully deleted the product...' })
+
+        }
+        else {
+            res.status(500).json({ message: 'Product is already deleted...' })
+        }
+
     }
     catch (err) {
-        res.status(500).json({ message: 'Failed to delete the product' })
+        res.status(500).json({ message: 'Failed to delete the product...' })
     }
 })
 
