@@ -107,6 +107,68 @@ function SellerProducts(props) {
         }
     };
 
+
+    const [updateShow, setUpdateShow] = useState(false);
+
+    const [updateTitle, setUpdateTitle] = useState();
+    const [updateDescription, setUpdateDescription] = useState();
+    const [updatePrice, setUpdatePrice] = useState();
+    const [updateTags, setUpdateTags] = useState([]);
+    const [updateCategory, setUpdateCategory] = useState();
+    const [selectedProductID, setSelectedProductID] = useState();
+
+
+    const handleUpdateClose = () => {
+        setUpdateShow(false);
+    };
+
+    const handleUpdateShow = () => {
+        setUpdateTitle(null);
+        setUpdatePrice(null);
+        setUpdateDescription(null);
+        setUpdateTags(null);
+        setUpdateCategory(null);
+        setUpdateShow(true);
+    };
+
+    
+    const updateProduct = () => {
+        if (!updateTitle&&!updatePrice&&!updateCategory&&!updateDescription&&!updateTags)
+        {
+            alert("Must to fill in one of the field to update a product...");
+        }
+        else if (isNaN(newProductPrice)& Number(newProductPrice) > 0) {
+            alert("Price field is not a number...");
+        }
+        else {
+            
+            // array
+            
+            let tags;
+            if(updateTags)
+            {
+                tags = updateTags.split(",").map(tag=>tag.trim());
+            }
+
+            axios.patch("http://127.0.0.1:8888/products/"+selectedProductID,
+            {
+                "Title": updateTitle,
+                "Price": updatePrice,
+                "Description": updateDescription,
+                "SearchKeys": tags,
+                "Category": updateCategory
+            }).then(()=>{
+                alert("Product has been successfully updated...");
+                setRerender(!rerender);
+            }).catch(err=>console.log(err));
+
+            handleUpdateClose();   
+        }
+    };
+
+
+
+
     return (
         <div>
             <NavBar userType="seller" />
@@ -118,6 +180,90 @@ function SellerProducts(props) {
                         <button className="btn btn-primary btn-lg" onClick={handleShow}>Add New Product</button>
                     </div>
                 </section>
+
+
+
+
+                <Modal show={updateShow} onHide={handleUpdateClose}>
+                    <Modal.Header closeButton>
+                        <Modal.Title>New Product Details</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Form>
+                            <Form.Group className="mb-3">
+                                <Form.Label>If you do not want to update a field, leave it blank.</Form.Label>
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Product Title</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: iPhone"
+                                    autoFocus
+                                    onChange={e => setUpdateTitle(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3">
+                                <Form.Label>Product Price</Form.Label>
+                                <Form.Control
+                                    placeholder="eg: 1999.99 (no dollar sign please)"
+                                    autoFocus
+                                    onChange={e => setUpdatePrice(e.target.value)}
+                                />
+                            </Form.Group>
+
+
+
+                            <Form.Group>
+                                <Form.Label>Category</Form.Label>
+                                <Form.Control
+                                    as="select"
+                                    onChange={e => setUpdateCategory(e.target.value)}
+                                >
+                                    <option>Please select the category</option>
+                                    {categories.length > 0 && categories.map(cate => <option key={cate._id} value={cate.Title}>{cate.Title}</option>)}
+                                </Form.Control>
+                            </Form.Group>
+
+
+
+
+                            <Form.Group className="mb-3">
+                                <Form.Label>Search Tags</Form.Label>
+                                <Form.Control
+                                    placeholder='eg: ios, Apple, Phone 
+                                    (seperate each tag by ",")'
+                                    autoFocus
+                                    onChange={e => setUpdateTags(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Form.Group
+                                className="mb-3"
+                            >
+                                <Form.Label>Product Description</Form.Label>
+                                <Form.Control as="textarea" rows={2}
+                                    placeholder="eg: iPhone designed by Apple at California."
+                                    onChange={e => setUpdateDescription(e.target.value)} />
+                            </Form.Group>
+                        </Form>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={handleUpdateClose}>
+                            Cancel
+                        </Button>
+                        <Button variant="primary" onClick={updateProduct}>
+                            Save Product
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -185,7 +331,7 @@ function SellerProducts(props) {
                             Cancel
                         </Button>
                         <Button variant="primary" onClick={addNewProduct}>
-                            Save Products
+                            Create Product
                         </Button>
                     </Modal.Footer>
                 </Modal>
@@ -214,7 +360,7 @@ function SellerProducts(props) {
                                         <td>{product.Description}</td>
                                         <td>{product.Price}</td>
                                         <td>
-                                            <button className="btn btn-primary">Update</button>
+                                            <button className="btn btn-primary" onClick={()=>{setSelectedProductID(product.ProductNumber);handleUpdateShow()}}>Update</button>
                                             <button className="btn btn-danger" onClick={deleteProduct(product.ProductNumber)}>Delete</button>
                                         </td>
                                     </tr>

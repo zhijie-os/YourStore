@@ -111,11 +111,17 @@ router.patch('/:id', getProductInstance, async (req, res) => {
     if (req.body.Title) {
         res.productInstance.Title = req.body.Title
     }
-    else if (body.Price) {
+    if (req.body.Price) {
         res.productInstance.Price = req.body.Price
     }
-    else if (body.Description) {
+    if (req.body.Description) {
         res.productInstance.Description = req.body.Description
+    }
+    if (req.body.Category){
+        res.productInstance.Category = req.body.Category
+    }
+    if(req.body.SearchKeys){
+        res.productInstance.SearchKeys= req.body.SearchKeys
     }
 
     // try to save back
