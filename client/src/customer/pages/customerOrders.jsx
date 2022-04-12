@@ -48,6 +48,14 @@ function CustomerOrders(props) {
             }).catch(err => console.log(err));
     }, [rerender]);
 
+    const payOrder = (orderNumber) => () => {
+        // console.log(product._id);
+        axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
+            { "Payment": "true" }).then(() => {
+                setRerender(!rerender);
+                alert("Order with ID: " + orderNumber + " has been successfully being paid...")
+            }).catch(err => alert(err.response.message));
+    };
 
     return (
         <div>
@@ -81,6 +89,7 @@ function CustomerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
+                                        <button className="btn btn-primary" onClick={payOrder(order.OrderNumber)}>Pay</button>
                                         <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>
