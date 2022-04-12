@@ -2,7 +2,7 @@ import SearchBar from "../../components/searchBar";
 
 function GiantSearchBar(props) {
     return (
-        <div>
+        <div >
             <section className="text-light p-5 p-lg-3 pt-lg-5">
                 <div className="d-flex justify-content-center">
 

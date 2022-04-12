@@ -36,9 +36,9 @@ body {
     }
 }
 
-.at-bottom {
+.footer {
     width: 100%;
     position: fixed;
     bottom: 0;
+    max-height: 20px;
 }
-
