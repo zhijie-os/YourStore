@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const bcrypt = require("bcrypt");
 const PORT = 8888;
 const express = require('express');
 const app = express();
@@ -50,7 +50,8 @@ app.put('/login', async (req, res) => {
             // check if the user is customer
             customerInstance = await customerDB.findOne({ "UserName": username });
             if (customerInstance != null) {
-                if (password === customerInstance.Password) {
+                const validPassword = await bcrypt.compare(password, customerInstance.Password);
+                if (validPassword) {
                     res.json({ "UserName": username, "UserType": "customer" });
                 }
                 else {
@@ -63,7 +64,8 @@ app.put('/login', async (req, res) => {
             // check if the user is seller
             sellerInstance = await sellerDB.findOne({ "UserName": username });
             if (sellerInstance != null) {
-                if (password === sellerInstance.Password) {
+                const validPassword = await bcrypt.compare(password, sellerInstance.Password);
+                if (validPassword) {
                     res.json({ "UserName": username, "UserType": "seller" });
                 }
                 else {

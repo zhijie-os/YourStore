@@ -4,6 +4,7 @@ const customerDB = require('../models/customers')
 const productDB = require('../models/products')
 const orderDB = require('../models/orders')
 const sellerDB = require('../models/sellers')
+const bcrypt = require("bcrypt");
 
 // get customer's orders by UserName
 router.get("/:id/orders", getCustomerInstance, async (req, res) => {
@@ -18,40 +19,37 @@ router.get("/:id/orders", getCustomerInstance, async (req, res) => {
         }));
 
         let orderInfo;
-        orderInfo = await Promise.all(actualOrders.map(async (order)=>{
-            let product = await productDB.findOne({"_id":order.Product});
+        orderInfo = await Promise.all(actualOrders.map(async (order) => {
+            let product = await productDB.findOne({ "_id": order.Product });
 
             let status;
 
-            if(!order.Payment)
-            {
-                status="Unpaid"
+            if (!order.Payment) {
+                status = "Unpaid"
             }
-            else{
-                if(order.Shipped)
-                {
-                    status="Shipped"
+            else {
+                if (order.Shipped) {
+                    status = "Shipped"
                 }
-                else{
-                    status="Unshipped"
+                else {
+                    status = "Unshipped"
                 }
             }
 
-            if(order.Cancelled)
-            {
-                status="Cancelled";
+            if (order.Cancelled) {
+                status = "Cancelled";
             }
 
             return {
-                "OrderNumber":order._id,
-                "SellerID":order.SellerID,
+                "OrderNumber": order._id,
+                "SellerID": order.SellerID,
                 "ProductName": product.Title,
-                "Price":order.Total,
-                "ReceiverName":order.ReceiverName,
-                "ReceiverAddress":order.ReceiverAddress,
-                "Status":status,
-                "ShipmentLabel":order.ShipmentLabel
-            } 
+                "Price": order.Total,
+                "ReceiverName": order.ReceiverName,
+                "ReceiverAddress": order.ReceiverAddress,
+                "Status": status,
+                "ShipmentLabel": order.ShipmentLabel
+            }
         }));
 
         res.json({ Orders: orderInfo });
@@ -200,13 +198,13 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
                 await res.customerInstance.save();
 
 
-                    // decrease Inventory
+                // decrease Inventory
                 let productInstance;
-                productInstance = await productDB.findOne({"_id":product._id});
-                productInstance.Inventory = productInstance.Inventory-1;
+                productInstance = await productDB.findOne({ "_id": product._id });
+                productInstance.Inventory = productInstance.Inventory - 1;
                 await productInstance.save();
 
-                    // decrease Inventory
+                // decrease Inventory
                 let sellerInstance;
                 sellerInstance = await sellerDB.findOne({ "UserName": product.SellerID })
                 sellerInstance.Orders.push(newOrder._id)
@@ -270,16 +268,20 @@ router.post('/', async (req, res) => {
 
     // try if can save the customer
     try {
-        let alreadyUsed = await customerDB.findOne({"UserName": req.body.UserName});
- 
-        if(alreadyUsed!=null){
-            res.status(500).json({message:"Customer "+req.body.UserName+" already existed."});
+        let alreadyUsed = await customerDB.findOne({ "UserName": req.body.UserName });
+
+        if (alreadyUsed != null) {
+            res.status(500).json({ message: "Customer " + req.body.UserName + " already existed." });
             return;
         }
+        // generate salt to hash password
+        const salt = await bcrypt.genSalt(10);
+        // now we set user password to hashed password
+        newcustomer.Password = await bcrypt.hash(newcustomer.Password, salt);
 
         await newcustomer.save()
         // on success, send back 201
-        res.status(200).json({message:"Customer "+req.body.UserName+" has been successfully created"});
+        res.status(200).json({ message: "Customer " + req.body.UserName + " has been successfully created" });
     }
     catch (err) {
         // on error, send back error

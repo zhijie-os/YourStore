@@ -4,7 +4,7 @@ const sellerDB = require('../models/sellers')
 const orderDB = require('../models/orders')
 const productDB = require('../models/products')
 const { route } = require('./products')
-
+const bcrypt = require("bcrypt");
 
 // get seller's orders by UserName
 router.get("/:id/orders", getSellerInstance, async (req, res) => {
@@ -145,6 +145,10 @@ router.post('/', async (req, res) => {
             res.status(500).json({message:"Seller "+req.body.UserName+" already existed."});
             return;
         }
+
+        const salt = await bcrypt.genSalt(10);
+        // now we set user password to hashed password
+        newSeller.Password = await bcrypt.hash(newSeller.Password, salt);
 
         await newSeller.save()
         // on success, send back 201
