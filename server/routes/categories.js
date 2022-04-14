@@ -17,8 +17,7 @@ router.get('/', async (req, res) => {
 
 })
 
-
-// GET a user with respect to :id
+// GET a category with respect to :id
 router.get('/:id', getCategoryInstance, (req, res) => {
     res.send(res.categoryInstance)
 })
@@ -44,6 +43,7 @@ router.post('/', async (req, res) => {
     }
 })
 
+
 // PATCH with respect to :id and the given input
 router.patch('/:id', getCategoryInstance, async (req, res) => {
 
@@ -66,7 +66,6 @@ router.patch('/:id', getCategoryInstance, async (req, res) => {
 
 // DELETE a user with respect to :id
 router.delete('/:id', getCategoryInstance, async (req, res) => {
-
     // try to remove
     try {
         await res.categoryInstance.remove()
@@ -76,7 +75,6 @@ router.delete('/:id', getCategoryInstance, async (req, res) => {
         res.status(500).json({ message: 'Failed to delete the category' })
     }
 })
-
 
 
 // middleware that finds the category instance by :id from the database

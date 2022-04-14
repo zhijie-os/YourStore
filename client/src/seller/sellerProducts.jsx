@@ -132,7 +132,7 @@ function SellerProducts(props) {
         setUpdateDescription(null);
         setUpdateTags(null);
         setUpdateCategory(null);
-        setUpdateInventory
+        setUpdateInventory(null);
         setUpdateShow(true);
     };
 

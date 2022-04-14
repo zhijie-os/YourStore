@@ -6,64 +6,50 @@ const sellerDB = require('../models/sellers')
 
 
 router.get('/', async (req, res) => {
-    if (!req.query.pageSize) {
-        res.status(400).json({ message: 'pageSize is not defined...' })
-    }
-    else if (!req.query.pageNumber) {
-        res.status(400).json({ message: 'pageNumber is not defined...' })
-    }
-    else if (!req.query.searchKey) {
-        res.status(400).json({ message: 'searchKey is not defined' });
-    }
-    else if (!req.query.category) {
-        res.status(400).json({ message: 'category err' });
-    }
-    else {
-        try {
-            const pageSize = req.query.pageSize;
-            const pageNumber = req.query.pageNumber;
-            const searchKey = req.query.searchKey;
-            const category = req.query.category;
-            console.log(pageSize, pageNumber, searchKey, category);
 
-            let allProducts;
-            if (category != "null") {
-                allProducts = await categoryDB.findOne({ "Title": category });
-                allProducts = allProducts.Products;
+    try {
+        const searchKey = req.query.searchKey;
+        const category = req.query.category;
 
-                allProducts = await Promise.all(allProducts.map(async (productID) => {
-                    const product = await productDB.findOne({ "_id": productID });
-                    return product;
-                }));
+        let allProducts;
+        if (category) {
+            allProducts = await categoryDB.findOne({ "Title": category });
+            allProducts = allProducts.Products;
 
-                console.log(allProducts);
-            }
-            else {
-                // no specified category
-                allProducts = await productDB.find();
-            }
+            allProducts = await Promise.all(allProducts.map(async (productID) => {
+                const product = await productDB.findOne({ "_id": productID });
+                return product;
+            }));
 
-            if (searchKey != "null") {
-                allProducts = allProducts.filter((product) => {
-                    return (product.Title == searchKey || product.SearchKeys.includes(searchKey));
-                })
-            }
+            console.log(allProducts);
+        }
+        else {
+            // no specified category
+            allProducts = await productDB.find();
+        }
 
+        if (searchKey) {
             allProducts = allProducts.filter((product) => {
-                return product.Inventory > 0;
+                return (product.Title == searchKey || product.SearchKeys.includes(searchKey));
             })
-
-
-            allProducts = allProducts.filter((product)=>{
-                return product.Owned != false;
-            })
-
-            res.json(allProducts)
         }
-        catch (err) {
-            res.status(500).json({ message: err.message })
-        }
+
+        allProducts = allProducts.filter((product) => {
+            return product.Inventory > 0;
+        })
+
+
+        allProducts = allProducts.filter((product) => {
+            return product.Owned != false;
+        })
+
+        console.log(allProducts);
+        res.json(allProducts)
     }
+    catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+
 })
 
 
@@ -129,8 +115,7 @@ router.patch('/:id', getProductInstance, async (req, res) => {
     if (req.body.SearchKeys) {
         res.productInstance.SearchKeys = req.body.SearchKeys
     }
-    if (req.body.Inventory)
-    {
+    if (req.body.Inventory) {
         res.productInstance.Inventory = req.body.Inventory
     }
 
@@ -165,7 +150,7 @@ router.delete('/:id', getProductInstance, async (req, res) => {
             res.productInstance.Owned = false;
             await res.productInstance.save();
 
-            let categoryInstance = await categoryDB.findOne({"Title":res.productInstance.Category})
+            let categoryInstance = await categoryDB.findOne({ "Title": res.productInstance.Category })
             index = categoryInstance.Products.indexOf(res.productInstance._id);
             if (index > -1) {
                 categoryInstance.Products.splice(index, 1); // 2nd parameter means remove one item only

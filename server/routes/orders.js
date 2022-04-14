@@ -4,70 +4,53 @@ const orderDB = require('../models/orders')
 
 
 
-router.patch('/:id/ship', getOrderInstance, async (req, res)=>
-{
-    if(!req.body.ShippingLabel)
-    {
+router.patch('/:id/ship', getOrderInstance, async (req, res) => {
+    if (!req.body.ShippingLabel) {
         res.status(400).json({ fail: 'shipping label is not defined...' })
         return;
     }
 
-    if(!res.orderInstance.Payment && !res.orderInstance.Cancelled)
-    {
-        res.status(400).json({ fail: "Customer has not made a payment yet, you cannot ship..."});
+    if (!res.orderInstance.Payment && !res.orderInstance.Cancelled) {
+        res.status(400).json({ fail: "Customer has not made a payment yet, you cannot ship..." });
         return;
     }
 
-    if(res.orderInstance.Cancelled)
-    {
-        res.status(400).json({ fail: "The order is cancelled, you cannot ship..."});
+    if (res.orderInstance.Cancelled) {
+        res.status(400).json({ fail: "The order is cancelled, you cannot ship..." });
         return;
     }
 
-    try{
- 
+    try {
+
         res.orderInstance.Shipped = true;
         res.orderInstance.ShipmentLabel = req.body.ShippingLabel;
 
         await res.orderInstance.save();
 
 
-        res.status(200).json({success: "The order shipping status is udpated...."});
+        res.status(200).json({ success: "The order shipping status is udpated...." });
     }
-    catch(err)
-    {
+    catch (err) {
         res.status(500).json({ fail: err.message });
     }
 
-    
+
 });
 
 
-// GET a list of orders with pagination
+// GET a list of orders 
 router.get('/', async (req, res) => {
-    if (!req.query.pageSize) {
-        res.status(400).json({ message: 'pageSize is not defined...' })
+    try {
+
+        const allOrders = await orderDB.find();
+
+        // only return the name of the order
+        res.json(allOrders)
     }
-    else if (!req.query.pageNumber) {
-        res.status(400).json({ message: 'pageNumber is not defined...' })
+    catch (err) {
+
+        res.status(500).json({ message: err.message })
     }
-    else {
-        try {
-            const pageSize = req.query.pageSize
-            const pageNumber = req.query.pageNumber
-            // all order is a list
-            const allOrders = await orderDB.find().limit(pageSize).skip(pageSize * pageNumber)
-
-            // only return the name of the order
-            res.json(allOrders)
-        }
-        catch (err) {
-
-            res.status(500).json({ message: err.message })
-
-        }
-    }
-
 
 })
 
@@ -118,8 +101,7 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
         res.orderInstance.Payment = req.body.Payment
     }
     else if (req.body.Cancelled) {
-        if(res.orderInstance.Cancelled)
-        {
+        if (res.orderInstance.Cancelled) {
             res.status(400).json({ message: "Order is already being cancelled" });
         }
 

@@ -29,6 +29,26 @@ app.use(express.json());
 
 const customerDB = require('./models/customers')
 const sellerDB = require('./models/sellers')
+const adminDB = require('./models/admins')
+
+
+
+// const createAdmin = async () => {
+//     // generate salt to hash password
+//     const salt = await bcrypt.genSalt(10);
+
+//     let admin = new adminDB();
+//     admin.UserName = "SuperUser";
+
+//     // now we set user password to hashed password
+//     admin.Password = await bcrypt.hash("sudo", salt);
+//     await admin.save();
+
+//     console.log("saved");
+// }
+
+// createAdmin();
+
 
 app.put('/login', async (req, res) => {
 
@@ -45,6 +65,20 @@ app.put('/login', async (req, res) => {
             const username = req.body.UserName;
             const password = req.body.Password;
 
+            let adminInstance;
+
+            adminInstance = await adminDB.findOne({ "UserName": username });
+            if (adminInstance != null) {
+                const validPassword = await bcrypt.compare(password, adminInstance.Password);
+                if (validPassword) {
+                    res.json({ "UserName": username, "UserType": "admin" });
+                }
+                else {
+                    res.status(500).json({ message: "Wrong password..." })
+                }
+                return;
+            }
+
             let customerInstance, sellerInstance;
 
             // check if the user is customer
@@ -59,7 +93,6 @@ app.put('/login', async (req, res) => {
                 }
                 return;
             }
-
 
             // check if the user is seller
             sellerInstance = await sellerDB.findOne({ "UserName": username });

@@ -51,7 +51,7 @@ function Login(props) {
                     navigate("/seller/products");
                 }
                 else {
-                    navigate("/login")
+                    navigate("/admin/products");
                 }
             }).catch((err) => {
                 // otherwise, alert user that the error message

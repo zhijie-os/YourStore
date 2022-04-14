@@ -34,6 +34,13 @@ function NavBar(props) {
         navigate("/seller/orders");
     };
 
+    const goAllProducts = () => {
+        navigate("/admin/products");
+    };
+
+    const goAllOrders = () => {
+        navigate("/admin/orders");
+    };
 
     const logout = () => {
         dispatch(clean("Dummy"));
@@ -56,10 +63,12 @@ function NavBar(props) {
                         <li className="nav-item">
                             {userType === "seller" && <a href="#myproducts" className="nav-link text-white" onClick={goToSellerProduct}>My Products</a>}
                             {userType === "customer" && <a href="#mycart" className="nav-link text-white" onClick={goToCart}>My Cart</a>}
+                            {userType === "admin" && <a href="#mycart" className="nav-link text-white" onClick={goAllProducts}>All Products</a>} 
                         </li>
                         <li className="nav-item">
                             {userType === "customer" && <a href="#myorders" className="nav-link text-white" onClick={goToCustomerOrder}>My Orders</a>}
                             {userType === "seller" && <a href="#myorders" className="nav-link text-white" onClick={goToSellerOrder}>My Orders</a>}
+                            {userType === "admin" && <a href="#mycart" className="nav-link text-white" onClick={goAllOrders}>All Orders</a>}
                         </li>
                         <li className="nav-item">
                             <a href="#logout" className="nav-link text-white" onClick={logout}>Logout</a>
