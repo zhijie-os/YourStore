@@ -19,7 +19,7 @@ function SearchResult(props) {
 
     const retrieveProducts = ()=>{
         // console.log(getGSValue().category);
-        axios.get("http://127.0.0.1:8888/products?pageSize=10" + "&pageNumber=" + page
+        axios.get("http://127.0.0.1:8888/products?"
         +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+
         "&category="+(getGSValue().category=="All"||
         getGSValue().category==null?"null":getGSValue().category))

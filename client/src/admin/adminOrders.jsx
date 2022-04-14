@@ -27,17 +27,17 @@ function AdminOrders(props){
             { "Cancelled": "true" }).then(() => {
                 setRerender(!rerender);
                 alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
-            }).catch(err => console.log(err));
+            }).catch(err => err.response.message);
     };
 
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/orders").then((res) => {
+        axios.get("http://127.0.0.1:8888/admins/orders").then((res) => {
                 setLoaded(false);
-                console.log(res.data);
-                setOrders(res.data);
+                console.log(res.data.Orders);
+                setOrders(res.data.Orders);
                 setLoaded(true);
-            }).catch(err => console.log(err));
+            }).catch(err => err.response.message);
     }, [rerender]);
 
 
@@ -56,22 +56,26 @@ function AdminOrders(props){
                             <th>Price</th>
                             <th>Receiver Address</th>
                             <th>Receiver Name</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {loaded && orders.map(order => {
+                            console.log(order);
+                            console.log(order.Order._id,order.Order.CustomerID,order.Order.SellerID,order.Product);
                             return (
-                                <tr key={order._id}>
-                                    <td>{order._id}</td>
-                                    <td>{order.CustomerID}</td>
-                                    <td>{order.SellerID}</td>
-                                    <td>{order.Product}</td>
-                                    <td>{order.Total}</td>
-                                    <td>{order.ReceiverName}</td>
-                                    <td>{order.ReceiverAddress}</td>
+                                <tr key={order.Order._id}>
+                                    <td>{order.Order._id}</td>
+                                    <td>{order.Order.CustomerID}</td>
+                                    <td>{order.Order.SellerID}</td>
+                                    <td>{order.Product.Title}</td>
+                                    <td>{order.Order.Total}</td>
+                                    <td>{order.Order.ReceiverName}</td>
+                                    <td>{order.Order.ReceiverAddress}</td>
+                                    <td>{order.Status}</td>
                                     <td>
-                                        <button className="btn btn-danger" onClick={cancelOrder(order._id)}>Cancel</button>
+                                        <button className="btn btn-danger" onClick={cancelOrder(order.Order._id)}>Cancel</button>
                                     </td>
                                 </tr>
                             )

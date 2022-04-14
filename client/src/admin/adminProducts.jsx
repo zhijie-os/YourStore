@@ -18,7 +18,7 @@ function AdminProducts(props) {
     const [rerender, setRerender] = useState(false);
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/products").
+        axios.get("http://127.0.0.1:8888/admins/products").
             then((res) => {
                 setLoaded(false);
                 console.log(res.data);
