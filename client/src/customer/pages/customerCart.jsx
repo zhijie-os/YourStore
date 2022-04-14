@@ -34,9 +34,9 @@ function CustomerCart(props) {
             };
             axios.put("http://127.0.0.1:8888/customers/"+
             store.getState().GlobalState.value.userID+"/createOrder",
-            info).then(()=>{
+            info).then((res)=>{
                 setRerender(!rerender);
-                alert("Orders has been successively created");
+                alert(res.data.message);
             }).catch(err=>console.log(err))
         }
         else

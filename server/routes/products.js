@@ -53,6 +53,11 @@ router.get('/', async (req, res) => {
                 return product.Inventory > 0;
             })
 
+
+            allProducts = allProducts.filter((product)=>{
+                return product.Owned != false;
+            })
+
             res.json(allProducts)
         }
         catch (err) {

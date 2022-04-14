@@ -173,8 +173,28 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
     else {
         try {
 
+
+            let outOfStock = false;
+
             // create orders
             for (const product of req.body.Products) {
+
+
+
+                // decrease Inventory
+                let productInstance;
+                productInstance = await productDB.findOne({ "_id": product._id });
+                if (productInstance.Inventory > 0) {
+
+                    productInstance.Inventory = productInstance.Inventory - 1;
+                    await productInstance.save();
+                }
+                else {
+                    outOfStock = true;
+                    continue;
+                }
+
+
 
                 let newOrder = new orderDB(
                     {
@@ -198,11 +218,6 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
                 await res.customerInstance.save();
 
 
-                // decrease Inventory
-                let productInstance;
-                productInstance = await productDB.findOne({ "_id": product._id });
-                productInstance.Inventory = productInstance.Inventory - 1;
-                await productInstance.save();
 
                 // decrease Inventory
                 let sellerInstance;
@@ -215,7 +230,14 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
             // clear the cart
             res.customerInstance.Cart = [];
             await res.customerInstance.save();
-            res.json("Orders created");
+
+            if (outOfStock) {
+                res.json({ message: "Some products are failed to make the order, please check your orders to review..." })
+            }
+            else {
+
+                res.json({ message: "Orders created successfully" });
+            }
         }
         catch (err) {
             console.log(err);
