@@ -48,7 +48,7 @@ function Login(props) {
                 }
                 else if (store.getState().GlobalState.value.userType == "seller") {
                     // navigate to page /inventory if it is seller
-                    navigate("/seller/orders");
+                    navigate("/seller/products");
                 }
                 else {
                     navigate("/login")
