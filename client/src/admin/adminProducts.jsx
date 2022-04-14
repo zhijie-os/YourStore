@@ -27,46 +27,6 @@ function AdminProducts(props) {
             }).catch(err => console.log(err.resposne.message));
     }, [rerender]);
 
-
-
-
-    // const [show, setShow] = useState(false);
-    // const [newProductTitle, setNewProductTitle] = useState();
-    // const [newProductPrice, setNewProductPrice] = useState();
-    // const [newProductDescription, setNewProductDescription] = useState();
-    // const [newSearchTags, setNewSearchTags] = useState();
-    // const [newInventory, setNewInventory] = useState();
-
-    // const [category, setCategory] = useState();
-
-
-    // const handleClose = () => {
-    //     setShow(false);
-    // };
-
-
-
-    // const handleShow = () => {
-    //     setNewProductDescription(null);
-    //     setNewInventory(null);
-    //     setNewProductPrice(null);
-    //     setNewProductTitle(null);
-    //     setNewSearchTags(null);
-    //     setCategory(null);
-    //     setShow(true);
-    // };
-
-    // useEffect(() => {
-    //     axios.get("http://127.0.0.1:8888/categories")
-    //         .then(res => {
-    //             // set the allCategories
-    //             setCategories(res.data);
-    //         }).catch(err => console.log(err));
-    // }, [])
-
-
-
-
     const deleteProduct = (productID) => () => {
         console.log("http://127.0.0.1:8888/products/"+productID);
         axios.delete("http://127.0.0.1:8888/products/"+productID).then(()=>{
@@ -76,25 +36,38 @@ function AdminProducts(props) {
     };
 
 
+    
+    const [show, setShow] = useState(false);
+    const [category,setCategory] = useState();
+
+    const createCategory = () =>{
+        axios.post("http://127.0.0.1:8888/admins/createCategory",{"Title":category}).then(()=>{
+            alert("Category "+category + " has created");
+        }).catch(err=>alert(err.response.message));
+    }
+
+    const handleClose = () => {
+        setShow(false);
+    };
+
+    const handleShow = () => {
+        setCategory(null);
+        setShow(true);
+    };
+
 
     return (
         <div>
             <NavBar userType="admin" />
 
             <div>
-{/* 
+
                 <section className="p-1">
                     <div className="container">
-                        <button className="btn btn-primary btn-lg" onClick={handleShow}>Add New Product</button>
+                        <button className="btn btn-primary btn-lg" onClick={handleShow}>Create New Category</button>
                     </div>
-                </section> */}
+                </section>
 
-
-
-
-
-
-{/* 
 
                 <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
@@ -103,62 +76,12 @@ function AdminProducts(props) {
                     <Modal.Body>
                         <Form>
                             <Form.Group className="mb-3">
-                                <Form.Label>Product Title</Form.Label>
-                                <Form.Control
-                                    placeholder="eg: iPhone"
-                                    autoFocus
-                                    onChange={e => setNewProductTitle(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Product Price</Form.Label>
-                                <Form.Control
-                                    placeholder="eg: 1999.99 (no dollar sign please)"
-                                    autoFocus
-                                    onChange={e => setNewProductPrice(e.target.value)}
-                                />
-                            </Form.Group>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Inventory</Form.Label>
-                                <Form.Control
-                                    placeholder="eg: 50 "
-                                    autoFocus
-                                    onChange={e => setNewInventory(e.target.value)}
-                                />
-                            </Form.Group>
-
-
-
-                            <Form.Group>
                                 <Form.Label>Category</Form.Label>
                                 <Form.Control
-                                    as="select"
-                                    onChange={e => setCategory(e.target.value)}
-                                >
-                                    <option>Please select the category</option>
-                                    {categories.length > 0 && categories.map(cate => <option key={cate._id} value={cate.Title}>{cate.Title}</option>)}
-                                </Form.Control>
-                            </Form.Group>
-
-
-
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Search Tags</Form.Label>
-                                <Form.Control
-                                    placeholder='eg: ios, Apple, Phone 
-                                    (seperate each tag by ",")'
+                                    placeholder="eg: Cars"
                                     autoFocus
-                                    onChange={e => setNewSearchTags(e.target.value)}
+                                    onChange={e => setCategory(e.target.value)}
                                 />
-                            </Form.Group>
-                            <Form.Group
-                                className="mb-3"
-                            >
-                                <Form.Label>Product Description</Form.Label>
-                                <Form.Control as="textarea" rows={2}
-                                    placeholder="eg: iPhone designed by Apple at California."
-                                    onChange={e => setNewProductDescription(e.target.value)} />
                             </Form.Group>
                         </Form>
                     </Modal.Body>
@@ -166,12 +89,12 @@ function AdminProducts(props) {
                         <Button variant="secondary" onClick={handleClose}>
                             Cancel
                         </Button>
-                        <Button variant="primary" onClick={addNewProduct}>
-                            Create Product
+                        <Button variant="primary" onClick={createCategory}>
+                            Create Category
                         </Button>
                     </Modal.Footer>
                 </Modal>
- */}
+
 
 
 

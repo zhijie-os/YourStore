@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         const category = req.query.category;
 
         let allProducts;
-        if (category) {
+        if (category&&category!="null") {
             allProducts = await categoryDB.findOne({ "Title": category });
             allProducts = allProducts.Products;
 
@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
             allProducts = await productDB.find();
         }
 
-        if (searchKey) {
+        if (searchKey&&searchKey!="null") {
             allProducts = allProducts.filter((product) => {
                 return (product.Title == searchKey || product.SearchKeys.includes(searchKey));
             })

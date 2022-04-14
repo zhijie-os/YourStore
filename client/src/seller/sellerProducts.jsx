@@ -32,7 +32,7 @@ function SellerProducts(props) {
 
 
 
-    const [show, setShow] = useState(false);
+   
     const [newProductTitle, setNewProductTitle] = useState();
     const [newProductPrice, setNewProductPrice] = useState();
     const [newProductDescription, setNewProductDescription] = useState();
@@ -41,7 +41,7 @@ function SellerProducts(props) {
     const [categories, setCategories] = useState([]);
     const [category, setCategory] = useState();
 
-
+    const [show, setShow] = useState(false);
     const handleClose = () => {
         setShow(false);
     };

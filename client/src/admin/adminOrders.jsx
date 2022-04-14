@@ -14,7 +14,6 @@ import axios from "axios";
 
 function AdminOrders(props){
 
-
     // let navigate = useNavigate();
     const [loaded, setLoaded] = useState(false);
     const [orders, setOrders] = useState([]);

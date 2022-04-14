@@ -133,6 +133,10 @@ app.use('/products', productRouter);
 const categoryRouter = require('./routes/categories');
 app.use('/categories', categoryRouter);
 
+const adminRouter = require('./routes/admins');
+app.use('/admins', adminRouter);
+
+
 app.listen(PORT, () => console.log('Server Started.'));
 
 
