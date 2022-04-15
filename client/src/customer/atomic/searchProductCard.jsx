@@ -7,7 +7,10 @@ function SearchProductCard(props) {
     const addToCart = () => {
         axios.patch("http://127.0.0.1:8888/customers/" +
             store.getState().GlobalState.value.userID + "/cart",
-            { "ProductID": props.product._id  }).then(
+            { "ProductID": props.product._id  },{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(
                 () => alert(props.product.Title + " has been successfully added into the cart...")
             ).catch(err => console.log(err));
     };
