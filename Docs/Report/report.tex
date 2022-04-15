@@ -62,11 +62,62 @@ order acceptance and arrange delivery . Order status is also updated at differen
 \newpage 
 \textbf{Project Design Description:}
 
+We have three types of users : \textbf{customer}, \textbf{seller}, and \textbf{administrator}. Each type of user needs to 
+login first and receive an access token for future interactions with APIs. Note that \textbf{administrator} users 
+are predefined and an user cannot register himself/herself as a type of \textbf{administrator}.
+\vspace*{5mm}
+
+\textbf{Customer:}
+    After a \textbf{customer} user logs in, he/she would be given a search bar which has a dropdown menu of category and a text input 
+    field. 
+    
+    The customer can choose a particular category from the categories or "All" and search products with the text input. After clicking "Search",
+    the page would redirect customer to search results, a list of products that meet the searching conditions would be showed on the screen.
+    
+    The products would be showed with their descriptions, images, prices and inventories information so that the customer can carefully exam.
+    
+    After the customer decides what products he/she may want, he/she can choose to add the products by clicking "Add To Cart" button, and the product information 
+    would be added into his/her cart. 
+    
+    When the customer decides to checkout, he/she would goes to his/her cart page, and the list of products that the 
+    customer added would show on the screen. 
+    
+    The customer may want to delete some unwantted products by clicking the trashbin icon, thus the product would be 
+    remove from his/her cart. 
+    
+    In order to create orders and actually purchase the products in the cart, the customer must supply a receiver name 
+    and a receiver address to create orders. The receiver name and address would be stored in the database so that the seller can arrange shipping when the order 
+    is paid for. 
+    
+    After creating the products, the customer needs to goto his/her "Orders" page where he/she can find a list of all orders of his/her and do 
+    some actions, for example, "Pay" for the order or "Cancel" the order. While waiting for the products to arrive, the customer can follow the status in his/her
+    order pages. 
+
+\vspace*{5mm}
+\textbf{Seller:} After a \textbf{seller} user logs in, he/she would be redirected to a page where he/she can find 
+all his/her products that are listing in the site for sell. 
+
+If there are any products that the seller wants to sell, 
+he/she can click "Add New Product" buttons, a modal input form would pop up. The seller must fill in the product details 
+in all blank fields and click "Create Product" to insert the product information in the database so that a customer can find 
+the product in the search result and potentially add it into the cart and purchase it.
+
+Moreover, when the seller can closely mointor the product information especially the inventory status. The seller would want
+to add more inventory when he/she has more products avaiable arrived in stock. Or the product want to increase/decrease price of a 
+particular product. Maybe he wants to change the description to attract more customers. All the updations can be done in the "My Products" page.
+
+The seller can also see the list of orders that he/she is getting, and the status of the orders(unpaid, paid, unshipped, shipped) to plan the shipment.
+Both the seller and the customer of a order would have the same view on the status. When the customer paid for the order, the seller of the 
+order can now upload shipping label and complete the order.
 
 
+\vspace*{5mm}
+\textbf{Administrator:}
 
+    The \textbf{administrator} manages every part of the site, and a administrator user has absolutely full permissions to anything, for example, delete 
+    a user, delete a product, cancel a order.
 
-
+    Thus, the administrator account should be carefully protected and given to trusted ones.
 
 
 
@@ -82,6 +133,22 @@ order acceptance and arrange delivery . Order status is also updated at differen
 
 \newpage 
 \textbf{Implementation DBMS:}
+
+    We have chosed \textbf{MongoDB} as our DBMS. MongoDB is an open source NoSQL database program
+    that stores JSON-like documents.
+
+
+    
+
+
+
+
+
+
+
+
+
+
 
 
 \newpage
