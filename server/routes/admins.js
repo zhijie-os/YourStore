@@ -73,14 +73,14 @@ router.post("/createCategory", authenticateToken, async (req,res)=>{
 
 
 // get customer's orders by UserName
-router.get("/orders",async (req, res) => {
+router.get("/orders", authenticateToken, async (req, res) => {
 
     if (req.user.UserType != "admin") {
         res.status(403).json({ message: "Permission required..." });
         return;
     }
 
-    
+
     try {
         
         let actualOrders;

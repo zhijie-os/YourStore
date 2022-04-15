@@ -66,7 +66,7 @@ router.get('/:id',authenticateToken, getProductInstance, (req, res) => {
 })
 
 // create a product with respect to the JSON input
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
     if(req.user.UserName != req.body.SellerID && req.user.UserType != "admin")
     {
         res.status(403).json({"message":"Permission required..."});
@@ -115,7 +115,7 @@ router.patch('/:id',authenticateToken, getProductInstance, async (req, res) => {
         res.status(403).json({"message":"Permission required..."});
         return;
     }
-    
+
     if (req.body.Title) {
         res.productInstance.Title = req.body.Title
     }
@@ -149,7 +149,12 @@ router.patch('/:id',authenticateToken, getProductInstance, async (req, res) => {
 })
 
 // DELETE a user with respect to :id
-router.delete('/:id', getProductInstance, async (req, res) => {
+router.delete('/:id', authenticateToken, getProductInstance, async (req, res) => {
+    if(req.user.UserName != res.productInstance.SellerID && req.user.UserType != "admin")
+    {
+        res.status(403).json({"message":"Permission required..."});
+        return;
+    }
 
     // try to remove
     try {
