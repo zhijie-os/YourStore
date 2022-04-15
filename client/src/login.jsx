@@ -40,7 +40,7 @@ function Login(props) {
             { "UserName": userName, "Password": password }).then(res => {
                 // trigger the "login" reducer in the global state
                 // set th userID and userType in the global state
-                dispatch(login({ userID: res.data.UserName, userType: res.data.UserType }));
+                dispatch(login({ userID: res.data.UserName, userType: res.data.UserType, token:res.data.Token}));
                 // check which type the user is
                 if (store.getState().GlobalState.value.userType == "customer") {
                     // navigate to page /home

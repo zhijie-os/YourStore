@@ -2,16 +2,20 @@ require('dotenv').config();
 const bcrypt = require("bcrypt");
 const PORT = 8888;
 const express = require('express');
+
 const app = express();
 const mongoose = require('mongoose');
-
 const cors = require('cors')
+
+const jwt = require("jsonwebtoken");
+
 
 app.use(
     cors({
         origin: "*",
     })
 )
+
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 const db = mongoose.connection;
@@ -30,7 +34,6 @@ app.use(express.json());
 const customerDB = require('./models/customers')
 const sellerDB = require('./models/sellers')
 const adminDB = require('./models/admins')
-
 
 
 // const createAdmin = async () => {
@@ -71,7 +74,8 @@ app.put('/login', async (req, res) => {
             if (adminInstance != null) {
                 const validPassword = await bcrypt.compare(password, adminInstance.Password);
                 if (validPassword) {
-                    res.json({ "UserName": username, "UserType": "admin" });
+                    const token = jwt.sign({ "UserName": username, "UserType": "admin" },process.env.ACCESS_TOKEN);
+                    res.json({ "UserName": username, "UserType": "admin" , "Token":token});
                 }
                 else {
                     res.status(500).json({ message: "Wrong password..." })
@@ -86,7 +90,8 @@ app.put('/login', async (req, res) => {
             if (customerInstance != null) {
                 const validPassword = await bcrypt.compare(password, customerInstance.Password);
                 if (validPassword) {
-                    res.json({ "UserName": username, "UserType": "customer" });
+                    const token = jwt.sign({ "UserName": username, "UserType": "customer" },process.env.ACCESS_TOKEN);
+                    res.json({ "UserName": username, "UserType": "customer" , "Token":token});
                 }
                 else {
                     res.status(500).json({ message: "Wrong password..." })
@@ -99,7 +104,8 @@ app.put('/login', async (req, res) => {
             if (sellerInstance != null) {
                 const validPassword = await bcrypt.compare(password, sellerInstance.Password);
                 if (validPassword) {
-                    res.json({ "UserName": username, "UserType": "seller" });
+                    const token = jwt.sign({"UserName":username, "UserType":"seller"}, process.env.ACCESS_TOKEN);
+                    res.json({ "UserName": username, "UserType": "seller","Token":token });
                 }
                 else {
                     res.status(500).json({ message: "Wrong password..." })

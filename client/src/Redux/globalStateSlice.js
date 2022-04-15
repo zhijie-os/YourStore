@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     value: {
+        token:null,
         loggedIn: false,
         userID: null,
         userType: null,
@@ -20,11 +21,13 @@ export const GlobalStateSlice = createSlice({
             state.value.loggedIn = true;
             state.value.userID = action.payload.userID;
             state.value.userType = action.payload.userType;
+            state.value.token = action.payload.token;
         },
         logout: (state) => {
             state.value.loggedIn = false;
-            userID = null;
-            userType = null;
+            state.value.userID = null;
+            state.value.userType = null;
+            state.value.token = null;
         },
         selectCategory: (state, action) => {
             state.value.category = action.payload;
@@ -39,6 +42,7 @@ export const GlobalStateSlice = createSlice({
             state.value.userType= null;
             state.value.category= "All";
             state.value.key= "";
+            state.value.token = null;
         }
     },
 });
