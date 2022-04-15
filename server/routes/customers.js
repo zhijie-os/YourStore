@@ -12,7 +12,14 @@ const bcrypt = require("bcrypt");
 
 const jwt = require("jsonwebtoken");
 // get customer's orders by UserName
-router.get("/:id/orders", getCustomerInstance, async (req, res) => {
+router.get("/:id/orders", authenticateToken, getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+
     try {
 
         const customerOrderIDs = res.customerInstance.Orders;
@@ -71,7 +78,14 @@ router.get("/:id/orders", getCustomerInstance, async (req, res) => {
 
 
 // get user Cart by UserName
-router.get("/:id/cart", getCustomerInstance, async (req, res) => {
+router.get("/:id/cart", authenticateToken,getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+    
+    
     try {
         const cart = res.customerInstance.Cart;
 
@@ -96,7 +110,14 @@ router.get("/:id/cart", getCustomerInstance, async (req, res) => {
 
 
 // add one product into customer's cart
-router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
+router.patch("/:id/cart", authenticateToken, getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+
     try {
 
         // console.log(req.body);
@@ -119,7 +140,15 @@ router.patch("/:id/cart", getCustomerInstance, async (req, res) => {
 });
 
 
-router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
+router.delete("/:id/cart", authenticateToken, getCustomerInstance, async (req, res) => {
+
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+
     try {
         // console.log(req.body);
         if (!req.body.ProductID) {
@@ -144,7 +173,15 @@ router.delete("/:id/cart", getCustomerInstance, async (req, res) => {
     }
 });
 
-router.delete("/:id/orders", getCustomerInstance, async (req, res) => {
+router.delete("/:id/orders",authenticateToken, getCustomerInstance, async (req, res) => {
+
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+
     try {
 
         res.customerInstance.Orders = []
@@ -164,7 +201,13 @@ router.delete("/:id/orders", getCustomerInstance, async (req, res) => {
 
 
 
-router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
+router.put("/:id/createOrder", authenticateToken, getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
 
     if (!req.body.ReceiverName) {
         res.status(400).json({ message: "ReceiverName needed to create orders..." });
@@ -253,7 +296,13 @@ router.put("/:id/createOrder", getCustomerInstance, async (req, res) => {
 });
 
 // Get a list of customer with pagination
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
+
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
     if (!req.query.pageSize) {
         res.status(400).json({ message: 'pageSize is not defined...' })
     }
@@ -278,7 +327,12 @@ router.get('/', async (req, res) => {
 })
 
 // GET a user with respect to :id
-router.get('/:id', getCustomerInstance, (req, res) => {
+router.get('/:id', authenticateToken, getCustomerInstance, (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
     res.send(res.customerInstance)
 })
 
@@ -318,7 +372,12 @@ router.post('/', async (req, res) => {
 })
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getCustomerInstance, async (req, res) => {
+router.patch('/:id', authenticateToken, getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
 
     if (req.body.Password) {
         // change password if any
@@ -344,7 +403,13 @@ router.patch('/:id', getCustomerInstance, async (req, res) => {
 })
 
 // DELETE a user with respect to :id
-router.delete('/:id', getCustomerInstance, async (req, res) => {
+router.delete('/:id', authenticateToken, getCustomerInstance, async (req, res) => {
+    if (req.user.UserName != res.customerInstance.UserName
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
 
     // try to remove
     try {

@@ -27,7 +27,10 @@ function SearchBar(props) {
     // called only the first time loading
     useEffect(() => {
         // get the list of all categories
-        axios.get("http://127.0.0.1:8888/categories")
+        axios.get("http://127.0.0.1:8888/categories",{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }})
             .then(res => {
                 setLoaded(false);
                 // set the allCategories

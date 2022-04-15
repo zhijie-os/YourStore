@@ -9,7 +9,10 @@ const sellerDB = require('../models/sellers')
 
 const jwt = require("jsonwebtoken");
 
-router.get('/', async (req, res) => {
+
+
+// get a list of all orders
+router.get('/',authenticateToken, async (req, res) => {
 
     try {
         const searchKey = req.query.searchKey;
@@ -57,14 +60,18 @@ router.get('/', async (req, res) => {
 })
 
 
-// GET a user with respect to :id
-router.get('/:id', getProductInstance, (req, res) => {
+// GET a product with respect to :id
+router.get('/:id',authenticateToken, getProductInstance, (req, res) => {
     res.send(res.productInstance)
 })
 
 // create a product with respect to the JSON input
 router.post('/', async (req, res) => {
-
+    if(req.user.UserName != req.body.SellerID && req.user.UserType != "admin")
+    {
+        res.status(403).json({"message":"Permission required..."});
+        return;
+    }
     // parse the JSON
     const newProduct = new productDB(
         {
@@ -102,8 +109,13 @@ router.post('/', async (req, res) => {
 })
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getProductInstance, async (req, res) => {
-
+router.patch('/:id',authenticateToken, getProductInstance, async (req, res) => {
+    if(req.user.UserName != res.productInstance.SellerID && req.user.UserType != "admin")
+    {
+        res.status(403).json({"message":"Permission required..."});
+        return;
+    }
+    
     if (req.body.Title) {
         res.productInstance.Title = req.body.Title
     }

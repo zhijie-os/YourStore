@@ -7,11 +7,10 @@ const orderDB = require('../models/orders')
 const jwt = require("jsonwebtoken");
 
 
-router.patch('/:id/ship',authenticateToken, getOrderInstance, async (req, res) => {
+router.patch('/:id/ship', authenticateToken, getOrderInstance, async (req, res) => {
 
-    console.log(req.user);
-    if(res.orderInstance.SellerID != req.user.UserName){
-        res.status(403).json({fail:'You do not have permission to ship this order...'})
+    if (res.orderInstance.SellerID != req.user.UserName) {
+        res.status(403).json({ fail: 'Permission required' })
         return;
     };
 
@@ -50,7 +49,13 @@ router.patch('/:id/ship',authenticateToken, getOrderInstance, async (req, res) =
 
 
 // GET a list of orders 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+
     try {
 
         const allOrders = await orderDB.find();
@@ -67,12 +72,27 @@ router.get('/', async (req, res) => {
 
 
 // GET an order with respect to :id
-router.get('/:id', getOrderInstance, (req, res) => {
+router.get('/:id', authenticateToken, getOrderInstance, (req, res) => {
+
+
+    if (req.user.UserName != res.orderInstance.CustomerID
+        && req.user.UserName != res.orderInstance.SellerID
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
     res.send(res.orderInstance)
 })
 
 // POST an order with respect to the JSON input
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
+
+    if (req.user.UserName != req.body.CustomerID
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
 
     // parse the JSON
     const newOrder = new orderDB(
@@ -105,7 +125,14 @@ router.post('/', async (req, res) => {
 
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getOrderInstance, async (req, res) => {
+router.patch('/:id', authenticateToken, getOrderInstance, async (req, res) => {
+
+    if (req.user.UserName != res.orderInstance.CustomerID
+        && req.user.UserName != res.orderInstance.SellerID
+        && req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
 
     // change into "paid" status
     if (req.body.Payment) {
@@ -150,7 +177,12 @@ router.patch('/:id', getOrderInstance, async (req, res) => {
 })
 
 // DELETE an order with respect to :id
-router.delete('/:id', getOrderInstance, async (req, res) => {
+router.delete('/:id', authenticateToken, getOrderInstance, async (req, res) => {
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+    
 
     // try to remove
     try {
@@ -163,7 +195,12 @@ router.delete('/:id', getOrderInstance, async (req, res) => {
 })
 
 
-router.delete('/', async (req, res) => {
+router.delete('/', authenticateToken, async (req, res) => {
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
 
     // try to remove
     try {

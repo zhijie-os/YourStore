@@ -12,8 +12,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 // get seller's orders by UserName
-router.get("/:id/orders", getSellerInstance, async (req, res) => {
+router.get("/:id/orders", authenticateToken, getSellerInstance, async (req, res) => {
     try {
+
+        if (req.user.UserName != res.sellerInstance.UserName && req.user.UserType != "admin") {
+            res.status(403).json({ "message": "Permission required..." });
+            return;
+        }
 
         const sellerOrderIDs = res.sellerInstance.Orders;
 
@@ -24,40 +29,37 @@ router.get("/:id/orders", getSellerInstance, async (req, res) => {
         }));
 
         let orderInfo;
-        orderInfo = await Promise.all(actualOrders.map(async (order)=>{
-            let product = await productDB.findOne({"_id":order.Product});
+        orderInfo = await Promise.all(actualOrders.map(async (order) => {
+            let product = await productDB.findOne({ "_id": order.Product });
 
             let status;
 
-            if(!order.Payment)
-            {
-                status="Unpaid"
+            if (!order.Payment) {
+                status = "Unpaid"
             }
-            else{
-                if(order.Shipped)
-                {
-                    status="Shipped"
+            else {
+                if (order.Shipped) {
+                    status = "Shipped"
                 }
-                else{
-                    status="Unshipped"
+                else {
+                    status = "Unshipped"
                 }
             }
 
-            if(order.Cancelled)
-            {
-                status="Cancelled";
+            if (order.Cancelled) {
+                status = "Cancelled";
             }
 
             return {
-                "OrderNumber":order._id,
-                "CustomerID":order.CustomerID,
+                "OrderNumber": order._id,
+                "CustomerID": order.CustomerID,
                 "ProductName": product.Title,
-                "Price":order.Total,
-                "ReceiverName":order.ReceiverName,
-                "ReceiverAddress":order.ReceiverAddress,
-                "Status":status,
-                "ShipmentLabel":order.ShipmentLabel
-            } 
+                "Price": order.Total,
+                "ReceiverName": order.ReceiverName,
+                "ReceiverAddress": order.ReceiverAddress,
+                "Status": status,
+                "ShipmentLabel": order.ShipmentLabel
+            }
         }));
 
         res.json({ Orders: orderInfo });
@@ -70,35 +72,33 @@ router.get("/:id/orders", getSellerInstance, async (req, res) => {
 
 
 // get sellers's products
-router.get('/:id/products', getSellerInstance, async(req,res)=>{
-    try 
-    {
+router.get('/:id/products', authenticateToken, getSellerInstance, async (req, res) => {
+    try {
         const productIDs = res.sellerInstance.Products;
 
-        let allProducts = await Promise.all(productIDs.map(async (productID)=>{
-            let productInstance = await productDB.findOne({"_id":productID});
+        let allProducts = await Promise.all(productIDs.map(async (productID) => {
+            let productInstance = await productDB.findOne({ "_id": productID });
 
             return {
-                "ProductNumber":productInstance._id,
-                "ProductTitle":productInstance.Title,
-                "Inventory":productInstance.Inventory,
-                "Description":productInstance.Description,
-                "Price":productInstance.Price
+                "ProductNumber": productInstance._id,
+                "ProductTitle": productInstance.Title,
+                "Inventory": productInstance.Inventory,
+                "Description": productInstance.Description,
+                "Price": productInstance.Price
             }
         }));
 
-        res.json({Products: allProducts});
+        res.json({ Products: allProducts });
     }
-    catch(err)
-    {
-        res.status(500).json({message:err.message});
+    catch (err) {
+        res.status(500).json({ message: err.message });
     }
 });
 
 
 
 // get seller instances
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     if (!req.query.pageSize) {
         res.status(400).json({ message: 'pageSize is not defined...' })
     }
@@ -124,12 +124,12 @@ router.get('/', async (req, res) => {
 })
 
 
-// GET a user with respect to :id
-router.get('/:id', getSellerInstance, (req, res) => {
+// GET a sellerInstance with respect to :id
+router.get('/:id', authenticateToken, getSellerInstance, (req, res) => {
     res.send(res.sellerInstance)
 })
 
-// POST a user with respect to the JSON input
+// POST create a user with respect to the JSON input
 router.post('/', async (req, res) => {
 
     // parse the JSON
@@ -144,10 +144,10 @@ router.post('/', async (req, res) => {
 
     // try if can save the seller
     try {
-        let alreadyUsed = await sellerDB.findOne({"UserName": req.body.UserName});
- 
-        if(alreadyUsed!=null){
-            res.status(500).json({message:"Seller "+req.body.UserName+" already existed."});
+        let alreadyUsed = await sellerDB.findOne({ "UserName": req.body.UserName });
+
+        if (alreadyUsed != null) {
+            res.status(500).json({ message: "Seller " + req.body.UserName + " already existed." });
             return;
         }
 
@@ -157,7 +157,7 @@ router.post('/', async (req, res) => {
 
         await newSeller.save()
         // on success, send back 201
-        res.status(200).json({message:"Seller "+req.body.UserName+" has been successfully created"});
+        res.status(200).json({ message: "Seller " + req.body.UserName + " has been successfully created" });
     }
     catch (err) {
         // on error, send back error
@@ -166,7 +166,12 @@ router.post('/', async (req, res) => {
 })
 
 // PATCH with respect to :id and the given input
-router.patch('/:id', getSellerInstance, async (req, res) => {
+router.patch('/:id', authenticateToken, getSellerInstance, async (req, res) => {
+    if (req.user.UserName != res.sellerInstance.UserName && req.user.UserType != "admin") {
+        res.status(403).json({ "message": "Permission required..." });
+        return;
+    }
+
 
     if (req.body.Password) {
         // change password if any
@@ -192,7 +197,12 @@ router.patch('/:id', getSellerInstance, async (req, res) => {
 })
 
 // DELETE a user with respect to :id
-router.delete('/:id', getSellerInstance, async (req, res) => {
+router.delete('/:id', authenticateToken, getSellerInstance, async (req, res) => {
+
+    if (req.user.UserName != res.sellerInstance.UserName && req.user.UserType != "admin") {
+        res.status(403).json({ "message": "Permission required..." });
+        return;
+    }
 
     // try to remove
     try {
@@ -205,15 +215,20 @@ router.delete('/:id', getSellerInstance, async (req, res) => {
 })
 
 
+// delete a seller's all orders
+router.delete("/:id/orders", authenticateToken, getSellerInstance, async (req, res) => {
+    if (req.user.UserName != res.sellerInstance.UserName && req.user.UserType != "admin") {
+        res.status(403).json({ "message": "Permission required..." });
+        return;
+    }
 
-router.delete("/:id/orders", getSellerInstance, async (req, res) => {
     try {
 
         res.sellerInstance.Orders = []
         await res.sellerInstance.save();
 
 
-        res.status(200).json({ message:" orders has been deleted..." });
+        res.status(200).json({ message: " orders has been deleted..." });
 
     }
     catch (err) {

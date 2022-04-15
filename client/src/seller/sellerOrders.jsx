@@ -49,7 +49,10 @@ function SellerOrders(props) {
     const cancelOrder = (orderNumber) => () => {
         // console.log(product._id);
         axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
-            { "Cancelled": "true" }).then(() => {
+            { "Cancelled": "true" },{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(() => {
                 setRerender(!rerender);
                 alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
             }).catch(err => console.log(err));
@@ -63,7 +66,10 @@ function SellerOrders(props) {
     useEffect(() => {
         axios.get("http://127.0.0.1:8888/sellers/" +
             store.getState().GlobalState.value.userID +
-            "/orders").then((res) => {
+            "/orders",{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then((res) => {
                 setLoaded(false);
                 console.log(res.data.Orders);
                 setOrders(res.data.Orders);

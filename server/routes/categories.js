@@ -8,7 +8,7 @@ const categoryDB = require('../models/categories')
 
 const jwt = require("jsonwebtoken");
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken, async (req, res) => {
     try {
         // all category is a list
         const allCategories = await categoryDB.find()
@@ -23,12 +23,17 @@ router.get('/', async (req, res) => {
 })
 
 // GET a category with respect to :id
-router.get('/:id', getCategoryInstance, (req, res) => {
+router.get('/:id', authenticateToken, getCategoryInstance, (req, res) => {
     res.send(res.categoryInstance)
 })
 
 // POST a category with respect to the JSON input
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken,async (req, res) => {
+
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
 
     // parse the JSON
     const newCategory = new categoryDB(
@@ -49,28 +54,15 @@ router.post('/', async (req, res) => {
 })
 
 
-// PATCH with respect to :id and the given input
-router.patch('/:id', getCategoryInstance, async (req, res) => {
 
-    if (req.body.Title) {
-        res.categoryInstance.Title = req.body.Title
+// DELETE a category with respect to :id
+router.delete('/:id',authenticateToken, getCategoryInstance, async (req, res) => {
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
     }
-
-    // try to save back
-    try {
-        const updatedcategory = await res.categoryInstance.save()
-        // successed
-        res.status(200).json(updatedcategory)
-    }
-    catch (err) {
-        // error on our side
-        res.status(500).json({ message: 'Failed to update the password' })
-    }
-
-})
-
-// DELETE a user with respect to :id
-router.delete('/:id', getCategoryInstance, async (req, res) => {
+    
+    
     // try to remove
     try {
         await res.categoryInstance.remove()

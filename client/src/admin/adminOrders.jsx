@@ -4,12 +4,12 @@ import Footer from "../components/footer";
 import Table from 'react-bootstrap/Table'
 import { useEffect, useState } from "react";
 
+
 import { store } from '../Redux/store'
 import { useNavigate } from "react-router-dom"
 
+
 import axios from "axios";
-
-
 
 
 function AdminOrders(props){
@@ -23,7 +23,10 @@ function AdminOrders(props){
     const cancelOrder = (orderNumber) => () => {
         // console.log(product._id);
         axios.patch("http://127.0.0.1:8888/orders/" + orderNumber,
-            { "Cancelled": "true" }).then(() => {
+            { "Cancelled": "true" },{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(() => {
                 setRerender(!rerender);
                 alert("Order with ID: " + orderNumber + " has been successfully cancelled...")
             }).catch(err => err.response.message);
@@ -31,7 +34,10 @@ function AdminOrders(props){
 
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/admins/orders").then((res) => {
+        axios.get("http://127.0.0.1:8888/admins/orders",{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }}).then((res) => {
                 setLoaded(false);
                 console.log(res.data.Orders);
                 setOrders(res.data.Orders);

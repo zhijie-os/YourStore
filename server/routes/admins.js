@@ -10,7 +10,13 @@ const { route } = require('./products')
 
 const jwt = require("jsonwebtoken");
 
-router.get('/products', async (req, res) => {
+router.get('/products', authenticateToken, async (req, res) => {
+
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
 
     try {
         let allProducts = await productDB.find(); 
@@ -27,7 +33,10 @@ router.get('/products', async (req, res) => {
 
 // create new category
 router.post("/createCategory", authenticateToken, async (req,res)=>{
-    console.log(req.user);
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
 
 
     if(!req.body.Title)
@@ -65,6 +74,13 @@ router.post("/createCategory", authenticateToken, async (req,res)=>{
 
 // get customer's orders by UserName
 router.get("/orders",async (req, res) => {
+
+    if (req.user.UserType != "admin") {
+        res.status(403).json({ message: "Permission required..." });
+        return;
+    }
+
+    
     try {
         
         let actualOrders;

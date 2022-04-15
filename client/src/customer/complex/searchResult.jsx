@@ -13,24 +13,29 @@ function SearchResult(props) {
     const [products, setProducts] = useState([]);
     const [page, setPage] = useState(0);
 
-    const getGSValue = ()=>{
+    const getGSValue = () => {
         return store.getState().GlobalState.value;
     }
 
-    const retrieveProducts = ()=>{
+    const retrieveProducts = () => {
         // console.log(getGSValue().category);
         axios.get("http://127.0.0.1:8888/products?"
-        +"&searchKey="+(getGSValue().key==""?"null":getGSValue().key)+
-        "&category="+(getGSValue().category=="All"||
-        getGSValue().category==null?"null":getGSValue().category))
+            + "&searchKey=" + (getGSValue().key == "" ? "null" : getGSValue().key) +
+            "&category=" + (getGSValue().category == "All" ||
+                getGSValue().category == null ? "null" : getGSValue().category),
+            {
+                headers: {
+                    'Authorization': "Bearer " + store.getState().GlobalState.value.token
+                }
+            })
             .then(res => {
                 setLoaded(false);
                 setProducts(res.data);
                 console.log(res.data);
                 setLoaded(true);
-                
 
-            }).catch(err=>console.log(err.response.data));
+
+            }).catch(err => console.log(err.response.data));
     }
 
 

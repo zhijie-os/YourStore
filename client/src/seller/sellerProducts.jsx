@@ -20,7 +20,10 @@ function SellerProducts(props) {
     useEffect(() => {
         axios.get("http://127.0.0.1:8888/sellers/" +
             store.getState().GlobalState.value.userID +
-            "/products").then((res) => {
+            "/products",{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then((res) => {
                 setLoaded(false);
                 console.log(res.data.Products);
                 setProducts(res.data.Products);
@@ -59,7 +62,10 @@ function SellerProducts(props) {
     };
 
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/categories")
+        axios.get("http://127.0.0.1:8888/categories",{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }})
             .then(res => {
                 // set the allCategories
                 setCategories(res.data);
@@ -71,7 +77,10 @@ function SellerProducts(props) {
 
     const deleteProduct = (productID) => () => {
         console.log("http://127.0.0.1:8888/products/"+productID);
-        axios.delete("http://127.0.0.1:8888/products/"+productID).then(()=>{
+        axios.delete("http://127.0.0.1:8888/products/"+productID,{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }}).then(()=>{
             alert("Product with ID " + productID + " has been successfully remvoed....")
             setRerender(!rerender);
         }).catch(err => console.log(err.response));
@@ -101,7 +110,10 @@ function SellerProducts(props) {
                 "Description": newProductDescription,
                 "SearchKeys": tags,
                 "Category":category
-            }).then(()=>{
+            },{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(()=>{
                 alert("Product has been successfully created...");
                 setRerender(!rerender);
             }).catch(err=>console.log(err));
@@ -163,7 +175,10 @@ function SellerProducts(props) {
                 "Description": updateDescription,
                 "SearchKeys": tags,
                 "Category": updateCategory
-            }).then(()=>{
+            },{
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(()=>{
                 alert("Product has been successfully updated...");
                 setRerender(!rerender);
             }).catch(err=>console.log(err));

@@ -17,8 +17,13 @@ function AdminProducts(props) {
     const [products, setProducts] = useState([]);
     const [rerender, setRerender] = useState(false);
 
+
+
     useEffect(() => {
-        axios.get("http://127.0.0.1:8888/admins/products").
+        axios.get("http://127.0.0.1:8888/admins/products",{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }}).
             then((res) => {
                 setLoaded(false);
                 console.log(res.data);
@@ -27,9 +32,15 @@ function AdminProducts(props) {
             }).catch(err => console.log(err.resposne.message));
     }, [rerender]);
 
+
+
+
     const deleteProduct = (productID) => () => {
         console.log("http://127.0.0.1:8888/products/"+productID);
-        axios.delete("http://127.0.0.1:8888/products/"+productID).then(()=>{
+        axios.delete("http://127.0.0.1:8888/products/"+productID,{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }}).then(()=>{
             alert("Product with ID " + productID + " has been successfully remvoed....")
             setRerender(!rerender);
         }).catch(err => console.log(err.response));
