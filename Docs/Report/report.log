@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.4.13)  15 APR 2022 03:06
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.4.13)  15 APR 2022 04:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -597,29 +597,122 @@ File: Diagrams/relation.png Graphic file (type png)
 <use Diagrams/relation.png>
 Package pdftex.def Info: Diagrams/relation.png  used on input line 81.
 (pdftex.def)             Requested size: 211.69162pt x 637.41862pt.
- [6 </home/notadevice/YourStore/Docs/Report/Diagrams/relation.png>] [7] [8] [9]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 99.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 99.
+ [6 </home/notadevice/YourStore/Docs/Report/Diagrams/relation.png>] [7] [8]
+<UserGuideImage/1.png, id=49, 1284.8pt x 1295.84125pt>
+File: UserGuideImage/1.png Graphic file (type png)
+<use UserGuideImage/1.png>
+Package pdftex.def Info: UserGuideImage/1.png  used on input line 103.
+(pdftex.def)             Requested size: 211.38832pt x 213.19162pt.
+<UserGuideImage/2.png, id=50, 1284.8pt x 1295.84125pt>
+File: UserGuideImage/2.png Graphic file (type png)
+<use UserGuideImage/2.png>
+Package pdftex.def Info: UserGuideImage/2.png  used on input line 104.
+(pdftex.def)             Requested size: 211.38832pt x 213.19162pt.
+<UserGuideImage/3.png, id=51, 1336.995pt x 1358.07375pt>
+File: UserGuideImage/3.png Graphic file (type png)
+<use UserGuideImage/3.png>
+Package pdftex.def Info: UserGuideImage/3.png  used on input line 114.
+(pdftex.def)             Requested size: 211.38832pt x 214.70592pt.
+ [9 </home/notadevice/YourStore/Docs/Report/UserGuideImage/1.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/2.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/3.png>]
+<UserGuideImage/4.png, id=59, 1281.78876pt x 1335.99126pt>
+File: UserGuideImage/4.png Graphic file (type png)
+<use UserGuideImage/4.png>
+Package pdftex.def Info: UserGuideImage/4.png  used on input line 121.
+(pdftex.def)             Requested size: 211.38832pt x 220.32712pt.
+<UserGuideImage/5.png, id=60, 1284.8pt x 1332.98pt>
+File: UserGuideImage/5.png Graphic file (type png)
+<use UserGuideImage/5.png>
+Package pdftex.def Info: UserGuideImage/5.png  used on input line 128.
+(pdftex.def)             Requested size: 211.38832pt x 219.30168pt.
+ [10 </home/notadevice/YourStore/Docs/Report/UserGuideImage/4.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/5.png>]
+<UserGuideImage/6.png, id=67, 1281.78876pt x 1291.82625pt>
+File: UserGuideImage/6.png Graphic file (type png)
+<use UserGuideImage/6.png>
+Package pdftex.def Info: UserGuideImage/6.png  used on input line 135.
+(pdftex.def)             Requested size: 211.38832pt x 213.04358pt.
+<UserGuideImage/7.png, id=68, 1286.8075pt x 1288.815pt>
+File: UserGuideImage/7.png Graphic file (type png)
+<use UserGuideImage/7.png>
+Package pdftex.def Info: UserGuideImage/7.png  used on input line 136.
+(pdftex.def)             Requested size: 211.38832pt x 211.70134pt.
+<UserGuideImage/8.png, id=69, 1284.8pt x 1289.81876pt>
+File: UserGuideImage/8.png Graphic file (type png)
+<use UserGuideImage/8.png>
+Package pdftex.def Info: UserGuideImage/8.png  used on input line 139.
+(pdftex.def)             Requested size: 211.38832pt x 212.20079pt.
+ [11 </home/notadevice/YourStore/Docs/Report/UserGuideImage/6.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/7.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/8.png>]
+<UserGuideImage/9.png, id=77, 1286.8075pt x 1315.91624pt>
+File: UserGuideImage/9.png Graphic file (type png)
+<use UserGuideImage/9.png>
+Package pdftex.def Info: UserGuideImage/9.png  used on input line 152.
+(pdftex.def)             Requested size: 211.38832pt x 216.153pt.
+<UserGuideImage/10.png, id=78, 1279.78125pt x 1333.98375pt>
+File: UserGuideImage/10.png Graphic file (type png)
+<use UserGuideImage/10.png>
+Package pdftex.def Info: UserGuideImage/10.png  used on input line 159.
+(pdftex.def)             Requested size: 211.38832pt x 220.34207pt.
+ [12 </home/notadevice/YourStore/Docs/Report/UserGuideImage/9.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/10.png>]
+<UserGuideImage/11.png, id=85, 1286.8075pt x 1287.81125pt>
+File: UserGuideImage/11.png Graphic file (type png)
+<use UserGuideImage/11.png>
+Package pdftex.def Info: UserGuideImage/11.png  used on input line 167.
+(pdftex.def)             Requested size: 211.38832pt x 211.53647pt.
+ [13 </home/notadevice/YourStore/Docs/Report/UserGuideImage/11.png>]
+<UserGuideImage/12.png, id=92, 1281.78876pt x 1288.815pt>
+File: UserGuideImage/12.png Graphic file (type png)
+<use UserGuideImage/12.png>
+Package pdftex.def Info: UserGuideImage/12.png  used on input line 173.
+(pdftex.def)             Requested size: 211.38832pt x 212.54697pt.
+<UserGuideImage/13.png, id=93, 1282.7925pt x 1287.81125pt>
+File: UserGuideImage/13.png Graphic file (type png)
+<use UserGuideImage/13.png>
+Package pdftex.def Info: UserGuideImage/13.png  used on input line 174.
+(pdftex.def)             Requested size: 211.38832pt x 212.20457pt.
+<UserGuideImage/14.png, id=94, 1266.7325pt x 1291.82625pt>
+File: UserGuideImage/14.png Graphic file (type png)
+<use UserGuideImage/14.png>
+Package pdftex.def Info: UserGuideImage/14.png  used on input line 176.
+(pdftex.def)             Requested size: 211.38832pt x 215.56667pt.
+ [14 </home/notadevice/YourStore/Docs/Report/UserGuideImage/12.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/13.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/14.png>]
+<UserGuideImage/15.png, id=102, 1280.785pt x 1330.9725pt>
+File: UserGuideImage/15.png Graphic file (type png)
+<use UserGuideImage/15.png>
+Package pdftex.def Info: UserGuideImage/15.png  used on input line 184.
+(pdftex.def)             Requested size: 211.38832pt x 219.66191pt.
+<UserGuideImage/16.png, id=103, 1280.785pt x 1323.94624pt>
+File: UserGuideImage/16.png Graphic file (type png)
+<use UserGuideImage/16.png>
+Package pdftex.def Info: UserGuideImage/16.png  used on input line 192.
+(pdftex.def)             Requested size: 211.38832pt x 218.5023pt.
+ [15 </home/notadevice/YourStore/Docs/Report/UserGuideImage/15.png> </home/notadevice/YourStore/Docs/Report/UserGuideImage/16.png>]
+<UserGuideImage/17.png, id=110, 1275.76625pt x 1329.96875pt>
+File: UserGuideImage/17.png Graphic file (type png)
+<use UserGuideImage/17.png>
+Package pdftex.def Info: UserGuideImage/17.png  used on input line 201.
+(pdftex.def)             Requested size: 211.38832pt x 220.36888pt.
+ [16 </home/notadevice/YourStore/Docs/Report/UserGuideImage/17.png>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 204.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 204.
  (/home/notadevice/YourStore/Docs/Report/report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 99.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 99.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 204.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 204.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 99.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 204.
  ) 
 Here is how much of TeX's memory you used:
- 27195 strings out of 481239
- 655623 string characters out of 5920377
+ 27305 strings out of 481239
+ 657843 string characters out of 5920377
  993795 words of memory out of 5000000
- 41989 multiletter control sequences out of 15000+600000
+ 42074 multiletter control sequences out of 15000+600000
  535841 words of font info for 38 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,11n,127p,762b,609s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on /home/notadevice/YourStore/Docs/Report/report.pdf (9 pages, 254119 bytes).
+Output written on /home/notadevice/YourStore/Docs/Report/report.pdf (16 pages, 879013 bytes).
 PDF statistics:
- 69 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
- 10 named destinations out of 1000 (max. 500000)
- 23 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 133 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
+ 17 named destinations out of 1000 (max. 500000)
+ 108 words of extra memory for PDF output out of 10000 (max. 10000000)
 
