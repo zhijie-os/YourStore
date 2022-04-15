@@ -192,7 +192,7 @@ function SellerProducts(props) {
 
                 <Modal show={updateShow} onHide={handleUpdateClose}>
                     <Modal.Header closeButton>
-                        <Modal.Title>New Product Details</Modal.Title>
+                        <Modal.Title>Update Product Details</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Form>

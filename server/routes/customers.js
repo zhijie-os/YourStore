@@ -288,6 +288,7 @@ router.post('/', async (req, res) => {
             Cart: []
         })
 
+        
     // try if can save the customer
     try {
         let alreadyUsed = await customerDB.findOne({ "UserName": req.body.UserName });
