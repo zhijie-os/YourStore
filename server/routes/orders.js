@@ -1,10 +1,21 @@
+require('dotenv').config();
+
 const express = require('express')
 const router = express.Router()
 const orderDB = require('../models/orders')
 
+const jwt = require("jsonwebtoken");
 
 
-router.patch('/:id/ship', getOrderInstance, async (req, res) => {
+router.patch('/:id/ship',authenticateToken, getOrderInstance, async (req, res) => {
+
+    console.log(req.user);
+    if(res.orderInstance.SellerID != req.user.UserName){
+        res.status(403).json({fail:'You do not have permission to ship this order...'})
+        return;
+    };
+
+
     if (!req.body.ShippingLabel) {
         res.status(400).json({ fail: 'shipping label is not defined...' })
         return;
@@ -185,5 +196,24 @@ async function getOrderInstance(req, res, next) {
     res.orderInstance = orderInstance
     next()
 }
+
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401);
+    }
+
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    });
+}
+
 
 module.exports = router

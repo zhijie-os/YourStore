@@ -22,24 +22,25 @@ function SellerOrders(props) {
     const ship = (orderNumber) => () => {
         let shippingLabel = prompt("Please enter the shipping label", "eg:1Z149A726800291371");
         if (shippingLabel != null) {
-            axios.patch("http://127.0.0.1:8888/orders/" + orderNumber+"/ship",
-            {"ShippingLabel":shippingLabel}).then(()=>{
+            axios.patch("http://127.0.0.1:8888/orders/" + orderNumber + "/ship",
+                { "ShippingLabel": shippingLabel }, {
+                headers: {
+                    'Authorization': "Bearer "+store.getState().GlobalState.value.token
+                }}).then(() => {
                 setRerender(!rerender);
                 alert("The order's shipping status is udpated...")
-            }).catch(error=>alert(error.response.data.fail));
+            }).catch(error => alert(error.response.data.fail));
         }
-        else 
-        {
+        else {
             alert("Shipping Label cannot be blank...");
         }
     }
 
     const cannotShip = (status) => () => {
-        if(status == "Unpaid")
-        {
+        if (status == "Unpaid") {
             alert("Customer has not made a payment yet, cannot ship...");
         }
-        else{
+        else {
             alert("The order is cancelled, cannot ship...");
         }
     }
@@ -103,7 +104,7 @@ function SellerOrders(props) {
                                     <td>{order.Status}</td>
                                     <td>{order.ShipmentLabel}</td>
                                     <td>
-                                        <button className="btn btn-primary" onClick={(order.Status=="Cancelled"||order.Status=="Unpaid")?cannotShip(order.Status):ship(order.OrderNumber)}>Ship</button>
+                                        <button className="btn btn-primary" onClick={(order.Status == "Cancelled" || order.Status == "Unpaid") ? cannotShip(order.Status) : ship(order.OrderNumber)}>Ship</button>
                                         <button className="btn btn-danger" onClick={order.Status === "Cancelled" ? cancelledAlert : cancelOrder(order.OrderNumber)}>Cancel</button>
                                     </td>
                                 </tr>

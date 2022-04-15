@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+
 const express = require('express')
 const router = express.Router()
 const productDB = require('../models/products')
@@ -5,6 +8,7 @@ const categoryDB = require('../models/categories')
 const orderDB = require('../models/orders')
 const { route } = require('./products')
 
+const jwt = require("jsonwebtoken");
 
 router.get('/products', async (req, res) => {
 
@@ -22,7 +26,10 @@ router.get('/products', async (req, res) => {
 
 
 // create new category
-router.post("/createCategory", async (req,res)=>{
+router.post("/createCategory", authenticateToken, async (req,res)=>{
+    console.log(req.user);
+
+
     if(!req.body.Title)
     {
         res.status(500).json({ message: "Title is required for creating category." });
@@ -102,6 +109,22 @@ router.get("/orders",async (req, res) => {
 });
 
 
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401);
+    }
+
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    });
+}
 
 
 

@@ -41,7 +41,10 @@ function AdminProducts(props) {
     const [category,setCategory] = useState();
 
     const createCategory = () =>{
-        axios.post("http://127.0.0.1:8888/admins/createCategory",{"Title":category}).then(()=>{
+        axios.post("http://127.0.0.1:8888/admins/createCategory",{"Title":category},{
+            headers: {
+                'Authorization': "Bearer "+store.getState().GlobalState.value.token
+            }}).then(()=>{
             alert("Category "+category + " has created");
         }).catch(err=>alert(err.response.message));
     }

@@ -1,3 +1,6 @@
+require('dotenv').config();
+
+
 const express = require('express')
 const router = express.Router()
 const customerDB = require('../models/customers')
@@ -6,6 +9,8 @@ const orderDB = require('../models/orders')
 const sellerDB = require('../models/sellers')
 const bcrypt = require("bcrypt");
 
+
+const jwt = require("jsonwebtoken");
 // get customer's orders by UserName
 router.get("/:id/orders", getCustomerInstance, async (req, res) => {
     try {
@@ -371,5 +376,23 @@ async function getCustomerInstance(req, res, next) {
     res.customerInstance = customerInstance
     next()
 }
+
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if (token == null) {
+        return res.sendStatus(401);
+    }
+
+
+    jwt.verify(token, process.env.ACCESS_TOKEN, (err, user) => {
+        if (err) {
+            return res.sendStatus(403);
+        }
+        req.user = user;
+        next();
+    });
+}
+
 
 module.exports = router
