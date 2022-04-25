@@ -1,2 +1,2 @@
-# YourStore: A project for CPSC 471
+# YourStore: An Online Shopping Site
 
